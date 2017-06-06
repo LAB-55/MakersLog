@@ -12,5 +12,26 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+$meta = [
+		'title' => "Search Makers Log ",
+		'pageName' => 'Search',
+		'firstName' => 'Kalpit',
+		'lastName' => 'Akhawat',
+		'avatar'	=> 'https://avatars0.githubusercontent.com/u/16951479?v=3&s=460'
+	];
+	return view('search')
+    			->with('meta',$meta);;
+});
+
+Route::get('/{gusermail}', function ( $gusermail) {
+	
+	$meta = [
+		'title' => "Kalpit Akhawat's blog",
+		'pageName' => 'Kalpit Akhawat',
+		'firstName' => 'Kalpit',
+		'lastName' => 'Akhawat',
+		'avatar'	=> 'https://avatars0.githubusercontent.com/u/16951479?v=3&s=460'
+	];
+    return view('welcome')
+    			->with('meta',$meta);
 });
