@@ -9,7 +9,7 @@
             
             <!-- Breadcrumb-->
             <ol class="breadcrumb hidden-lg-down">
-                <li class="breadcrumb-item active"><a href="home.html#">Makers Log</a></li>
+                <li class="breadcrumb-item active"><a href="/">Makers Log</a></li>
                 <li class="breadcrumb-item active">{{ $meta['pageName']}}</li>
             </ol>
             
