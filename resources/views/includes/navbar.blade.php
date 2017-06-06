@@ -21,9 +21,9 @@
                         <span class="hidden-sm-down">Ouick Access</span>
                     </a>
                     <div class="dropdown-menu dropdown-ins dropdown-menu-right" aria-labelledby="userDropdown"> 
-                        <a class="dropdown-item" href="/_/logout">My Blogs</a>
-                        <a class="dropdown-item" href="/_/report">Report Bug</a>
-                        <a class="dropdown-item" href="home.html">Log Out</a>
+                        <a class="dropdown-item" href="/{{ $meta['gusermail']}}">My Logs</a>
+                        <a class="dropdown-item" href="/report">Report Bug</a>
+                        <a class="dropdown-item" href="/logout">Log Out</a>
                     </div>
                 </li>
             </ul>

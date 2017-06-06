@@ -4,38 +4,6 @@
 <head>
     @include('includes.head')
 </head>
-    <style type="text/css">
-        .pad-lr-10{
-            padding-left: 10px;
-            padding-right:10px;
-        }
-        .pad-lr-20{
-            padding-left: 20px;
-            padding-right:20px;
-        }
-        .pad-tb-10{
-            padding-top: 10px;
-            padding-bottom:10px;
-        }
-        .nav-item > .active {
-                background-color: rgba(255,255,255,.2);
-                border-bottom: 10px;
-        }
-        @media (min-width: 62em){            
-            .classic-tabs li:last-child {
-                margin-right: 56px;
-            }
-        }
-        .med-btn-fonts {
-            font-size:1rem!important;
-        }
-        .rounded-circle-imp{
-            border-radius: 50%!important;
-        }
-
-        .testimonial-card .avatar,.testimonial-card .card-up{overflow:hidden;height:120px}
-        .testimonial-card .avatar{border-radius:50%;width:120px;margin:-65px auto 0;border:5px solid #fff;background:#FFF}.testimonial-card .avatar img{width:100%}.testimonial-card .card-block,.testimonial-carousel{text-align:center}
-    </style>
     <body class="fixed-sn white-skin">
         
     <header>
@@ -63,7 +31,7 @@
                     <li class="nav-item">
                         <a class="nav-link waves-light" data-toggle="tab" href="#panel52" role="tab">
                         <i class="fa fa-list-ul pad-lr-10"></i>
-                        Recent Blogs</a>
+                        Recent Logs</a>
                     </li>
                 </ul>
             </div>
@@ -95,7 +63,7 @@
                                 </div>
                                  <div class="card-data">
                                     <ul>
-                                        <li><i class="fa fa-bars"></i> 25 blogs</li>
+                                        <li><i class="fa fa-bars"></i> 25 Logs</li>
                                     </ul>
                                 </div>
                                 </div>
@@ -121,11 +89,11 @@
                                     <img class="rounded-circle-imp" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-13.jpg" alt="imag of p.name" width="80">
                                 </a>
                                 <div class="media-body pad-lr-20">
-                                    <h4 class="media-heading">Blog Title</h4>
+                                    <h4 class="media-heading">Log Title</h4>
                                     <ul class="rating inline-ul">
                                         by him or her
                                     </ul>
-                                    <p>Blog description like, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate temporibus iure soluta. Quasi mollitia maxime nemo quam accusamus possimus, voluptatum expedita assumenda. Earum sit id ullam eum vel delectus!</p>
+                                    <p>Log description like, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate temporibus iure soluta. Quasi mollitia maxime nemo quam accusamus possimus, voluptatum expedita assumenda. Earum sit id ullam eum vel delectus!</p>
                                     <a class="btn btn-outline-secondary btn-rounded waves-effect">Read More</a>
                                 </div>
                             </div>
@@ -137,11 +105,11 @@
                                     <img class="rounded-circle-imp" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-13.jpg" alt="imag of p.name" width="80">
                                 </a>
                                 <div class="media-body pad-lr-20">
-                                    <h4 class="media-heading">Blog Title</h4>
+                                    <h4 class="media-heading">Log Title</h4>
                                     <ul class="rating inline-ul">
                                         by him or her
                                     </ul>
-                                    <p>Blog description like, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate temporibus iure soluta. Quasi mollitia maxime nemo quam accusamus possimus, voluptatum expedita assumenda. Earum sit id ullam eum vel delectus!</p>
+                                    <p>Log description like, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate temporibus iure soluta. Quasi mollitia maxime nemo quam accusamus possimus, voluptatum expedita assumenda. Earum sit id ullam eum vel delectus!</p>
                                     <a class="btn btn-outline-secondary btn-rounded waves-effect">Read More</a>
                                 </div>
                             </div>

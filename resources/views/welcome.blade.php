@@ -18,7 +18,7 @@
         <div class="container-fluid">
 
             <!--Section heading-->
-            <h4 class="text-left">Blogs from {{ $meta['firstName']}}</h4>
+            <h4 class="text-left">Logs from {{ $meta['firstName']}}</h4>
             <hr>
             <br>
 
