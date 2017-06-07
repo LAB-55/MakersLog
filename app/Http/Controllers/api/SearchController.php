@@ -9,6 +9,12 @@ class SearchController extends Controller
 {
     public function index(Request $r)
     {
-      die('test');
+      try {
+      	$txt=$r->text;
+      	$type=$r->type;
+      	$categories=$r->categories;
+      } catch (Exception $e) {
+      	
+      }
     }
 }

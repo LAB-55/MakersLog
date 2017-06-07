@@ -23,9 +23,7 @@ $meta = [
 	return view('search')
     			->with('meta',$meta);;
 });
-Route::group(['prefix' => 'api','namespace'=>'api'], function () {
-    Route::post('search','SearchController@index');
-});
+
 
 Route::get('/{gusermail}', function ( $gusermail) {
 
@@ -53,4 +51,15 @@ Route::get('/log/new', function () {
 	];
     return view('newpost')
     			->with('meta',$meta);
+});
+
+
+
+
+
+
+
+//-------------Api----------------------
+Route::group(['prefix' => 'api','namespace'=>'api'], function () {
+    Route::post('search','SearchController@index');
 });
