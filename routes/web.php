@@ -26,6 +26,7 @@ Route::get('/log/new', 'PostController@index')->middleware('auth');
 Route::group(['prefix' => 'api','namespace'=>'api'], function () {
     Route::post('search','SearchController@index');
     Route::post('log/publish','PostController@create');
+    Route::post('log/update','PostController@update');
     Route::post('category','CategoryController@index');
     Route::post('category/add','CategoryController@create');
 

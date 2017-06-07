@@ -42,7 +42,7 @@
                 <!--Panel 1-->
                 <div class="tab-pane fade in show active" id="panel51" role="tabpanel ">
                     <div class="md-form col-md-8 offset-md-2 ">
-                        <input type="search" id="form-autocomplete-f" class="form-control" placeholder="Search Fellow Makers of TT17 ">
+                        <input type="search" id="form-autocomplete-f" class="form-control" placeholder="Search Fellow Makers of TT17 " v-model="text" v-on:keyup="typed">
                     </div>
 
                     <div class="row pad-lr-20">
@@ -83,7 +83,7 @@
                     </div>
                    <div class="row pad-lr-20">
                      
-                        <div class="col-md-12 pad-lr-10 pad-tb-10">
+<!--                         <div class="col-md-12 pad-lr-10 pad-tb-10">
                             <div class="media mb-1">
                                 <a class="media-left waves-light">
                                     <img class="rounded-circle-imp" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-13.jpg" alt="imag of p.name" width="80">
@@ -98,7 +98,7 @@
                                         <p>@{{ p.short_desc }}</p>
                                     </div>
                             </div>
-                        </div>
+                        </div> -->
                         <hr />
                         <div class="col-md-12 pad-lr-10 pad-tb-10">
                             <div class="media mb-1">
@@ -140,7 +140,33 @@
         </a>
     </div>  
     @include('includes.footerscripts')
-  
+    <script type="text/javascript">
+    var timeout=null;
+        new Vue({
+            el : "#panel51",
+            data:{
+                text: "",
+            },
+            methods:{
+                typed: function (e) {
+                    clearTimeout(timeout);
+                    self=this;
+                    timeout = setTimeout(function () {
+                    var self = this
+                    axios.post('/api/search',{'text':self.text, 'type':'user','offset':0 ,'limit':12})
+                      .then(function (response) {
+                        console.log(response.data);
+                      })
+                  }, 100);
+                }
+            }
+        });
+
+        new Vue({
+            el : "#panel52"
+        })
+
+    </script>
     </script>
 </body>
 
