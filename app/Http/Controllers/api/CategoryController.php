@@ -10,7 +10,12 @@ class CategoryController extends Controller
 {
     public function index()
     {
-    	
+    	try {
+           $cat=Category::all()->toArray();
+           return json(['status'=>'1' ,'data'=>$cat]);
+        } catch (Exception $e) {
+            return json(['status'=>'0','error'=>$e]);
+        }
     }
     public function create(Request $r)
     {
