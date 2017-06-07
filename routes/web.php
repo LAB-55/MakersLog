@@ -19,4 +19,7 @@ Route::get('/log/new', 'PostController@index');
 //-------------Api----------------------
 Route::group(['prefix' => 'api','namespace'=>'api'], function () {
     Route::post('search','SearchController@index');
+    Route::post('log/publish','PostController@create');
+    Route::post('category/add','CategoryController@create');
+
 });

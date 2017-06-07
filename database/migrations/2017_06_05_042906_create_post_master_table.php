@@ -17,12 +17,12 @@ class CreatePostMasterTable extends Migration
         Schema::create('post_master', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('p_id');
-            $table->string('rand_id')->nullable();
             $table->string('u_id');
             $table->text('p_content');
             $table->text('p_short_dec');
             $table->text('p_title');
-            $table->string('is_latest');
+            $table->string('is_latest')->default('1');
+            $table->string('delete')->default('0');
             $table->text('uri')->nullable();
             $table->timestamps();
         });

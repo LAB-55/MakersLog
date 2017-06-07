@@ -14,7 +14,7 @@ class SearchController extends Controller
       	$type=$r->type;
       	$categories=$r->categories;
       } catch (Exception $e) {
-      	
+      	return json(['status'=>'0','error'=>$e]);
       }
     }
 }
