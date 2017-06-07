@@ -76,7 +76,8 @@
                                                     v-on:keyup.enter="addCategory" 
                                                     class="form-control"
                                                     name="newcategory"
-                                                    placeholder="Make new category" required="" />       
+                                                    placeholder="Make new category" required=""
+                                                    :disabled='catAddInProcess' />       
                                         
                                     </div>
                                     <button class="btn green col-md-10 offset-md-1">Publish</button>
@@ -104,14 +105,24 @@
         new Vue({
             el: "#category-scope",
             data : {
-                categories : [ {name : "3d printing", checked:false},{name : "j", checked:false}, {name : "Electronics",checked:true} ],
+                categories : [],
                 newCategoryName : "",
+                catAddInProcess : false,
             },
+            mounted:function () {
+                var self = this;
+                  axios.post('/api/category', {}).then(function (response) {
+                        self.categories = response.data.collection.map(function (e) {
+                            e.name = e.c_name;
+                            return e;
+                        });
+                  })
+            },//ready
             methods:{
                 addCategory : function ( e ) {
-
                     var notFound = true, self = this, scrollid="#chk";
-                    this.newCategoryName = this.newCategoryName.trim();
+                    self.catAddInProcess = true;
+                    this.newCategoryName = this.newCategoryName.trim().toLowerCase();
                     if( this.newCategoryName != ""  )
                     {
                         this.categories.forEach(function(e, i){
@@ -119,27 +130,28 @@
                             if ( e.name == self.newCategoryName ) {
                                 e.checked = true; 
                                 notFound = false; 
+                                self.catAddInProcess = false;
+                                self.newCategoryName = "";
+                                
                             }
                         });
                         if( notFound ){
-        
-                        axios.post('/api/category', {})
-                          .then(function (response) {
-                            console.log(response);
-                          })
-                          .catch(function (error) {
-                            console.log(error);
-                          });
-
-                        this.categories.push({ name: this.newCategoryName, checked:true });
+                            var self = this;
+                            axios.post('/api/category/add', {
+                                    c_name: self.newCategoryName,
+                            }).then(function (response) {
+                               self.categories.push({ name: self.newCategoryName, checked:true });
+                                self.catAddInProcess = false;
+                                self.newCategoryName = "";
+                            });
 
                         }
 
-                        this.newCategoryName = "";
                     }
                     return;
                 },
-            },
+
+            },//methods
         })
 
     </script>

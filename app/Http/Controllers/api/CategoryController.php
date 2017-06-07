@@ -11,8 +11,14 @@ class CategoryController extends Controller
     public function index()
     {
     	try {
-           $cat=Category::all()->toArray();
-           return(['status'=>'1' ,'data'=>$cat]);
+           $cat = Category::all()->toArray();
+           $ar = array();
+           $i = 0;
+           foreach ($cat as $value) {
+            $ar[$i] = $value; 
+            $i++;
+           }
+           return(['status'=>'1' , "collection" =>$ar ]);
         } catch (Exception $e) {
             return(['status'=>'0','error'=>$e]);
         }
