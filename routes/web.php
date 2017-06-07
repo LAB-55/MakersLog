@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::group(['prefix' => 'api','namespace'=>'api'], function () {
+    Route::post('search','SearchController@index');
+});
