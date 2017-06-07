@@ -12,9 +12,15 @@
 */
 
 
+
+Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
+
 Route::get('/', 'RootController@index');
+Route::get('/logout', 'Auth\LoginController@logout');
+Auth::routes();
 Route::get('/{gusermail}', 'RootController@userpage');
-Route::get('/log/new', 'PostController@index');
+Route::get('/log/new', 'PostController@index')->middleware('auth');
 
 //-------------Api----------------------
 Route::group(['prefix' => 'api','namespace'=>'api'], function () {
