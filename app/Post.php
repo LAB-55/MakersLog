@@ -10,7 +10,7 @@ class Post extends Model
     protected $fillable = [
        'p_id',
        'rand_id',
-       'u_id',
+       'provider_id',
        'p_content',
        'p_short_desc',
        'p_title',

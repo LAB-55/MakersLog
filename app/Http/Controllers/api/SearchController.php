@@ -13,6 +13,7 @@ class SearchController extends Controller
       	$txt=$r->text;
       	$type=$r->type;
       	$categories=$r->categories;
+      	
       } catch (Exception $e) {
       	return json(['status'=>'0','error'=>$e]);
       }

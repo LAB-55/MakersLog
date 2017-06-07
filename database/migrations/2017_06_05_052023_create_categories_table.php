@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('c_id');
             $table->uuid('p_id');
-            $table->uuid('u_id');
+            $table->string('provider_id');
             $table->string('c_name');
         });
     }

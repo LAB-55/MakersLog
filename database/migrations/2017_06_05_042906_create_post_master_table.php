@@ -17,7 +17,7 @@ class CreatePostMasterTable extends Migration
         Schema::create('post_master', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('p_id');
-            $table->string('u_id');
+            $table->string('provider_id');
             $table->text('p_content');
             $table->text('p_short_dec');
             $table->text('p_title');
