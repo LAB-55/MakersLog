@@ -45,7 +45,7 @@
                     </div>
                     <!-- /.First col -->
                     <!-- Second col -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" id="category-scope">
 
                         <!-- Second card -->
                         <div class="card card-cascade narrower mb-r">
@@ -59,48 +59,28 @@
                                 <div class="card-block ">
                                     <div class="check-list grey lighten-5 pad-lr-10 pad-tb-10">
                                         
-                                        <fieldset class="form-group">
-                                            <input type="checkbox" id="color-1">
-                                            <label for="color-1">Material Design</label>
-                                        </fieldset>
-                                        <fieldset class="form-group">
-                                            <input type="checkbox" id="color-2">
-                                            <label for="color-2">Tutorials</label>
-                                        </fieldset>
-                                        <fieldset class="form-group">
-                                            <input type="checkbox" id="color-3">
-                                            <label for="color-3">Marketing Automation</label>
-                                        </fieldset>
-                                        <fieldset class="form-group">
-                                            <input type="checkbox" id="color-4">
-                                            <label for="color-4">Design Resources</label>
-                                        </fieldset>
-                                        <fieldset class="form-group">
-                                            <input type="checkbox" id="color-5">
-                                            <label for="color-5">Random Stories</label>
-                                        </fieldset>
-
-                                        <fieldset class="form-group">
-                                            <input type="checkbox" id="color-5">
-                                            <label for="color-5">Random Stories</label>
-                                        </fieldset>
-                                        <fieldset class="form-group">
-                                            <input type="checkbox" id="color-5">
-                                            <label for="color-5">Random Stories</label>
-                                        </fieldset>
-                                        <fieldset class="form-group">
-                                            <input type="checkbox" id="color-5">
-                                            <label for="color-5">Random Stories</label>
-                                        </fieldset>
-                                        <fieldset class="form-group">
-                                            <input type="checkbox" id="color-5">
-                                            <label for="color-5">Random Stories</label>
-                                        </fieldset>
+                                        <fieldset v-for="(c, index) in categories" class="form-group">
+                                            
+                                            <input  type="checkbox" 
+                                                    v-model="c.checked" 
+                                                    v-el="'chk' + index.toString()"
+                                                    v-bind:id="'chk' + index.toString()
+                                                 ">
+                                            <label v-bind:for="'chk' + index.toString()">@{{ c.name }}</label>
+                                        </fieldset>                               
 
                                     </div>
-                                    <br>
-                                        <button class="btn green col-md-10 offset-md-1">Publish</button>
-                                        <button class="btn red btn-danger waves-effect col-md-10 offset-md-2"> Discard</button>
+                                    <div class="form-group">
+                                            <input  type="text" 
+                                                    v-model="newCategoryName"
+                                                    v-on:keyup.enter="addCategory" 
+                                                    class="form-control"
+                                                    name="newcategory"
+                                                    placeholder="Make new category" required="" />       
+                                        
+                                    </div>
+                                    <button class="btn green col-md-10 offset-md-1">Publish</button>
+                                    <button class="btn red btn-danger waves-effect col-md-10 offset-md-2"> Discard</button>
 
                                 </div>
                                 <!--/.Card content-->
@@ -116,10 +96,48 @@
         </div>
     </main>
     <!--/Main layout-->
+    @include('includes.footerscripts')
+    <script type="text/javascript">
+
+        new Vue({
+            el: "#category-scope",
+            data : {
+                categories : [ {name : "3d printing", checked:false},{name : "j", checked:false}, {name : "Electronics",checked:true} ],
+                newCategoryName : "",
+            },
+            methods:{
+                addCategory : function ( e ) {
+
+                    var notFound = true, self = this, scrollid="#chk";
+                    this.newCategoryName = this.newCategoryName.trim();
+                    if( this.newCategoryName != ""  )
+                    {
+                        this.categories.forEach(function(e, i){
+
+                            if ( e.name == self.newCategoryName ) {
+                                e.checked = true; 
+                                notFound = false; 
+                            }
+                        });
+                        if( notFound ){
+                            //make xhr 
+                            
+
+                            this.categories.push({ name: this.newCategoryName, checked:true });
+
+                        }
+
+                        this.newCategoryName = "";
+                    }
+                    return;
+                },
+            },
+        })
+
+    </script>
     <script type="text/javascript" >
           tinymce.init({ selector:'#post_content', menubar: false, height : "270" });
     </script>
-    @include('includes.footerscripts')
 </body>
 
 </html>

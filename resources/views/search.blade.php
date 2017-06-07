@@ -88,14 +88,15 @@
                                 <a class="media-left waves-light">
                                     <img class="rounded-circle-imp" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-13.jpg" alt="imag of p.name" width="80">
                                 </a>
-                                <div class="media-body pad-lr-20">
-                                    <h4 class="media-heading">Log Title</h4>
-                                    <ul class="rating inline-ul">
-                                        by him or her
-                                    </ul>
-                                    <p>Log description like, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate temporibus iure soluta. Quasi mollitia maxime nemo quam accusamus possimus, voluptatum expedita assumenda. Earum sit id ullam eum vel delectus!</p>
-                                    <a class="btn btn-outline-secondary btn-rounded waves-effect">Read More</a>
-                                </div>
+                                    <div class="media-body pad-lr-20">
+                                    <a href="#">
+                                        <h5 class="media-heading">Log nu bau lambu Title</h5>
+                                    </a>
+                                        <ul class="rating inline-ul">
+                                            by <a href="@{{ p.gusermail}}">@{{ p.name }}</a>
+                                        </ul>
+                                        <p>@{{ p.short_desc }}</p>
+                                    </div>
                             </div>
                         </div>
                         <hr />
@@ -105,12 +106,12 @@
                                     <img class="rounded-circle-imp" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-13.jpg" alt="imag of p.name" width="80">
                                 </a>
                                 <div class="media-body pad-lr-20">
-                                    <h4 class="media-heading">Log Title</h4>
+                                    <h5 class="media-heading">Log Title</h5>
                                     <ul class="rating inline-ul">
                                         by him or her
                                     </ul>
                                     <p>Log description like, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate temporibus iure soluta. Quasi mollitia maxime nemo quam accusamus possimus, voluptatum expedita assumenda. Earum sit id ullam eum vel delectus!</p>
-                                    <a class="btn btn-outline-secondary btn-rounded waves-effect">Read More</a>
+                                   
                                 </div>
                             </div>
                         </div>
