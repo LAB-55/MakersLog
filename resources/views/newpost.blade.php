@@ -98,6 +98,8 @@
     <!--/Main layout-->
     @include('includes.footerscripts')
     <script type="text/javascript">
+    
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         new Vue({
             el: "#category-scope",
@@ -120,10 +122,16 @@
                             }
                         });
                         if( notFound ){
-                            //make xhr 
-                            
+        
+                        axios.post('/api/category', {})
+                          .then(function (response) {
+                            console.log(response);
+                          })
+                          .catch(function (error) {
+                            console.log(error);
+                          });
 
-                            this.categories.push({ name: this.newCategoryName, checked:true });
+                        this.categories.push({ name: this.newCategoryName, checked:true });
 
                         }
 

@@ -1,3 +1,5 @@
+    @if( Auth::check() )
+
         <!--/. Sidebar navigation -->
 
         <ul id="slide-out" class="side-nav fixed sn-bg-1 custom-scrollbar">
@@ -65,4 +67,4 @@
         </ul>
         
         <!--/. Sidebar navigation -->
-        
+    @endif

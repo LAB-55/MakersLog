@@ -3,8 +3,10 @@
            
             <!-- SideNav slide-out button -->
             <div class="float-left">
-                <a href="home.html#" data-activates="slide-out" class="button-collapse"><i class="fa fa-bars"></i></a>
+                @if( Auth::check() )
                 
+                <a href="/" data-activates="slide-out" class="button-collapse"><i class="fa fa-bars"></i></a>
+                @endif
             </div>
             
             <!-- Breadcrumb-->
@@ -16,16 +18,25 @@
             <!--Navbar links-->
             <ul class="nav navbar-nav nav-flex-icons ml-auto">
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="home.html#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="hidden-sm-down">Ouick Access</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-ins dropdown-menu-right" aria-labelledby="userDropdown"> 
-                        <a class="dropdown-item" href="/{{ $meta['gusermail']}}">My Logs</a>
-                        <a class="dropdown-item" href="/report">Report Bug</a>
-                        <a class="dropdown-item" href="{{ route('logout') }}">Log Out</a>
-                    </div>
-                </li>
+                @if( Auth::check() )
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="hidden-sm-down">Ouick Access</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-ins dropdown-menu-right" aria-labelledby="userDropdown"> 
+                            <a class="dropdown-item" href="/{{ $meta['gusermail']}}">My Logs</a>
+                            <a class="dropdown-item" href="/report">Report Bug</a>
+                            <a class="dropdown-item" href="{{ route('logout') }}">Log Out</a>
+                        </div>
+                    </li>
+                    
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login / Sign up</a>
+                    </li>
+                @endif
+
+
             </ul>
             <!--/Navbar links-->
             
