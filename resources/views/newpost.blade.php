@@ -6,7 +6,7 @@
     <script type="text/javascript" src="/js/vendor/tinymce/tinymce.min.js"></script>
 </head>
 
-    <body class="fixed-sn white-skin">
+    <body class="fixed-sn white-skin" style="display: none">
         
      <header>
         @include('includes.sidebar')
@@ -108,10 +108,16 @@
                 categories : [],
                 newCategoryName : "",
                 catAddInProcess : false,
+                page : true,
             },
             mounted:function () {
                 var self = this;
-                  axios.post('/api/category', {}).then(function (response) {
+                    axios.get('/root/initial?'+Date.now().toString()+Math.floor(Math.random()*9999)+Date.now().toString()+Math.floor(Math.random()*9999) )
+                    .then(function (r) {
+                            r.data.say != "YmFyb2JhciBjaGUuIGFnYWwgamF2YSBkZQ==" ? (function () { window.location = "/?auth=0&failed=true"; self.page = false })() : $('body').show();
+                    });   
+                  
+                    axios.post('/api/category', {}).then(function (response) {
                         self.categories = response.data.collection.map(function (e) {
                             e.name = e.c_name;
                             return e;
@@ -143,7 +149,7 @@
                                self.categories.push({ name: self.newCategoryName, checked:true });
                                 self.catAddInProcess = false;
                                 self.newCategoryName = "";
-                            });
+                            })
 
                         }
 
@@ -152,10 +158,17 @@
                 },
 
             },//methods
+            watch: {
+                page :function( val ){
+                    if( !this.page ){
+                        window.location = "/?auth=0&failed=true";
+                    }
+                }
+            },
         })
 
     </script>
-    <script type="text/javascript" >
+    <script type="text/javascript">
           tinymce.init({ selector:'#post_content', menubar: false, height : "270" });
     </script>
 </body>

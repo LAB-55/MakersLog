@@ -11,16 +11,14 @@
 |
 */
 
-
-
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
+Route::get('root/initial', 'PostController@validateInitial');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::get('/', 'RootController@index');
-Route::get('/logout', 'Auth\LoginController@logout');
 Auth::routes();
 Route::get('/{gusermail}', 'RootController@userpage');
-Route::get('/log/new', 'PostController@index')->middleware('auth');
+Route::get('/log/new', 'PostController@index')->middleware(['nocache','auth']);
 
 //-------------Api----------------------
 Route::group(['prefix' => 'api','namespace'=>'api'], function () {

@@ -9,8 +9,12 @@ class RootController extends Controller
 {
 	
 
-	public function index()
+	public function index( Request $r )
 	{
+		if(isset($_GET['auth']) && isset($_GET['failed']) )
+		{
+			return redirect("/");
+		}
 		return view('search')
 	    		->with('meta',Meta::get('Search') );
 	}

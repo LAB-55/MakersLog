@@ -46,11 +46,11 @@
                     </div>
 
                     <div class="row pad-lr-20">
-                            <div class="col-md-12 pad-lr-30" v-if="users.length <= 0">
+                            <div class="col-md-12 pad-lr-30" v-if="users.length <= 0 && !userloading" v-cloak>
                                 <div class="alert blue-text text-center" >Result Not Found</div>
                             </div>
                             <div class="col-md-4 pad-lr-10 pad-tb-10" v-for="user in users">
-                                <div class="card testimonial-card view overlay hm-white-slight">
+                                <div class="card testimonial-card view overlay hm-white-slight" v-cloak>
                                 
                                 <div class="card-up default-color-dark"></div>
                                 <a v-bind:href="user.g_username">
@@ -59,13 +59,13 @@
                                 <div class="avatar"><img  width="100" v-bind:src="user.avatar" class="rounded-circle img-responsive">
                                 </div>
                                 <div class="card-block">
-                                    <h4 class="card-title">@{{user.first_name}} @{{user.last_name}}</h4>
+                                    <h4 class="card-title" >@{{user.first_name}} @{{user.last_name}}</h4>
                                     <hr>
-                                    <p> @{{ user.bio }}</p>
+                                    <p > @{{ user.bio }}</p>
                                 </div>
                                  <div class="card-data">
                                     <ul>
-                                        <li><i class="fa fa-bars"></i> @{{user.post_count}} Logs</li>
+                                        <li ><i class="fa fa-bars" ></i> @{{user.post_count}} Logs</li>
                                     </ul>
                                 </div>
                                 </div>
@@ -150,12 +150,15 @@
             data:{
                 text: "",
                 users: [],
+                userloading:false,
             },
             mounted:function () {
                 self=this;
+                self.userloading=true
                 axios.post('/api/search',{ 'type':'user', 'offset':0 , 'limit':12 , 'qry':"" })
                       .then(function (response) {
                         self.users=response.data.collection;
+                        self.userloading=false;
                       })
                   },
 
@@ -164,10 +167,12 @@
                     clearTimeout(timeout);
                     self=this;
                     timeout = setTimeout(function () {
+                    self.userloading=true
                         
                     axios.post('/api/search',{ 'type':'user', 'offset':0 , 'limit':12 , 'qry':self.text })
                       .then(function (response) {
                         self.users=response.data.collection;
+                        self.userloading=false;
                       })
                   }, 200);
                 }

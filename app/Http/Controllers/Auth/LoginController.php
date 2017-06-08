@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/log/new';
+    protected $redirectTo = '/log/new/';
 
     /**
      * Create a new controller instance.
@@ -39,7 +39,6 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
     public function redirectToProvider($provider)
     {
         return Socialite::driver($provider)->redirect();

@@ -26,7 +26,10 @@
                         <div class="dropdown-menu dropdown-ins dropdown-menu-right" aria-labelledby="userDropdown"> 
                             <a class="dropdown-item" href="/{{ $meta['gusermail']}}">My Logs</a>
                             <a class="dropdown-item" href="/report">Report Bug</a>
-                            <a class="dropdown-item" href="{{ route('logout') }}">Log Out</a>
+                            <form action="/logout" method="post">
+                                {{ csrf_field() }}
+                                <button type="submit" class="dropdown-item" href="{{ route('logout') }}">Log Out</button>
+                            </form>
                         </div>
                     </li>
                     
