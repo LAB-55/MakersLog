@@ -27,5 +27,4 @@ Route::group(['prefix' => 'api','namespace'=>'api'], function () {
     Route::post('log/update','PostController@update');
     Route::post('category','CategoryController@index');
     Route::post('category/add','CategoryController@create');
-
 });
