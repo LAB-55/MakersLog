@@ -9,6 +9,7 @@
                     <p class="user text-center black-text">{{ $meta['firstName'] }} {{$meta['lastName']}}</p>
                 </div>
             </li>
+            <button type="submit" class="btn btn-success"><a href="{{ route('profile', ['gusermail' => $meta['gusermail']] ) }}">Edit Profile</a></button>
 
          <!--    <li>
                 <ul class="collapsible collapsible-accordion">

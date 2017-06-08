@@ -72,8 +72,10 @@ class LoginController extends Controller
             'nickname'   => isset($user->nickname) ? $user->nickname: "Not Specified",
             'bio'   => isset($user->tagline) ? $user->tagline: "Not Specified",
             'avatar'   => isset($user->avatar) ? str_replace('sz=50', 'sz=100', $user->avatar): "Not Specified",
+            'website'   => isset($user->website) ? $user->website: "Not Specified",
             'gender'   => isset($user->gender) ? $user->gender: "Not Specified",
             'birthday'   => isset($user->birthday) ? $user->birthday: "Not Specified",
+            'mobile_number'   => isset($user->mobile_number) ? $user->mobile_number: "Not Specified",
             'provider' => $provider,
             'provider_id' => $user->id
         ]);
