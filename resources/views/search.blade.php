@@ -46,6 +46,9 @@
                     </div>
 
                     <div class="row pad-lr-20">
+                            <div class="col-md-12 pad-lr-30" v-if="users.length <= 0">
+                                <div class="alert blue-text text-center" >Result Not Found</div>
+                            </div>
                             <div class="col-md-4 pad-lr-10 pad-tb-10" v-for="user in users">
                                 <div class="card testimonial-card view overlay hm-white-slight">
                                 
@@ -165,7 +168,6 @@
                     axios.post('/api/search',{ 'type':'user', 'offset':0 , 'limit':12 , 'qry':self.text })
                       .then(function (response) {
                         self.users=response.data.collection;
-                        console.log(self.users[0]);
                       })
                   }, 200);
                 }
