@@ -57,7 +57,7 @@
                                 <!--/Card image-->
                                 <!--Card content-->
                                 <div class="card-block ">
-                                    <div class="check-list grey lighten-5 pad-lr-10 pad-tb-10">
+                                    <div class="check-list new-scroll grey lighten-5 pad-lr-10 pad-tb-10">
                                         
                                         <fieldset v-for="(c, index) in categories" class="form-group">
                                             

@@ -83,6 +83,48 @@
                     <div class="md-form col-md-8 offset-md-2 ">
                         <input type="search" id="form-autocomplete-b" class="form-control" placeholder="Search from what Makers think of">
                     </div>
+                    <form class="scrollmenu new-scroll">
+                            <fieldset class="form-group">
+                                <input type="checkbox" class="filled-in" id="checkbox22">
+                                <label>Filled-in checkbox</label>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <input type="checkbox" class="filled-in" id="checkbox22">
+                                <label>Filled-in checkbox</label>
+                            </fieldset><fieldset class="form-group">
+                                <input type="checkbox" class="filled-in" id="checkbox22">
+                                <label>Filled-in checkbox</label>
+                            </fieldset><fieldset class="form-group">
+                                <input type="checkbox" class="filled-in" id="checkbox22">
+                                <label>Filled-in checkbox</label>
+                            </fieldset><fieldset class="form-group">
+                                <input type="checkbox" class="filled-in" id="checkbox22">
+                                <label>Filled-in checkbox</label>
+                            </fieldset><fieldset class="form-group">
+                                <input type="checkbox" class="filled-in" id="checkbox22">
+                                <label>Filled-in checkbox</label>
+                            </fieldset><fieldset class="form-group">
+                                <input type="checkbox" class="filled-in" id="checkbox22">
+                                <label>Filled-in checkbox</label>
+                            </fieldset><fieldset class="form-group">
+                                <input type="checkbox" class="filled-in" id="checkbox22">
+                                <label>Filled-in checkbox</label>
+                            </fieldset><fieldset class="form-group">
+                                <input type="checkbox" class="filled-in" id="checkbox22">
+                                <label>Filled-in checkbox</label>
+                            </fieldset><fieldset class="form-group">
+                                <input type="checkbox" class="filled-in" id="checkbox22">
+                                <label>Filled-in checkbox</label>
+                            </fieldset><fieldset class="form-group">
+                                <input type="checkbox" class="filled-in" id="checkbox22">
+                                <label>Filled-in checkbox</label>
+                            </fieldset><fieldset class="form-group">
+                                <input type="checkbox" class="filled-in" id="checkbox22">
+                                <label>Filled-in checkbox</label>
+                            </fieldset>
+                        </form>
+                        <br>
+                        <br>
                    <div class="row pad-lr-20">
                      
                         <div class="col-md-12 pad-lr-10 pad-tb-10">

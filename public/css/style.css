@@ -15,6 +15,12 @@
         border-bottom: 10px;
 }
 @media (min-width: 62em){            
+    
+	.scrollmenu {
+        margin-right: 56px;
+        margin-left: 56px;
+	
+	}
     .classic-tabs li:last-child {
         margin-right: 56px;
     }
@@ -41,25 +47,27 @@
 .testimonial-card .card-block,.testimonial-carousel{
 		text-align:center
 	}
-	.check-list{
-		max-height: 280px;
-		overflow-y:scroll;
-	}
-.check-list::-webkit-scrollbar
+.check-list{
+	max-height: 280px;
+	overflow-y:scroll;
+}
+
+.new-scroll::-webkit-scrollbar
 {
 	width: 10px;
+	height: 10px;
 	background-color: #F5F5F5;
 	border: none;
 
 }
-.check-list::-webkit-scrollbar-track
+.new-scroll::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
 	border-radius: 8px;
 	border: none;
 	background-color: #F5F5F5;
 }
-.check-list::-webkit-scrollbar-thumb
+.new-scroll::-webkit-scrollbar-thumb
 {
 	border-radius: 8px;
 	-webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.3);
@@ -68,3 +76,16 @@
 [v-cloak]{
   display: none!important;
 }
+.scrollmenu {
+    overflow: auto;
+    white-space: nowrap;
+    overflow-y: hidden;
+}
+
+.scrollmenu fieldset {
+    display: inline-block;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+}
+
