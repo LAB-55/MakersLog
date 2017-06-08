@@ -20,7 +20,6 @@ class CreateUsersTable extends Migration
             $table->string('email', 191)->unique();
             $table->string('g_username');
             $table->string('password', 60)->nullable();
-            $table->string('nickname')->nullable();
             $table->text('bio')->nullable();
             $table->string('avatar')->nullable();
             $table->string('website')->nullable();

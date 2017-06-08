@@ -23,6 +23,7 @@ Route::get('/{gusermail}', 'RootController@userpage');
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/log/new', 'PostController@index');
     Route::get('/profile/{gusermail}', 'ProfileController@index')->name('profile');
+    Route::post('/profile/{gusermail}', 'ProfileController@store')->name('profile');
 });
 
 //-------------Api----------------------

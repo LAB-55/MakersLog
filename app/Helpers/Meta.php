@@ -21,7 +21,7 @@ class Meta
                 'bio' => Auth::user()->bio,
                 'gender' => Auth::user()->gender,
                 'birthday' => Auth::user()->birthday,
-                'mobileNumber' => Auth::user()->mobileNumber,
+                'mobileNumber' => Auth::user()->mobile_number,
             ];
         }
         return [
