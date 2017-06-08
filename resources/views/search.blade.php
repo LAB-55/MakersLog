@@ -46,24 +46,23 @@
                     </div>
 
                     <div class="row pad-lr-20">
-                            <div class="col-md-4 pad-lr-10 pad-tb-10">
+                            <div class="col-md-4 pad-lr-10 pad-tb-10" v-for="user in users">
                                 <div class="card testimonial-card view overlay hm-white-slight">
                                 
-                                <div class="card-up default-color-dark">
-                                </div>
-                                <a href">
+                                <div class="card-up default-color-dark"></div>
+                                <a v-bind:href="user.g_username">
                                         <div class="mask waves-effect waves-light"></div>
                                 </a>
-                                <div class="avatar"><img  width="100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20%288%29.jpg" class="rounded-circle img-responsive">
+                                <div class="avatar"><img  width="100" v-bind:src="user.avatar" class="rounded-circle img-responsive">
                                 </div>
                                 <div class="card-block">
-                                    <h4 class="card-title">Anna Doe</h4>
+                                    <h4 class="card-title">@{{user.first_name}} @{{user.last_name}}</h4>
                                     <hr>
-                                    <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci</p>
+                                    <p> @{{ user.bio }}</p>
                                 </div>
                                  <div class="card-data">
                                     <ul>
-                                        <li><i class="fa fa-bars"></i> 25 Logs</li>
+                                        <li><i class="fa fa-bars"></i> @{{user.post_count}} Logs</li>
                                     </ul>
                                 </div>
                                 </div>
@@ -83,7 +82,7 @@
                     </div>
                    <div class="row pad-lr-20">
                      
-<!--                         <div class="col-md-12 pad-lr-10 pad-tb-10">
+                        <div class="col-md-12 pad-lr-10 pad-tb-10">
                             <div class="media mb-1">
                                 <a class="media-left waves-light">
                                     <img class="rounded-circle-imp" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-13.jpg" alt="imag of p.name" width="80">
@@ -93,12 +92,13 @@
                                         <h5 class="media-heading">Log nu bau lambu Title</h5>
                                     </a>
                                         <ul class="rating inline-ul">
-                                            by <a href="@{{ p.gusermail}}">@{{ p.name }}</a>
-                                        </ul>
-                                        <p>@{{ p.short_desc }}</p>
+                                        by him or her
+                                    </ul>
+                                    <p>Log description like, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate temporibus iure soluta. Quasi mollitia maxime nemo quam accusamus possimus, voluptatum expedita assumenda. Earum sit id ullam eum vel delectus!</p>
+                                   
                                     </div>
                             </div>
-                        </div> -->
+                        </div>
                         <hr />
                         <div class="col-md-12 pad-lr-10 pad-tb-10">
                             <div class="media mb-1">
@@ -146,18 +146,28 @@
             el : "#panel51",
             data:{
                 text: "",
+                users: [],
             },
+            mounted:function () {
+                self=this;
+                axios.post('/api/search',{ 'type':'user', 'offset':0 , 'limit':12 , 'qry':"" })
+                      .then(function (response) {
+                        self.users=response.data.collection;
+                      })
+                  },
+
             methods:{
                 typed: function (e) {
                     clearTimeout(timeout);
                     self=this;
                     timeout = setTimeout(function () {
-                    var self = this
-                    axios.post('/api/search',{'text':self.text, 'type':'user','offset':0 ,'limit':12})
+                        
+                    axios.post('/api/search',{ 'type':'user', 'offset':0 , 'limit':12 , 'qry':self.text })
                       .then(function (response) {
-                        console.log(response.data);
+                        self.users=response.data.collection;
+                        console.log(self.users[0]);
                       })
-                  }, 100);
+                  }, 200);
                 }
             }
         });

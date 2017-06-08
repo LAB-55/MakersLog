@@ -24,10 +24,13 @@ class SearchController extends Controller
     }
     public function byUser($r)
     {
-      $txt=$r->text;
+      $txt=$r->qry;
       $offset=$r->offset;
       $limit=$r->limit;
       $result=User::where('first_name','like','%'.$txt.'%')->orWhere('last_name','like','%'.$txt.'%')->orWhere('g_username','like','%'.$txt.'%')->offset($offset)->limit($limit)->get();
+      foreach ($result as $key => $r) {
+          $r->post_count=Post::where('provider_id',$r->provider_id)->count();
+      }
       return $result;
     }
 }
