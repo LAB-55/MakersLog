@@ -14,7 +14,7 @@ class Meta
             'firstName' => Auth::user()->first_name,
             'lastName' => Auth::user()->last_name,
             'gusermail' => Auth::user()->g_username,
-            'avatar'    => Auth::user()->avatar
+            'avatar'    => str_replace("sz=100", "" , Auth::user()->avatar) 
         ];
     }
 }
