@@ -86,7 +86,7 @@
                     <form class="scrollmenu new-scroll">
                             <fieldset class="form-group" v-for="(c, index) in categories">
                                 <input type="checkbox" class="filled-in" v-on:click="search" v-model="c.checked" v-bind:id="'chk' + index.toString()">
-                                <label v-bind:for="'chk' + index.toString()">@{{ c.c_name }}</label>
+                                <label v-bind:for="'chk' + index.toString()" >@{{ c.c_name }}</label>
                             </fieldset>
                         </form>
                         <br>
@@ -140,7 +140,7 @@
 
     @if( Auth::check() )
     <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-        <a data-toggle="tooltip" data-placement="left" title="Add new log" class="btn-floating btn-large red">
+        <a title="Add new log" class="btn-floating btn-large red" href="/log/new">
             <i class="fa fa-pencil"></i>
         </a>
     </div>  
@@ -211,7 +211,7 @@
                             return element.checked
                         });
                     console.log(chkCat);
-                    axios.post('/api/search',{ 'type':'post', 'offset':0 , 'limit':12 , 'qry':self.text , 'categories':self.categories})
+                    axios.post('/api/search',{ 'type':'post', 'offset':0 , 'limit':12 , 'qry':self.text , 'categories':chkCat})
                       .then(function (response) {
                         self.collection=response.data;
                         console.log(response.data);

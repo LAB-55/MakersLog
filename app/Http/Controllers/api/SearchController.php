@@ -14,7 +14,7 @@ class SearchController extends Controller
         if($r->type=="user"){
           return(['status'=>'1' , "collection" =>$this->byUser($r) ]);
         } elseif ($r->type=="post") {
-          return($r);
+          byPost($r);
         }else{
           return json(['status'=>'0','error'=>"Undefined Search Category"]);
         }     	
@@ -32,5 +32,19 @@ class SearchController extends Controller
           $r->post_count=Post::where('provider_id',$r->provider_id)->count();
       }
       return $result;
+    }
+    public function byPost($r)
+    {
+      $txt=$r->qry;
+      $offset=$r->offset;
+      $limit=$r->limit;
+      $cat=$r->categories;
+      $result=DB::table('user')
+              ->join('post_master',function ($query)
+              {
+                $query->on('user.provider_id','=','post_master.provider_id')
+                      ->where('post_master.p_title','like','%'.$txt.'%')
+              })->get();
+
     }
 }
