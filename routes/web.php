@@ -23,6 +23,9 @@ Route::get('/{gusermail}', 'RootController@userpage')->name('gusermail');
 Route::get('/{gusermail}/profile', 'ProfileController@index')->name('getProfile');
 Route::post('/{gusermail}/profile', 'ProfileController@store')->name('postProfile');
 
+Route::get('/{gusermail}/presentations', 'ProfileController@presentations')->name('presentations');
+Route::post('/{gusermail}/presentations', 'ProfileController@uploadPresentation')->name('uploadPresentation');
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/log/new', 'PostController@index');
 });
