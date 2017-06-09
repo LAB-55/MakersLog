@@ -10,8 +10,3 @@
 <script type="text/javascript" src="/js/mdb.min.js"></script>
 <script type="text/javascript" src="/js/customizer.min.js"></script>
 <script type="text/javascript" src="/js/ui-support.js"></script>
-<script type="text/javascript">
-	$(".fixed-action-btn").on('click',function () {
-		window.location.href = $(this).find('a')[0].href;
-	})
-</script>

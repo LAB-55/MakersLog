@@ -139,13 +139,13 @@
     <!--/Main layout-->
 
     @if( Auth::check() )
-    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <div class="fx-action-btn" style="bottom: 45px; right: 24px;">
         <a title="Add new log" class="btn-floating btn-large red" href="/log/new">
             <i class="fa fa-pencil"></i>
         </a>
     </div>  
     @endif
-     <div class="fixed-action-btn" style="bottom: 55px; right: 95px;">
+     <div class="fx-action-btn" style="bottom: 55px; right: 95px;">
         <a data-toggle="tooltip" data-placement="left" title="Goto top" class="btn-floating btn-med green">
             <i class="fa fa-chevron-up fa-1 med-btn-fonts" ></i>
         </a>
