@@ -48,6 +48,11 @@
                     <!-- Second col -->
                     <div class="col-lg-4" id="category-scope">
 
+                        <div>
+                               <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">Publish</button>
+                                <button class="btn red btn-danger waves-effect offset-md-2"> Discard</button> 
+                        </div>
+                        <br>
                         <!-- Second card -->
                         <div class="card card-cascade narrower mb-r">
                             <div class="admin-panel info-admin-panel">
@@ -147,10 +152,10 @@
                         this.categories.forEach(function(e, i){
 
                             if ( e.name == self.newCategoryName ) {
+                                toastr.info(self.newCategoryName + " checked");
                                 e.checked = true; 
                                 notFound = false; 
                                 self.catAddInProcess = false;
-                                toastr.info(self.newCategoryName +' checked');  
                                 self.newCategoryName = "";
                                 
                             }
@@ -160,10 +165,10 @@
                             axios.post('/api/category/add', {
                                     c_name: self.newCategoryName,
                             }).then(function (response) {
-                                self.categories.push({ name: self.newCategoryName, checked:true });
                                 
+                                toastr.success(self.newCategoryName + " added");
+                                self.categories.push({ name: self.newCategoryName, checked:true });
                                 self.catAddInProcess = false;
-                                toastr.info(self.newCategoryName +' Added');  
                                 self.newCategoryName = "";
                             });
 
