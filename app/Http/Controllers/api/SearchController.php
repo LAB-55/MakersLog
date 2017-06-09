@@ -40,14 +40,10 @@ class SearchController extends Controller
       $limit=$r->limit;
       $cat=$r->categories;
       $result=DB::table('user')
-              ->join('post_master',function ($query){
-                      $query->on('user.provider_id','=','post_master.provider_id')
+              ->join('post_master','user.provider_id','=','post_master.provider_id')
                             ->where('post_master.p_title','like','%'.$txt.'%')
                             ->orWhere('post_master.p_short_dec','like','%'.$txt.'%')
-                            ->orWhere('post_master.p_contect','like','%'.$txt.'%')
-
-
-              })->get();
+                            ->orWhere('post_master.p_contect','like','%'.$txt.'%')->get();
 
     }
 }
