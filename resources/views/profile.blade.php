@@ -15,7 +15,7 @@
 
     <!--Main layout-->
     <main class="">
-        <form action="{{ route('profile', ['gusermail' => $meta['gusermail']] ) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('postProfile', ['gusermail' => $meta['gusermail']] ) }}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
             <div class="container-fluid">
                 <!-- Section: Edit Account -->

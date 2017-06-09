@@ -18,12 +18,13 @@ Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallb
 Route::get('/', 'RootController@index')->name('indexroot');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Auth::routes();
-Route::get('/{gusermail}', 'RootController@userpage');
+Route::get('/{gusermail}', 'RootController@userpage')->name('gusermail');
+
+Route::get('/{gusermail}/profile', 'ProfileController@index')->name('getProfile');
+Route::post('/{gusermail}/profile', 'ProfileController@store')->name('postProfile');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/log/new', 'PostController@index');
-    Route::get('/{gusermail}/profile', 'ProfileController@index')->name('profile');
-    Route::post('/{gusermail}/profile', 'ProfileController@store')->name('profile');
 });
 
 //-------------Api----------------------
