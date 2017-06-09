@@ -20,7 +20,7 @@ class PostController extends Controller
 	    	$input['p_short_dec']=$r->p_short_desc;
 	    	$input['p_content']=$r->p_content;
 	    	$input['uri']= str_slug($r->p_title, "-");
-	    	$input['categories']=implode(',', $cats)
+	    	$input['categories']=implode(',', $cats);
 	    	$id=Post::insertGetId($input);
 	    	$cats=$r->categories;
 	    	foreach ($cats as $key => $cname) {
@@ -48,6 +48,7 @@ class PostController extends Controller
 	    	$input['p_content']=$r->p_content;
 	    	$input['uri']= str_slug($r->p_title, "-");
 	    	Post::where('p_id',$input['p_id'])->update(['is_latest' => '0']);
+	    	$input['categories']=implode(',', $cats);
 	    	$id=Post::insertGetId($input);
 	    	$cats=$r->categories;
 	    	CategoryMap::where('p_id',$input['p_id'])->delete();
