@@ -81,46 +81,12 @@
                 <!--Panel 2-->
                 <div class="tab-pane fade " id="panel52" role="tabpanel">
                     <div class="md-form col-md-8 offset-md-2 ">
-                        <input type="search" id="form-autocomplete-b" class="form-control" placeholder="Search from what Makers think of">
+                        <input type="search" id="form-autocomplete-b" class="form-control" placeholder="Search from what Makers think of"  v-model="text" v-on:keyup="typed">
                     </div>
                     <form class="scrollmenu new-scroll">
-                            <fieldset class="form-group">
-                                <input type="checkbox" class="filled-in" id="checkbox22">
-                                <label>Filled-in checkbox</label>
-                            </fieldset>
-                            <fieldset class="form-group">
-                                <input type="checkbox" class="filled-in" id="checkbox22">
-                                <label>Filled-in checkbox</label>
-                            </fieldset><fieldset class="form-group">
-                                <input type="checkbox" class="filled-in" id="checkbox22">
-                                <label>Filled-in checkbox</label>
-                            </fieldset><fieldset class="form-group">
-                                <input type="checkbox" class="filled-in" id="checkbox22">
-                                <label>Filled-in checkbox</label>
-                            </fieldset><fieldset class="form-group">
-                                <input type="checkbox" class="filled-in" id="checkbox22">
-                                <label>Filled-in checkbox</label>
-                            </fieldset><fieldset class="form-group">
-                                <input type="checkbox" class="filled-in" id="checkbox22">
-                                <label>Filled-in checkbox</label>
-                            </fieldset><fieldset class="form-group">
-                                <input type="checkbox" class="filled-in" id="checkbox22">
-                                <label>Filled-in checkbox</label>
-                            </fieldset><fieldset class="form-group">
-                                <input type="checkbox" class="filled-in" id="checkbox22">
-                                <label>Filled-in checkbox</label>
-                            </fieldset><fieldset class="form-group">
-                                <input type="checkbox" class="filled-in" id="checkbox22">
-                                <label>Filled-in checkbox</label>
-                            </fieldset><fieldset class="form-group">
-                                <input type="checkbox" class="filled-in" id="checkbox22">
-                                <label>Filled-in checkbox</label>
-                            </fieldset><fieldset class="form-group">
-                                <input type="checkbox" class="filled-in" id="checkbox22">
-                                <label>Filled-in checkbox</label>
-                            </fieldset><fieldset class="form-group">
-                                <input type="checkbox" class="filled-in" id="checkbox22">
-                                <label>Filled-in checkbox</label>
+                            <fieldset class="form-group" v-for="(c, index) in categories">
+                                <input type="checkbox" class="filled-in" v-on:click="search" v-model="c.checked" v-bind:id="'chk' + index.toString()">
+                                <label v-bind:for="'chk' + index.toString()">@{{ c.c_name }}</label>
                             </fieldset>
                         </form>
                         <br>
@@ -201,7 +167,9 @@
                       .then(function (response) {
                         self.users=response.data.collection;
                         self.userloading=false;
-                      })
+                      });
+                         
+
                   },
 
             methods:{
@@ -222,7 +190,44 @@
         });
 
         new Vue({
-            el : "#panel52"
+            el : "#panel52",
+            data:{
+                text: "",
+                categories : [],
+                collection:[],
+            },
+          
+            methods:{
+                typed: function (e) {
+                    clearTimeout(timeout);
+                    var self=this;
+                    timeout = setTimeout(function () {
+                        self.search();
+                    }, 200);
+                },
+                search:function (e) {
+                    var self=this;
+                    var chkCat=self.categories.filter(function (element) {
+                            return element.checked
+                        });
+                    console.log(chkCat);
+                    axios.post('/api/search',{ 'type':'post', 'offset':0 , 'limit':12 , 'qry':self.text , 'categories':self.categories})
+                      .then(function (response) {
+                        self.collection=response.data;
+                        console.log(response.data);
+                      })
+                }
+
+            },
+            mounted:function () {
+                var self = this;
+                axios.post('/api/category', {}).then(function (response) {
+                            self.categories = response.data.collection.map(function (e) {
+                                e.checked = false;
+                                return e;
+                            });
+                        });   
+            },
         })
 
     </script>

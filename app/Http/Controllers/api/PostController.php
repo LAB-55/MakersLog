@@ -19,6 +19,7 @@ class PostController extends Controller
 	    	$input['p_short_desc']=$r->p_short_desc;
 	    	$input['p_content']=$r->p_content;
 	    	$input['uri']= str_slug($r->p_title, "-");
+	    	$input['categories']=implode(',', $cats)
 	    	$id=Post::insertGetId($input);
 	    	$cats=$r->categories;
 	    	foreach ($cats as $key => $cname) {

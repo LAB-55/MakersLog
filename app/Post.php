@@ -14,6 +14,7 @@ class Post extends Model
        'p_content',
        'p_short_desc',
        'p_title',
+       'categories',
        'uri',
        'is_latest',
        'delete'

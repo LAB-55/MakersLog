@@ -14,7 +14,7 @@ class SearchController extends Controller
         if($r->type=="user"){
           return(['status'=>'1' , "collection" =>$this->byUser($r) ]);
         } elseif ($r->type=="post") {
-                
+          return($r);
         }else{
           return json(['status'=>'0','error'=>"Undefined Search Category"]);
         }     	
