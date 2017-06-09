@@ -16,9 +16,11 @@ Route::get('root/initial', 'PostController@validateInitial');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::get('/', 'RootController@index')->name('indexroot');
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
-Auth::routes();
+
 
 Route::group(['middleware' => 'auth'], function () {
    Route::get('/log/new', 'PostController@index');
