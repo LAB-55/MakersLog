@@ -10,8 +10,13 @@ use Auth;
 
 class ProfileController extends Controller
 {
-    public function index() {
-    	return view('profile')->with('meta',Meta::get('Kalpit Akhawat / New Log'));
+    public function index($gusermail) {
+    	if(Auth::check() &&  Auth::user()->g_username == $gusermail ) {
+    		return view('profile')->with('meta',Meta::get('Kalpit Akhawat / New Log'));
+    	}
+    	else {
+    		return redirect(route('gusermail', ['gusermail' => $gusermail]));
+    	}
     }
 
     public function store(Request $request, $gusermail) {
@@ -27,6 +32,6 @@ class ProfileController extends Controller
 	    	"birthday" => $request->birthday,
 	    	"mobile_number" => $request->mobileNumber,
         ]);
-    	return redirect( route('profile', ['gusermail' => $request->gusermail]) );
+    	return redirect( route('getProfile', ['gusermail' => $request->gusermail]) );
     }
 }
