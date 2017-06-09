@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CategoryMap extends Model
 {
-    protected $table = 'category_master';
+    protected $table = 'categories';
     protected $fillable = [
     	'p_id',
     	'provider_id',

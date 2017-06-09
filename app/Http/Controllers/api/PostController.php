@@ -20,14 +20,18 @@ class PostController extends Controller
 	    	$input['p_short_dec']=$r->p_short_desc;
 	    	$input['p_content']=$r->p_content;
 	    	$input['uri']= str_slug($r->p_title, "-");
-	    	$input['categories']=implode(',', $cats)
+	    	$i_cat = [];
+				
+				foreach ($r->categories as $key => $value)
+	    			array_push($i_cat, $value['c_name']);
+	    	
+	    	$input['categories']=implode(',',$i_cat ).",";
 	    	$id=Post::insertGetId($input);
-	    	$cats=$r->categories;
-	    	foreach ($cats as $key => $cname) {
+	    	foreach ($i_cat as $key => $cname) {
 	    		$catmap=new CategoryMap;
 	    		$catmap->p_id=$input['p_id'];
 	    		$catmap->provider_id=$input['provider_id'];
-	    		$catmap->$cname;
+	    		$catmap->c_name = $cname;
 	    		$catmap->save();
 	    	}
     		return(['status'=>'1']);
@@ -48,6 +52,7 @@ class PostController extends Controller
 	    	$input['p_content']=$r->p_content;
 	    	$input['uri']= str_slug($r->p_title, "-");
 	    	Post::where('p_id',$input['p_id'])->update(['is_latest' => '0']);
+	    	$input['categories']=implode(',', $r->categories).",";
 	    	$id=Post::insertGetId($input);
 	    	$cats=$r->categories;
 	    	CategoryMap::where('p_id',$input['p_id'])->delete();
