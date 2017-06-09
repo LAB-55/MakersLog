@@ -77,7 +77,9 @@
 
                                     </div>
                                     <div class="form-group">
-                                            <input type="text" 
+
+                                            <input  type="text"
+                                                    id="newcategory" 
                                                     v-model="newCategoryName"
                                                     v-on:keyup.enter="addCategory" 
                                                     class="form-control"
@@ -157,7 +159,6 @@
                                 notFound = false; 
                                 self.catAddInProcess = false;
                                 self.newCategoryName = "";
-                                
                             }
                         });
                         if( notFound ){
@@ -165,8 +166,7 @@
                             axios.post('/api/category/add', {
                                     c_name: self.newCategoryName,
                             }).then(function (response) {
-                                
-                                toastr.success(self.newCategoryName + " added");
+                               toastr.success(self.newCategoryName + " added");
                                 self.categories.push({ name: self.newCategoryName, checked:true });
                                 self.catAddInProcess = false;
                                 self.newCategoryName = "";
