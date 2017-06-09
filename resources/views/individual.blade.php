@@ -18,7 +18,7 @@
         <div class="container-fluid">
 
             <!--Section heading-->
-            <h4 class="text-left">Logs from Someone</h4>
+            <h4 class="text-left">----- from</h4>
             <hr>
             <br>
 
