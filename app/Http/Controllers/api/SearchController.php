@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Post;
+use DB;
 class SearchController extends Controller
 {
     public function index(Request $r)
@@ -14,7 +15,7 @@ class SearchController extends Controller
         if($r->type=="user"){
           return(['status'=>'1' , "collection" =>$this->byUser($r) ]);
         } elseif ($r->type=="post") {
-          byPost($r);
+          return(['status'=>'1' , "collection" =>$this->byPost($r) ]);
         }else{
           return json(['status'=>'0','error'=>"Undefined Search Category"]);
         }     	
@@ -39,15 +40,17 @@ class SearchController extends Controller
       $offset=$r->offset;
       $limit=$r->limit;
       $cat=$r->categories;
-      $result=DB::table('user')
-              ->join('post_master',function ($query){
-                      $query->on('user.provider_id','=','post_master.provider_id')
-                            ->where('post_master.p_title','like','%'.$txt.'%')
-                            ->orWhere('post_master.p_short_dec','like','%'.$txt.'%')
-                            ->orWhere('post_master.p_contect','like','%'.$txt.'%')
-
-
+      $result=DB::table('users')
+              ->join('post_master','users.provider_id','=','post_master.provider_id')
+              ->where('post_master.p_title','like','%'.$txt.'%')
+              ->orWhere('post_master.p_short_dec','like','%'.$txt.'%')
+              ->orWhere('post_master.p_content','like','%'.$txt.'%')
+              ->where(function ($q) use($cat)
+              {
+                  foreach ($cat as $key => $value) {
+                    $q->where('categories','like','%'.$value['c_name'].',%');
+                  }
               })->get();
-
+      return $result;
     }
 }
