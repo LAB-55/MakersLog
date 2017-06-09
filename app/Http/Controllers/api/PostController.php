@@ -20,6 +20,9 @@ class PostController extends Controller
 	    	$input['p_short_dec']=$r->p_short_desc;
 	    	$input['p_content']=$r->p_content;
 	    	$input['uri']= str_slug($r->p_title, "-");
+	    	$t=time();
+	    	$input['created_at']=$t;
+	    	$input['updated_at']=$t;
 	    	$i_cat = [];
 				
 				foreach ($r->categories as $key => $value)
@@ -51,6 +54,10 @@ class PostController extends Controller
 	    	$input['p_short_dec']=$r->p_short_desc;
 	    	$input['p_content']=$r->p_content;
 	    	$input['uri']= str_slug($r->p_title, "-");
+	    	$c_at=Post::select('created_at')->first();
+	    	$t=time();
+	    	$input['created_at']=$c_at;
+	    	$input['updated_at']=$t;
 	    	Post::where('p_id',$input['p_id'])->update(['is_latest' => '0']);
 	    	$input['categories']=implode(',', $r->categories).",";
 	    	$id=Post::insertGetId($input);
