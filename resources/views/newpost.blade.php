@@ -82,9 +82,6 @@
                                                     name="newcategory" />       
                                         
                                     </div>
-                                    <button type="submit" class="btn green col-md-10 offset-md-1" :disabled="pushing" v-on:click="publish">Publish</button>
-                                    <button class="btn red btn-danger waves-effect col-md-10 offset-md-2"> Discard</button>
-
                                 </div>
                                 <!--/.Card content-->
                             </div>
@@ -153,6 +150,7 @@
                                 e.checked = true; 
                                 notFound = false; 
                                 self.catAddInProcess = false;
+                                toastr.info(self.newCategoryName +' checked');  
                                 self.newCategoryName = "";
                                 
                             }
@@ -162,8 +160,10 @@
                             axios.post('/api/category/add', {
                                     c_name: self.newCategoryName,
                             }).then(function (response) {
-                               self.categories.push({ name: self.newCategoryName, checked:true });
+                                self.categories.push({ name: self.newCategoryName, checked:true });
+                                
                                 self.catAddInProcess = false;
+                                toastr.info(self.newCategoryName +' Added');  
                                 self.newCategoryName = "";
                             });
 

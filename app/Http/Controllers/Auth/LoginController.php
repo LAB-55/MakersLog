@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use Socialite;
 use App\User;
+use App\Helpers\Meta;
 
 class LoginController extends Controller
 {
@@ -28,7 +29,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/log/new/';
+    protected $redirectTo = '/log/new';
+    // protected $redirectTo = '';
 
     /**
      * Create a new controller instance.
@@ -51,6 +53,7 @@ class LoginController extends Controller
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
         return redirect($this->redirectTo);
+    
     }
 
     public function findOrCreateUser($user, $provider)

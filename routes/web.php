@@ -15,15 +15,15 @@ Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('root/initial', 'PostController@validateInitial');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
-Route::get('/', 'RootController@index');
+Route::get('/', 'RootController@index')->name('indexroot');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Auth::routes();
 Route::get('/{gusermail}', 'RootController@userpage');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/log/new', 'PostController@index');
-    Route::get('/profile/{gusermail}', 'ProfileController@index')->name('profile');
-    Route::post('/profile/{gusermail}', 'ProfileController@store')->name('profile');
+    Route::get('/{gusermail}/profile', 'ProfileController@index')->name('profile');
+    Route::post('/{gusermail}/profile', 'ProfileController@store')->name('profile');
 });
 
 //-------------Api----------------------
