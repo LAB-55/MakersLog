@@ -8,6 +8,7 @@ use App\Post;
 use App\CategoryMap;
 use Auth;
 use Uuid;
+
 class PostController extends Controller
 {
     public function create(Request $r)
@@ -16,7 +17,7 @@ class PostController extends Controller
 	    	$input['p_id']=Uuid::generate(5,Auth::user()->g_username . $r->p_title, Uuid::NS_DNS);
 	    	$input['provider_id']=Auth::user()->provider_id;
 	    	$input['p_title']=$r->p_title;
-	    	$input['p_short_desc']=$r->p_short_desc;
+	    	$input['p_short_dec']=$r->p_short_desc;
 	    	$input['p_content']=$r->p_content;
 	    	$input['uri']= str_slug($r->p_title, "-");
 	    	$input['categories']=implode(',', $cats)
@@ -43,7 +44,7 @@ class PostController extends Controller
 	    	$input['p_id']=$r->p_id;
 	    	$input['provider_id']=Auth::user()->provider_id;
 	    	$input['p_title']=$r->p_title;
-	    	$input['p_short_desc']=$r->p_short_desc;
+	    	$input['p_short_dec']=$r->p_short_desc;
 	    	$input['p_content']=$r->p_content;
 	    	$input['uri']= str_slug($r->p_title, "-");
 	    	Post::where('p_id',$input['p_id'])->update(['is_latest' => '0']);

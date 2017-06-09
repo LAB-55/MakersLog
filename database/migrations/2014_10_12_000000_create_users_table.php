@@ -20,12 +20,12 @@ class CreateUsersTable extends Migration
             $table->string('email', 191)->unique();
             $table->string('g_username');
             $table->string('password', 60)->nullable();
-            $table->string('nickname')->nullable();
             $table->text('bio')->nullable();
             $table->string('avatar')->nullable();
+            $table->string('website')->nullable();
             $table->string('gender')->nullable();
             $table->string('birthday')->nullable();
-            $table->bigInteger('mobile_number')->nullable();
+            $table->string('mobile_number')->nullable();
             $table->string('provider');
             $table->string('provider_id');
             $table->rememberToken();

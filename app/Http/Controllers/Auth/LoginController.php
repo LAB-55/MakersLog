@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use Socialite;
 use App\User;
+use App\Helpers\Meta;
 
 class LoginController extends Controller
 {
@@ -28,7 +29,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/log/new/';
+    protected $redirectTo = '/log/new';
+    // protected $redirectTo = '';
 
     /**
      * Create a new controller instance.
@@ -51,6 +53,7 @@ class LoginController extends Controller
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
         return redirect($this->redirectTo);
+    
     }
 
     public function findOrCreateUser($user, $provider)
@@ -69,11 +72,12 @@ class LoginController extends Controller
             'last_name' => $user->user['name']['familyName'],
             'email'    => $user->email,
             'g_username' => $g_username,
-            'nickname'   => isset($user->nickname) ? $user->nickname: "Not Specified",
-            'bio'   => isset($user->tagline) ? $user->tagline: "Not Specified",
-            'avatar'   => isset($user->avatar) ? str_replace('sz=50', 'sz=100', $user->avatar): "Not Specified",
-            'gender'   => isset($user->gender) ? $user->gender: "Not Specified",
-            'birthday'   => isset($user->birthday) ? $user->birthday: "Not Specified",
+            'bio'   => isset($user->tagline) ? $user->tagline: "",
+            'avatar'   => isset($user->avatar) ? str_replace('sz=50', 'sz=100', $user->avatar): "",
+            'website'   => isset($user->website) ? $user->website: "",
+            'gender'   => isset($user->gender) ? $user->gender: "",
+            'birthday'   => isset($user->birthday) ? $user->birthday: "",
+            'mobile_number'   => isset($user->mobile_number) ? $user->mobile_number: "",
             'provider' => $provider,
             'provider_id' => $user->id
         ]);

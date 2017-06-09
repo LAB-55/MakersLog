@@ -12,7 +12,7 @@ class Post extends Model
        'rand_id',
        'provider_id',
        'p_content',
-       'p_short_desc',
+       'p_short_dec',
        'p_title',
        'categories',
        'uri',

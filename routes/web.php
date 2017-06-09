@@ -15,10 +15,16 @@ Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('root/initial', 'PostController@validateInitial');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
-Route::get('/', 'RootController@index');
+Route::get('/', 'RootController@index')->name('indexroot');
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Auth::routes();
 Route::get('/{gusermail}', 'RootController@userpage');
-Route::get('/log/new', 'PostController@index')->middleware(['nocache','auth']);
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/log/new', 'PostController@index');
+    Route::get('/{gusermail}/profile', 'ProfileController@index')->name('profile');
+    Route::post('/{gusermail}/profile', 'ProfileController@store')->name('profile');
+});
 
 //-------------Api----------------------
 Route::group(['prefix' => 'api','namespace'=>'api'], function () {
@@ -27,5 +33,4 @@ Route::group(['prefix' => 'api','namespace'=>'api'], function () {
     Route::post('log/update','PostController@update');
     Route::post('category','CategoryController@index');
     Route::post('category/add','CategoryController@create');
-
 });

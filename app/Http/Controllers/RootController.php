@@ -21,8 +21,8 @@ class RootController extends Controller
 
 	public function userpage($gusermail) 
 	{
-		$fullName = "Kalpit Akhawat";
+		//$u = select from user where u_user=$gusermail 
     	return view('userpage')
-    			->with('meta',Meta::get($fullName) );
+    			->with('meta',Meta::get("") );
 	}
 }

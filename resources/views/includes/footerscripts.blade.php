@@ -1,4 +1,9 @@
 
+<script type="text/javascript">
+	if( window.location.href.indexOf('#') > 0) {
+		history.pushState("", document.title, window.location.pathname);
+	}
+</script>
 <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/js/tether.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.min.js"></script>

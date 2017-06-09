@@ -16,7 +16,8 @@
     </header>
 
     <!--Main layout-->
-        <main class="">
+        <main class="" id="editor-scope">
+
         <div class="container">
             <!-- Section: Create Page -->
             <section class="section">
@@ -28,18 +29,18 @@
                         <div class="card mb-r">
                             <div class="card-block">
                                 <div class="md-form mt-1 mb-0">
-                                    <input type="text" id="form1" class="form-control">
+                                    <input type="text" v-model="logcontent.title" class="form-control" name="logcontent-title" >
                                     <label for="form1" class="">Blog title</label>
                                 </div>
                                 <div class="md-form mb-0">
-                                    <textarea type="text" id="form7" class="md-textarea" rows="1"></textarea>
+                                    <textarea name="logcontent-content" v-model="logcontent.desc" type="text" class="md-textarea" rows="1" ></textarea>
                                     <label for="form7">Blog Description in 140 characters</label>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="card mb-r">
-                            <textarea name="" id="post_content" placeholder="Write content here.."></textarea>
+                            <textarea v-model="logcontent.content" id="post_content" placeholder="Write content here.." ></textarea>
                         </div>
                         
                     </div>
@@ -47,6 +48,11 @@
                     <!-- Second col -->
                     <div class="col-lg-4" id="category-scope">
 
+                        <div>
+                               <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">Publish</button>
+                                <button class="btn red btn-danger waves-effect offset-md-2"> Discard</button> 
+                        </div>
+                        <br>
                         <!-- Second card -->
                         <div class="card card-cascade narrower mb-r">
                             <div class="admin-panel info-admin-panel">
@@ -71,19 +77,18 @@
 
                                     </div>
                                     <div class="form-group">
+
                                             <input  type="text"
                                                     id="newcategory" 
                                                     v-model="newCategoryName"
                                                     v-on:keyup.enter="addCategory" 
                                                     class="form-control"
                                                     name="newcategory"
-                                                    placeholder="Make new category" required=""
-                                                    :disabled='catAddInProcess' />       
+                                                    placeholder="Make new category" 
+                                                    :disabled='catAddInProcess'
+                                                    name="newcategory" />       
                                         
                                     </div>
-                                    <button class="btn green col-md-10 offset-md-1">Publish</button>
-                                    <button class="btn red btn-danger waves-effect col-md-10 offset-md-2"> Discard</button>
-
                                 </div>
                                 <!--/.Card content-->
                             </div>
@@ -101,16 +106,29 @@
     @include('includes.footerscripts')
     <script type="text/javascript">
     
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        // window.history.pushState('obj', '', '/?tab=recent');
 
-        new Vue({
-            el: "#category-scope",
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+          
+          var tm = tinymce.init({ selector:'#post_content', menubar: false, height : "270" });
+
+       new Vue({    
+            el: "#editor-scope",
             data : {
+                pushing: false,
                 categories : [],
                 newCategoryName : "",
                 catAddInProcess : false,
                 page : true,
+                logcontent : {
+                    title : "",
+                    desc : "",
+                    content : "",
+                },
             },
+            // componets:{
+            //     VueTinymce :
+            // }
             mounted:function () {
                 var self = this;
                     axios.get('/root/initial?'+Date.now().toString()+Math.floor(Math.random()*9999)+Date.now().toString()+Math.floor(Math.random()*9999) )
@@ -127,6 +145,7 @@
             },//ready
             methods:{
                 addCategory : function ( e ) {
+                    e.preventDefault();
                     var notFound = true, self = this, scrollid="#chk";
                     self.catAddInProcess = true;
                     this.newCategoryName = this.newCategoryName.trim().toLowerCase();
@@ -135,6 +154,7 @@
                         this.categories.forEach(function(e, i){
 
                             if ( e.name == self.newCategoryName ) {
+                                toastr.info(self.newCategoryName + " checked");
                                 e.checked = true; 
                                 notFound = false; 
                                 self.catAddInProcess = false;
@@ -146,16 +166,38 @@
                             axios.post('/api/category/add', {
                                     c_name: self.newCategoryName,
                             }).then(function (response) {
+                               toastr.success(self.newCategoryName + " added");
                                 self.categories.push({ name: self.newCategoryName, checked:true });
                                 self.catAddInProcess = false;
                                 self.newCategoryName = "";
-                            })
+                            });
 
                         }
 
                     }
                     return;
                 },
+                publish : function(e){
+                    // validate all 
+                    var self = this;
+                    this.logcontent.content = tinymce.get('post_content').getContent();
+                    tinymce.get('post_content').setMode('readonly');
+
+                    var categoriesToPush =  this.categories.filter(function( elm ){
+                        return  elm.checked
+                    });
+                    axios.post('/api/log/publish', {
+                                    p_title: self.logcontent.title ,
+                                    p_short_desc: self.logcontent.desc,
+                                    p_content: self.logcontent.content,
+                                    categories: categoriesToPush,
+
+                            }).then(function (response) {
+                                console.log(response.data);
+                            })
+
+                    return false;
+                }
 
             },//methods
             watch: {
@@ -167,9 +209,6 @@
             },
         })
 
-    </script>
-    <script type="text/javascript">
-          tinymce.init({ selector:'#post_content', menubar: false, height : "270" });
     </script>
 </body>
 

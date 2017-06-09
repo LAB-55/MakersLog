@@ -10,9 +10,9 @@
                 </div>
             </li>
 
-         <!--    <li>
+            <li>
                 <ul class="collapsible collapsible-accordion">
-                    <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-code"></i> Dashboards<i class="fa fa-angle-down rotate-icon"></i></a>
+                    <!-- <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-code"></i> Dashboards<i class="fa fa-angle-down rotate-icon"></i></a>
                         <div class="collapsible-body">
                             <ul>
                                 <li><a href="home.html" class="waves-effect">Dahboard v1</a>
@@ -33,22 +33,22 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                    </li> -->
                     <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-lock"></i> Forms<i class="fa fa-angle-down rotate-icon"></i></a>
                         <div class="collapsible-body">
                             <ul>
-                                <li><a href="signup.html" class="waves-effect">Sign up</a>
+                                <!-- <li><a href="signup.html" class="waves-effect">Sign up</a>
                                 </li>
                                 <li><a href="signup v2.html" class="waves-effect">Sign up v2</a>
                                 </li>
                                 <li><a href="login.html" class="waves-effect">Login</a>
-                                </li>
-                                <li><a href="editaccount.html" class="waves-effect">Edit Account</a>
+                                </li> -->
+                                <li><a href="{{ route('profile', ['gusermail' => $meta['gusermail']] ) }}" class="waves-effect">Edit Account</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
-                    <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-bar-chart"></i> SEO<i class="fa fa-angle-down rotate-icon"></i></a>
+                    <!-- <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-bar-chart"></i> SEO<i class="fa fa-angle-down rotate-icon"></i></a>
                         <div class="collapsible-body">
                             <ul>
                                 <li><a href="seo-overview.html" class="waves-effect">Overview</a>
@@ -59,9 +59,9 @@
                     <li><a href="clients.html" class="collapsible-header waves-effect arrow-r"><i class="fa fa-users"></i> Clients</a>
                     <li><a href="invoice.html" class="collapsible-header waves-effect arrow-r"><i class="fa fa-money"></i> Invoice</a>
                     <li><a href="support.html" class="collapsible-header waves-effect arrow-r"><i class="fa fa-support"></i> Support</a>
-                    <li><a href="faq.html" class="collapsible-header waves-effect arrow-r"><i class="fa fa-question-circle" aria-hidden="true"></i> FAQ</a>
+                    <li><a href="faq.html" class="collapsible-header waves-effect arrow-r"><i class="fa fa-question-circle" aria-hidden="true"></i> FAQ</a> -->
                 </ul>
-            </li> -->
+            </li>
             <!--/. Side navigation links -->
             <div class="sidenav-bg mask-strong"></div>
         </ul>
