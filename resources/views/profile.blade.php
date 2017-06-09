@@ -36,12 +36,8 @@
 
                                     <!-- Card content -->
                                     <div class="card-block text-center">
-                                        <img src="{{ $meta['avatar']}}" alt="User Photo" class="rounded-circle contact-avatar my-2 mx-auto" />
-
-                                        <p class="text-muted"><small>Profile photo will be changed automatically</small></p>
-
-                                        <button class="btn btn-primary">Upload New Photo</button><br>
-                                        <button class="btn btn-danger">Delete</button>
+                                        <img src="{{ $meta['avatar']}}" alt="User Photo" class="rounded-circle contact-avatar my-2 mx-auto" /></br>
+                                        <button class="btn btn-primary">Upload New Photo</button>
                                     </div>
                                     <!-- /.Card content -->
                                 </div>

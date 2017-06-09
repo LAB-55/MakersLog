@@ -29,11 +29,11 @@
                         <div class="card mb-r">
                             <div class="card-block">
                                 <div class="md-form mt-1 mb-0">
-                                    <input type="text" v-model="logcontent.title" class="form-control" name="logcontent-title" >
+                                    <input type="text" v-model="logcontent.title" class="form-control" name="logcontent-title" :disabled="pushing" >
                                     <label for="form1" class="">Blog title</label>
                                 </div>
                                 <div class="md-form mb-0">
-                                    <textarea name="logcontent-content" v-model="logcontent.desc" type="text" class="md-textarea" rows="1" ></textarea>
+                                    <textarea name="logcontent-content" v-model="logcontent.desc" type="text" class="md-textarea" rows="1" :disabled="pushing" ></textarea>
                                     <label for="form7">Blog Description in 140 characters</label>
                                 </div>
                             </div>
@@ -70,8 +70,9 @@
                                             <input  type="checkbox" 
                                                     v-model="c.checked" 
                                                     v-el="'chk' + index.toString()"
-                                                    v-bind:id="'chk' + index.toString()
-                                                 ">
+                                                    v-bind:id="'chk' + index.toString()"
+                                                    :disabled="pushing"
+                                                 >
                                             <label v-bind:for="'chk' + index.toString()">@{{ c.name }}</label>
                                         </fieldset>                               
 
@@ -85,7 +86,7 @@
                                                     class="form-control"
                                                     name="newcategory"
                                                     placeholder="Make new category" 
-                                                    :disabled='catAddInProcess'
+                                                    :disabled='catAddInProcess || pushing'
                                                     name="newcategory" />       
                                         
                                     </div>
@@ -181,11 +182,23 @@
                     // validate all 
                     var self = this;
                     this.logcontent.content = tinymce.get('post_content').getContent();
-                    tinymce.get('post_content').setMode('readonly');
-
+                    if( this.logcontent.title.trim() == "" )
+                    {   
+                        toastr.error("Log Title is required");
+                         return;
+                    }
+                    else if(this.logcontent.desc.trim() == "" )
+                    {
+                        toastr.error("Log Description is required"); return;
+                    }
+                    else if( this.logcontent.content.trim() == "" ){
+                        toastr.error("Please add Log content"); return;
+                    }
+                    this.pushing = true;
                     var categoriesToPush =  this.categories.filter(function( elm ){
                         return  elm.checked
                     });
+                    tinymce.get('post_content').setMode('readonly');
                     axios.post('/api/log/publish', {
                                     p_title: self.logcontent.title ,
                                     p_short_desc: self.logcontent.desc,
@@ -193,7 +206,10 @@
                                     categories: categoriesToPush,
 
                             }).then(function (response) {
+                                // pushing = false;
                                 console.log(response.data);
+                                toastr.success("Post added");
+                                location.reload();
                             })
 
                     return false;
