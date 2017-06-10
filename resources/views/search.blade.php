@@ -49,7 +49,7 @@
                             <div class="col-lg-12 pad-lr-30" v-if="users.length <= 0 && !userloading" v-cloak>
                                 <div class="alert blue-text text-center" >Result Not Found</div>
                             </div>
-                            <div class="col-lg-4 col-md-6 pad-lr-10 pad-tb-10" v-for="user in users">
+                            <div class="col-lg-3 col-md-4 pad-lr-10 pad-tb-10" v-for="user in users">
                                 <div class="card testimonial-card view overlay hm-white-slight" v-cloak>
                                 
                                 <div class="card-up" :class="getColor(user.g_username)"></div>
@@ -60,8 +60,6 @@
                                 </div>
                                 <div class="card-block">
                                     <h4 class="card-title" >@{{user.first_name}} @{{user.last_name}}</h4>
-                                    <hr>
-                                    <p > @{{ user.bio }}</p>
                                 </div>
                                  <div class="card-data">
                                     <ul>
