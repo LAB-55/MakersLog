@@ -61,11 +61,30 @@
                                         <div class="card-block">
 
                                             <div class="list-group">
-                                                <a href="home v3.html#" class="list-group-item">Cras justo odio <i class="fa fa-wrench ml-auto" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to fix"></i></a>
-                                                <a href="home v3.html#" class="list-group-item">Dapibus ac facilisi<i class="fa fa-wrench ml-auto" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to fix"></i></a>
-                                                <a href="home v3.html#" class="list-group-item">Morbi leo risus <i class="fa fa-wrench ml-auto" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to fix"></i></a>
-                                                <a href="home v3.html#" class="list-group-item">Porta ac consectet<i class="fa fa-wrench ml-auto" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to fix"></i></a>
-                                                <a href="home v3.html#" class="list-group-item">Vestibulum at eros <i class="fa fa-wrench ml-auto" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to fix"></i></a>
+                                              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                  <h4 class="mb-1">List group item heading</h4>
+                                                  <small>3 days ago</small>
+                                                </div>
+                                                <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                                <small>Donec id elit non mi porta.</small>
+                                              </a>
+                                              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                  <h4 class="mb-1">List group item heading</h4>
+                                                  <small class="text-muted">3 days ago</small>
+                                                </div>
+                                                <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                                <small class="text-muted">Donec id elit non mi porta.</small>
+                                              </a>
+                                              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                  <h4 class="mb-1">List group item heading</h4>
+                                                  <small class="text-muted">3 days ago</small>
+                                                </div>
+                                                <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                                <small class="text-muted">Donec id elit non mi porta.</small>
+                                              </a>
                                             </div>
 
                                         </div>
