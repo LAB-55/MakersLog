@@ -63,9 +63,9 @@
                                 <!--/Card image-->
                                 <!--Card content-->
                                 <div class="card-block ">
-                                    <div class="check-list new-scroll grey lighten-5 pad-lr-10 pad-tb-10">
+                                    <div id="new-scroll" class="check-list new-scroll grey lighten-5 pad-lr-10 pad-tb-10">
                                         
-                                        <fieldset v-for="(c, index) in categories" class="form-group">
+                                        <fieldset :ref= "'chk' + index.toString()" v-for="(c, index) in categories" class="form-group">
                                             
                                             <input  type="checkbox" 
                                                     v-model="c.checked" 
@@ -126,6 +126,9 @@
                     desc : "",
                     content : "",
                 },
+                haveToScroll : false,
+                elmToScroll : null,
+
             },
             // componets:{
             //     VueTinymce :
@@ -144,6 +147,14 @@
                         });
                   })
             },//ready
+            updated : function(){
+                if( this.haveToScroll && this.elmToScroll ){
+                    var em = this.$refs[this.elmToScroll][0];
+                    this.$el.querySelector("#new-scroll").scrollTop = em.offsetTop-100;
+                    this.haveToScroll = false;
+                    this.elmToScroll = null;
+                }
+            },
             methods:{
                 addCategory : function ( e ) {
                     e.preventDefault();
@@ -152,7 +163,8 @@
                     this.newCategoryName = this.newCategoryName.trim().toLowerCase();
                     if( this.newCategoryName != ""  )
                     {
-                        this.categories.forEach(function(e, i){
+                        var em;
+                       this.categories.forEach(function(e, i){
 
                             if ( e.name == self.newCategoryName ) {
                                 toastr.info(self.newCategoryName + " checked");
@@ -160,6 +172,10 @@
                                 notFound = false; 
                                 self.catAddInProcess = false;
                                 self.newCategoryName = "";
+
+                                em = 'chk'+i;
+                                self.haveToScroll = true;
+                                self.elmToScroll = em;
                             }
                         });
                         if( notFound ){
@@ -170,10 +186,17 @@
                                toastr.success(self.newCategoryName + " added");
                                 self.categories.push({ name: self.newCategoryName, checked:true });
                                 self.catAddInProcess = false;
-                                self.newCategoryName = "";
+                                self.newCategoryName = "",
+                                
+                                em = 'chk'+ (self.categories.length - 1);
+                                console.log(em,self.categories.length);
+                                self.haveToScroll = true;
+                                self.elmToScroll = em;
+
                             });
 
                         }
+                        // console.log(this.$refs[em][0]);
 
                     }
                     return;

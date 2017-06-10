@@ -46,10 +46,10 @@
                     </div>
 
                     <div class="row pad-lr-20">
-                            <div class="col-md-12 pad-lr-30" v-if="users.length <= 0 && !userloading" v-cloak>
+                            <div class="col-lg-12 pad-lr-30" v-if="users.length <= 0 && !userloading" v-cloak>
                                 <div class="alert blue-text text-center" >Result Not Found</div>
                             </div>
-                            <div class="col-md-4 pad-lr-10 pad-tb-10" v-for="user in users">
+                            <div class="col-lg-4 col-md-6 pad-lr-10 pad-tb-10" v-for="user in users">
                                 <div class="card testimonial-card view overlay hm-white-slight" v-cloak>
                                 
                                 <div class="card-up default-color-dark"></div>
@@ -93,40 +93,24 @@
                         <br>
                    <div class="row pad-lr-20">
                      
-                        <div class="col-md-12 pad-lr-10 pad-tb-10">
+                        <div class="col-md-6 pad-lr-10 pad-tb-10" v-for="p in logsCollection">
                             <div class="media mb-1">
-                                <a class="media-left waves-light">
-                                    <img class="rounded-circle-imp" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-13.jpg" alt="imag of p.name" width="80">
+                                <a target="_blank" :href="makeUrl(p.g_username)" class="media-left waves-light">
+                                    <img class="rounded-circle-imp" v-bind:src="p.avatar" alt="image of @{{p.first_name}}" width="80">
                                 </a>
                                     <div class="media-body pad-lr-20">
-                                    <a href="#">
-                                        <h5 class="media-heading">Log nu bau lambu Title</h5>
+                                    <a target="_blank" :href="makeUrl(p.g_username,p.p_id,p.uri)">
+                                        <h5 class="media-heading">@{{getLimit(p.p_title,100)}}</h5>
                                     </a>
                                         <ul class="rating inline-ul">
-                                        by him or her
+                                        by <a target="_blank" :href="makeUrl(p.g_username)">@{{ p.first_name+" "+p.last_name }}</a>
                                     </ul>
-                                    <p>Log description like, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate temporibus iure soluta. Quasi mollitia maxime nemo quam accusamus possimus, voluptatum expedita assumenda. Earum sit id ullam eum vel delectus!</p>
+                                    <p>@{{getLimit(p.p_short_dec,140)}}</p>
                                    
                                     </div>
                             </div>
+                            <hr />
                         </div>
-                        <hr />
-                        <div class="col-md-12 pad-lr-10 pad-tb-10">
-                            <div class="media mb-1">
-                                <a class="media-left waves-light">
-                                    <img class="rounded-circle-imp" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-13.jpg" alt="imag of p.name" width="80">
-                                </a>
-                                <div class="media-body pad-lr-20">
-                                    <h5 class="media-heading">Log Title</h5>
-                                    <ul class="rating inline-ul">
-                                        by him or her
-                                    </ul>
-                                    <p>Log description like, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate temporibus iure soluta. Quasi mollitia maxime nemo quam accusamus possimus, voluptatum expedita assumenda. Earum sit id ullam eum vel delectus!</p>
-                                   
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
                 <!--/.Panel 2-->
@@ -163,14 +147,13 @@
             mounted:function () {
                 self=this;
                 self.userloading=true
-                axios.post('/api/search',{ 'type':'user', 'offset':0 , 'limit':12 , 'qry':"" })
+                    axios.post('/api/search',{ 'type':'user', 'offset':0 , 'limit':12 , 'qry':"" })
                       .then(function (response) {
                         self.users=response.data.collection;
                         self.userloading=false;
                       });
-                         
-
-                  },
+            
+            },
 
             methods:{
                 typed: function (e) {
@@ -181,11 +164,12 @@
                         
                     axios.post('/api/search',{ 'type':'user', 'offset':0 , 'limit':12 , 'qry':self.text })
                       .then(function (response) {
+                        // user
                         self.users=response.data.collection;
                         self.userloading=false;
                       })
                   }, 200);
-                }
+                },
             }
         });
 
@@ -195,6 +179,7 @@
                 text: "",
                 categories : [],
                 collection:[],
+                logsCollection:[],
             },
           
             methods:{
@@ -210,24 +195,45 @@
                     var chkCat=self.categories.filter(function (element) {
                             return element.checked
                         });
-                    console.log(chkCat);
+                    // console.log(chkCat);
                     axios.post('/api/search',{ 'type':'post', 'offset':0 , 'limit':12 , 'qry':self.text , 'categories':chkCat})
                       .then(function (response) {
-                        self.collection=response.data;
-                        console.log(response.data);
+                        //  logs
+                        self.logsCollection=response.data.collection;
                       })
+                },
+                makeUrl : function(){
+                    var x = "";
+                    if(arguments.length > 0){
+                        for( var i in arguments ){
+                            x += "/"+arguments[i];
+                        }
+                        return x;
+                    }
+                    return "/";
+                },
+                getLimit:function(str,lmt){
+                    // console.log(str,lmt);
+                    if( str.length > lmt+5 ){
+                        var s = str.substr(0,lmt);
+                        s = s.split(" ");
+                        s.pop();
+                        return s.join(" ")+"...";
+                    }
+                    return str;
                 }
 
             },
             mounted:function () {
                 var self = this;
-                axios.post('/api/category', {}).then(function (response) {
+                    self.search();
+                    axios.post('/api/category', {}).then(function (response) {
                             self.categories = response.data.collection.map(function (e) {
                                 e.checked = false;
                                 return e;
                             });
                         });   
-            },
+            }, 
         })
 
     </script>

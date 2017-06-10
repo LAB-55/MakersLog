@@ -42,4 +42,4 @@ Route::get('/{gusermail}/profile', 'ProfileController@index')->name('getProfile'
 Route::post('/{gusermail}/profile', 'ProfileController@store')->name('postProfile');
 Route::get('/{gusermail}/presentations', 'ProfileController@presentations')->name('presentations');
 Route::post('/{gusermail}/presentations', 'ProfileController@uploadPresentation')->name('uploadPresentation');
-Route::get('/{gusermail}/{pid}', 'ProfileController@index')->name('individial');
+Route::get('/{gusermail}/{pid}/{slug}', 'PostController@individual')->name('individial');
