@@ -52,7 +52,7 @@ class SearchController extends Controller
                   foreach ($cat as $key => $value) {
                     $q->where('categories','like','%'.$value['c_name'].',%');
                   }
-              })->offset($offset)->limit($limit)->get();
+              })->where('is_latest','1')->where('delete','0')->offset($offset)->limit($limit)->get();
       return $result;
     }
 }

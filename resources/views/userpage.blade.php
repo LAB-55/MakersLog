@@ -23,16 +23,21 @@
                         <div class="card contact-card with-padding">
                             <div class="card-body">
                                 <div class="mt-1 mb-1">
-                                    <img src="../../../../wp-content/uploads/2015/10/avatar-2.jpg" alt="" class="img-fluid rounded-circle contact-avatar mx-auto">
+                                    <img src="{{ $user->avatar }}" alt="" class="img-fluid rounded-circle contact-avatar mx-auto"/>
                                 </div>
-                                <h3 class="h3-responsive text-center">Anna Doe</h3>
-                                <p class="text-center grey-text">Marketing Analyst</p>
+                                <h3 class="h3-responsive text-center">{{$user->first_name}} {{$user->last_name}}</h3>
+                                <p class="text-center grey-text">{{$user->bio}}</p>
                                 <ul class="striped">
-                                    <li><strong>E-mail address:</strong> a.doe@example.com</li>
-                                    <li><strong>Phone number:</strong> +1 234 5678 90</li>
-                                    <li><strong>Company:</strong> The Company, Inc</li>
-                                    <li><strong>Twitter username:</strong> @anna.doe</li>
-                                    <li><strong>Instagram username:</strong> @anna.doe</li>
+                                    <li><strong>Username:</strong> {{$user->g_username}}</li>
+                                    <li><strong>E-mail address:</strong> {{$user->email}}</li>
+                                    @if( $user->mobile_number != "") 
+                                    <li><strong>Mobile number:</strong> {{$user->mobile_number}}</li>
+                                    @endif
+                                    @if( $user->mobile_number != "") 
+                                    <li><strong>Website:</strong> {{$user->website}}</li>
+                                    @endif
+                                    <li><strong>Total Blogs:</strong> {{$postcount}}</li>
+
                                 </ul>
                             </div>
                         </div>
