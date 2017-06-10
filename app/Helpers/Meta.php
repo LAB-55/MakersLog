@@ -7,7 +7,8 @@ use Auth;
 class Meta
 {
     public static function get( $title ){
-
+        
+        
         if (Auth::check()) {
                 return [
                 'title' => $title,
