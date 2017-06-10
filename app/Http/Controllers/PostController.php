@@ -15,6 +15,7 @@ class PostController extends Controller
 
         $aPost = Post::where('p_id', $pid)
                     ->where('is_latest','1')->where('delete','0')->first();
+                    // print_r($aPost);
                 if( $aPost ){
                     return view('individual')
                             ->with('p',$aPost)

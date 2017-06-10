@@ -6,7 +6,7 @@
     <script type="text/javascript" src="/js/vendor/tinymce/tinymce.min.js"></script>
 </head>
 
-    <body class="fixed-sn white-skin" style="display: none">
+    <body class="@if(Auth::check()) fixed-sn @else hidden-sn @endif white-skin" style="display: none">
         
      <header>
         @include('includes.sidebar')

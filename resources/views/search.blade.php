@@ -4,7 +4,7 @@
 <head>
     @include('includes.head')
 </head>
-    <body class="fixed-sn white-skin">
+    <body class="@if(Auth::check()) fixed-sn @else hidden-sn @endif white-skin">
         
     <header>
         @include('includes.sidebar')

@@ -5,8 +5,7 @@
     @include('includes.head')
 </head>
 
-    <body class="fixed-sn white-skin">
-        
+     <body class="@if(Auth::check()) fixed-sn @else hidden-sn @endif white-skin">
      <header>
         @include('includes.sidebar')
         @include('includes.navbar')
@@ -16,13 +15,12 @@
     <!--Main layout-->
     <main class="">
         <div class="container-fluid">
-
+            <div class="container-blog">
             <!--Section heading-->
-            <h4 class="text-left">----- from</h4>
-            <hr>
-            <br>
-
-        
+            <h4 class="text-left"> {{ $p->p_title}}</h4>
+                <hr>
+                <br>        
+            </div>
         </div>
     </main>
     <!--/Main layout-->
