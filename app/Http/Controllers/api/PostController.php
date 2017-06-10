@@ -20,13 +20,14 @@ class PostController extends Controller
 	    	$input['p_short_dec']=$r->p_short_desc;
 	    	$input['p_content']=$r->p_content;
 	    	$input['uri']= str_slug($r->p_title, "-");
-	    	$t=time();
-	    	$input['created_at']=$t;
-	    	$input['updated_at']=$t;
+	    	// date_default_timezone_set('Asia/Kolkata');
+	    	// $t=time();
+	    	// $input['created_at']=$t;
+	    	// $input['updated_at']=$t;
 	    	$i_cat = [];
 				
 				foreach ($r->categories as $key => $value)
-	    			array_push($i_cat, $value['c_name']);
+	    			array_push($i_cat, $value['name']);
 	    	
 	    	$input['categories']=implode(',',$i_cat ).",";
 	    	$id=Post::insertGetId($input);

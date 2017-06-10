@@ -92,7 +92,9 @@
                         <br>
                         <br>
                    <div class="row pad-lr-20">
-                     
+                        <div class="col-lg-12 pad-lr-30" v-if="logsCollection.length <= 0 && !postloading" v-cloak>
+                            <div class="alert blue-text text-center" >Result Not Found</div>
+                        </div>
                         <div class="col-md-6 pad-lr-10 pad-tb-10" v-for="p in logsCollection">
                             <div class="media mb-1">
                                 <a target="_blank" :href="makeUrl(p.g_username)" class="media-left waves-light">
@@ -180,6 +182,7 @@
                 categories : [],
                 collection:[],
                 logsCollection:[],
+                postloading:false,
             },
           
             methods:{
@@ -196,10 +199,13 @@
                             return element.checked
                         });
                     // console.log(chkCat);
+                    postloading:true;
                     axios.post('/api/search',{ 'type':'post', 'offset':0 , 'limit':12 , 'qry':self.text , 'categories':chkCat})
                       .then(function (response) {
                         //  logs
                         self.logsCollection=response.data.collection;
+                        postloading:false;
+
                       })
                 },
                 makeUrl : function(){

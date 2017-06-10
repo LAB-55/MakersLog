@@ -42,9 +42,11 @@ class SearchController extends Controller
       $cat=$r->categories;
       $result=DB::table('users')
               ->join('post_master','users.provider_id','=','post_master.provider_id')
-              ->where('post_master.p_title','like','%'.$txt.'%')
-              ->orWhere('post_master.p_short_dec','like','%'.$txt.'%')
-              ->orWhere('post_master.p_content','like','%'.$txt.'%')
+              ->where(function ($q) use($txt){
+                $q->orWhere('post_master.p_title','like','%'.$txt.'%')
+                  ->orWhere('post_master.p_short_dec','like','%'.$txt.'%')
+                  ->orWhere('post_master.p_content','like','%'.$txt.'%');
+              })
               ->where(function ($q) use($cat)
               {
                   foreach ($cat as $key => $value) {
