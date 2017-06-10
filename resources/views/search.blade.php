@@ -52,7 +52,7 @@
                             <div class="col-lg-4 col-md-6 pad-lr-10 pad-tb-10" v-for="user in users">
                                 <div class="card testimonial-card view overlay hm-white-slight" v-cloak>
                                 
-                                <div class="card-up default-color-dark"></div>
+                                <div class="card-up" :class="getColor(user.g_username)"></div>
                                 <a v-bind:href="user.g_username">
                                         <div class="mask waves-effect waves-light"></div>
                                 </a>
@@ -145,6 +145,7 @@
                 text: "",
                 users: [],
                 userloading:false,
+                colors:['red darken-1', 'grey darken-3', 'pink darken-1', 'teal darken-3', 'purple darken-2', 'yellow darken-2', 'indigo accent-4', 'green darken-2', 'deep-orange', 'deep-purple darken-3', 'mdb-color darken-3', 'cyan darken-2', 'brown']
             },
             mounted:function () {
                 self=this;
@@ -154,7 +155,6 @@
                         self.users=response.data.collection;
                         self.userloading=false;
                       });
-            
             },
 
             methods:{
@@ -172,6 +172,14 @@
                       })
                   }, 200);
                 },
+                getColor: function(name){
+                        var t = 0;
+                          for (var i = 0; i < name.length; i++){ 
+                             name.charCodeAt(i).toString(2).split('').map(function(n){ t+=parseInt(n) });
+                          }
+                          t = t % this.colors.length;
+                          return this.colors[t];
+                }
             }
         });
 
