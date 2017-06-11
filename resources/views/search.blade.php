@@ -60,6 +60,7 @@
                                 </div>
                                 <div class="card-block">
                                     <h4 class="card-title" >@{{user.first_name}} @{{user.last_name}}</h4>
+                                    <hr> <a :href="'/'+user.g_username">@{{user.g_username}}</a>
                                 </div>
                                  <div class="card-data">
                                     <ul>
@@ -179,7 +180,7 @@
                           t = t % this.colors.length;
                           return this.colors[t];
                 }
-            }
+            }   
         });
 
         new Vue({
