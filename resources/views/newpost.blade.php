@@ -111,7 +111,12 @@
 
         axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
           
-          var tm = tinymce.init({ selector:'#post_content', menubar: false, height : "270" });
+          var tm = tinymce.init({ 
+                    selector:'#post_content',
+                    menubar: false,
+                    height : "270",
+                    plugins: "paste",
+             });
 
        new Vue({    
             el: "#editor-scope",

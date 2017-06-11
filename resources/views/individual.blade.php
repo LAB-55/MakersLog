@@ -18,9 +18,21 @@
             <div class="container-blog">
             <!--Section heading-->
 
-                <div class="card-block">
-                    <h4 class="text-left"> {{ $p->p_title}}</h4>
-                    <hr>
+                <div class="card-block jumbotron">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2">
+                            
+                            <a target="_blank" href="/{{ $u->g_username}}" class="media-left waves-light waves-effect waves-light"><img src="https://lh4.googleusercontent.com/-yIfvqErBAzA/AAAAAAAAAAI/AAAAAAAAAjg/DJ2vTnUnDdE/photo.jpg?sz=100" alt="image of {{$p->first_name}}" width="80" class="rounded-circle-imp"></a>
+                        </div>
+                        <div class="col-md-10 col-sm-10">
+                            <h4 class="text-left"> {{ $p->p_title}}</h4>
+                            <div class="rating inline-ul">
+                                        by <a target="_blank" href="/fotariyajimish">Jimish Fotariya</a>
+                            </div>
+                            <hr>
+                        </div>
+
+                    </div>
                     
                 </div>        
             </div>

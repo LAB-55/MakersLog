@@ -52,7 +52,7 @@
                             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 pad-lr-10 pad-tb-10" v-for="user in users">
                                 <div class="card testimonial-card view overlay hm-white-slight" v-cloak>
                                 
-                                <div class="card-up" :class="getColor(user.g_username)"></div>
+                                <div class="card-up" :class="getColor(user.g_username,user.first_name,user.last_name)"></div>
                                 <a v-bind:href="user.g_username">
                                         <div class="mask waves-effect waves-light"></div>
                                 </a>
@@ -170,7 +170,8 @@
                       })
                   }, 200);
                 },
-                getColor: function(name){
+                getColor: function(name,salt1,salt2){
+                        name = name+"_"+salt1+"+6"+salt2;
                         var t = 0;
                           for (var i = 0; i < name.length; i++){ 
                              name.charCodeAt(i).toString(2).split('').map(function(n){ t+=parseInt(n) });
