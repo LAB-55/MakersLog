@@ -24,14 +24,20 @@
                             
                             <a target="_blank" href="/{{ $u->g_username}}" class="media-left waves-light waves-effect waves-light"><img src="https://lh4.googleusercontent.com/-yIfvqErBAzA/AAAAAAAAAAI/AAAAAAAAAjg/DJ2vTnUnDdE/photo.jpg?sz=100" alt="image of {{$p->first_name}}" width="80" class="rounded-circle-imp"></a>
                         </div>
-                        <div class="col-md-10 col-sm-10">
-                            <h4 class="text-left"> {{ $p->p_title}}</h4>
+                        <div class="col-md-10 col-sm-10 extra-margins">
+                            <h3 class="section-heading text-left"> {{ $p->p_title}}</h3>
                             <div class="rating inline-ul">
                                         by <a target="_blank" href="/fotariyajimish">Jimish Fotariya</a>
                             </div>
                             <hr>
+                                <p class="section-description text-left blue-grey-text">
+                                    {{$p->p_short_dec}}
+                                </p>
+                            <hr>
                         </div>
-
+                        <p class="text-left extra-margins">
+                                {!! $p->p_content !!}
+                        </p>
                     </div>
                     
                 </div>        
