@@ -15,7 +15,7 @@
                 <div class="col-md-6 col-lg-5 login-form mx-auto float-none">
                     
                     <!--Form with header-->
-                            <h1 class="text-center">MakersLog</h1>
+                            <h1 class="text-center makerslog-titile">MakersLog</h1>
                         <div class="card text-center">
                             <div class="card-block">
                             Sign up or Login with

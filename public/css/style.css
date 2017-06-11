@@ -1,3 +1,16 @@
+@font-face {
+    font-family: 'marloweCoctail';
+    src: url(/font/marlowe_coctail.woff);
+}
+@font-face {
+    font-family: 'marlowe';
+    src: url(/font/marlowe.woff);
+}
+.makerslog-titile{
+	font-family: "marloweCoctail";
+	/*font-family: "marlowe";*/
+	font-size: 5rem;
+}
 .pad-lr-10{
     padding-left: 10px;
     padding-right:10px;
