@@ -130,8 +130,68 @@
                                                 <!--First column-->
                                                 <div class="col-md-6">
                                                     <div class="md-form">
-                                                        <input type="text" id="gender" name="gender" class="form-control" value="{{ $meta['gender']}}">
-                                                        <label for="gender">Gender</label>
+                                                        @if ( $meta['gender'] == 'male')
+                                                            <div class="form-group">
+                                                                <input name="gender" type="radio" id="male" value="male" checked>
+                                                                <label for="male">Male</label>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input name="gender" type="radio" value="female" id="female">
+                                                                <label for="female">Female</label>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input name="gender" type="radio" value="other" id="other">
+                                                                <label for="other">Other</label>
+                                                            </div>
+                                                        @elseif ( $meta['gender'] == 'female')
+                                                            <div class="form-group">
+                                                                <input name="gender" type="radio" id="male">
+                                                                <label for="male">Male</label>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input name="gender" type="radio" value="female" id="female" checked>
+                                                                <label for="female">Female</label>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input name="gender" type="radio" value="other" id="other">
+                                                                <label for="other">Other</label>
+                                                            </div>
+                                                        @elseif ( $meta['gender'] == 'other')
+                                                            <div class="form-group">
+                                                                <input name="gender" type="radio" id="male">
+                                                                <label for="male">Male</label>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input name="gender" type="radio" value="female" id="female">
+                                                                <label for="female">Female</label>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input name="gender" type="radio" value="other" id="other" checked>
+                                                                <label for="other">Other</label>
+                                                            </div>
+                                                        @else
+                                                            <div class="form-group">
+                                                                <input name="gender" type="radio" value="male" id="male">
+                                                                <label for="male">Male</label>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input name="gender" type="radio" value="female" id="female">
+                                                                <label for="female">Female</label>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input name="gender" type="radio" value="other" id="other">
+                                                                <label for="other">Other</label>
+                                                            </div>
+                                                        @endif
+                                                        <label for="gender" class="active">Gender</label>
                                                     </div>
                                                 </div>
                                                 <!--Second column-->
