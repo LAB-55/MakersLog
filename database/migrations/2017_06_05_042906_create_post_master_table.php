@@ -25,7 +25,8 @@ class CreatePostMasterTable extends Migration
             $table->string('is_latest')->default('1');
             $table->string('delete')->default('0');
             $table->text('uri')->nullable();
-            $table->timestamps();
+            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

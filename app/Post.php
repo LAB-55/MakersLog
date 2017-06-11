@@ -16,6 +16,8 @@ class Post extends Model
        'p_title',
        'categories',
        'uri',
+       'created_at',
+       'updated_at',
        'is_latest',
        'delete'
    ];
