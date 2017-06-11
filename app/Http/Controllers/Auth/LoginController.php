@@ -29,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/log/new';
+    // protected $redirectTo = '/log/new';
     // protected $redirectTo = '';
 
     /**
@@ -52,7 +52,7 @@ class LoginController extends Controller
 
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
-        return redirect($this->redirectTo);
+        return redirect($authUser->g_username);
     
     }
 

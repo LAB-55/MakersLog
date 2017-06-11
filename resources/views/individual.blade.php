@@ -17,9 +17,12 @@
         <div class="container-fluid">
             <div class="container-blog">
             <!--Section heading-->
-            <h4 class="text-left"> {{ $p->p_title}}</h4>
-                <hr>
-                <br>        
+
+                <div class="card-block">
+                    <h4 class="text-left"> {{ $p->p_title}}</h4>
+                    <hr>
+                    
+                </div>        
             </div>
         </div>
     </main>
