@@ -148,17 +148,15 @@ var MainScope = new Vue({
     el: "#app-main",
     mounted: function () {
         var self = this;
-        var _throttleTimer = null;
-        var _throttleDelay = 100;
+        var throttleTimer = null;
+        var throttleDelay = 100;
         var $window = $(window);
         var $document = $(document);
 
-        $document.ready(function () {
             $window
                 .off('scroll', ScrollHandler)
                 .on('scroll', ScrollHandler);
-        });
-
+        
         function ScrollHandler(e) {
             var panel;
             if ($("#fellowMakers").hasClass('active')) {
@@ -167,8 +165,8 @@ var MainScope = new Vue({
                 panel = panel52;
             }
             //throttle event:
-            clearTimeout(_throttleTimer);
-            _throttleTimer = setTimeout(function () {
+            clearTimeout( throttleTimer );
+             throttleTimer  = setTimeout(function () {
 
                 if ($window.scrollTop() + $window.height() > $document.height() - 50) {
                     if (!panel.dataloading) {
@@ -176,7 +174,7 @@ var MainScope = new Vue({
                     }
                 }
 
-            }, _throttleDelay);
+            },  throttleDelay );
         }
 
 

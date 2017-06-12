@@ -127,3 +127,9 @@
 	  	margin-left: 2%;
 	}
 }
+
+.text-overflow-ellipsis{
+	overflow-x: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
