@@ -53,7 +53,6 @@ class LoginController extends Controller
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
         return redirect($this->redirectTo);
-    
     }
 
     public function findOrCreateUser($user, $provider)
