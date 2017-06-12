@@ -3,7 +3,7 @@ Array.prototype.extend = function ( ar ) {
         this.push(v)
     }, this)
 };
-var collectionSize  = 12, timeout = null;
+var collectionSize  = 2, timeout = null;
 
 var panel51 = new Vue({
     el: "#panel51",
@@ -36,21 +36,24 @@ var panel51 = new Vue({
             clearTimeout(timeout);
             var self = this;
             timeout = setTimeout(function () {
-                self.dataloading = true
-
-                axios.post('/api/search', {
-                        'type': 'user',
-                        'offset': self.lastOffset,
-                        'limit': self.lastOffset + collectionSize,
-                        'qry': self.text
-                    })
-                    .then(function (response) {
-                        // user
-                        self.users.extend(response.data.collection);
-                        self.lastOffset += self.users.length;
-                        self.dataloading = false;
-                    })
+              self.search();
             }, 200);
+        },
+        search: function(){
+            var self = this;
+            self.dataloading = true
+            axios.post('/api/search', {
+                    'type': 'user',
+                    'offset': self.lastOffset,
+                    'limit': self.lastOffset + collectionSize,
+                    'qry': self.text
+                })
+                .then(function (response) {
+                    // user
+                    self.users.extend(response.data.collection);
+                    self.lastOffset += self.users.length;
+                    self.dataloading = false;
+                })
         },
         getColor: function (name, salt1, salt2) {
             name = name + "_" + salt1 + "+6" + salt2;
@@ -157,16 +160,11 @@ var MainScope = new Vue({
         });
 
         function ScrollHandler(e) {
-            var panel, activeQry, chkCat = [];
+            var panel;
             if ($("#fellowMakers").hasClass('active')) {
-                activeQry = 'user';
                 panel = panel51;
             } else {
                 panel = panel52;
-                activeQry = 'post';
-                chkCat = panel.categories.filter(function (element) {
-                    return element.checked
-                });
             }
             //throttle event:
             clearTimeout(_throttleTimer);
@@ -174,27 +172,7 @@ var MainScope = new Vue({
 
                 if ($window.scrollTop() + $window.height() > $document.height() - 50) {
                     if (!panel.dataloading) {
-
-                        panel.dataloading = true;
-                        axios.post('/api/search', {
-                                'type': activeQry,
-                                'offset': panel.lastOffset,
-                                'limit': panel.lastOffset + collectionSize,
-                                'qry': self.text,
-                                'categories': chkCat
-                            })
-                            .then(function (response) {
-                                var templ;
-                                if (activeQry == 'user') {
-                                    panel.users.extend(response.data.collection);
-                                    templ = panel.users.length;
-                                } else {
-                                    panel.logsCollection.extend(response.data.collection);
-                                    templ = panel.logsCollection.length;
-                                }
-                                panel.lastOffset += templ;
-                                panel.dataloading = false;
-                            })
+                        panel.search();
                     }
                 }
 
