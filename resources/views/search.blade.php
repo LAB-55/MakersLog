@@ -14,7 +14,7 @@
     <!--/.Double navigation-->
 
     <!--Main layout-->
-    <main class="">
+    <main class="" id="appmain">
         <div class="container-fluid">
 
             <!--Section heading-->
@@ -24,7 +24,7 @@
             <div class="tabs-wrapper"> 
                 <ul class="nav classic-tabs indigo tabs-2" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link waves-light active" data-toggle="tab" href="#panel51" role="tab">
+                        <a class="nav-link waves-light active" id="fellowMakers" data-toggle="tab" href="#panel51" role="tab">
                         <i class="fa fa-coffee pad-lr-10"></i>
                         Fellow Makers</a>
                     </li>
@@ -40,13 +40,13 @@
             <div class="tab-content card">
 
                 <!--Panel 1-->
-                <div class="tab-pane fade in show active" id="panel51" role="tabpanel ">
+                <div class="tab-pane fade in show active" id="panel51" role="tabpanel">
                     <div class="md-form col-md-8 offset-md-2 ">
                         <input type="search" id="form-autocomplete-f" class="form-control" placeholder="Search Fellow Makers of TT17 " v-model="text" v-on:keyup="typed">
                     </div>
 
                     <div class="row pad-lr-20">
-                            <div class="col-lg-12 pad-lr-30" v-if="users.length <= 0 && !userloading" v-cloak>
+                            <div class="col-lg-12 pad-lr-30" v-if="users.length <= 0 && !dataloading" v-cloak>
                                 <div class="alert blue-text text-center" >Result Not Found</div>
                             </div>
                             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 pad-lr-10 pad-tb-10" v-for="user in users">
@@ -91,7 +91,7 @@
                         <br>
                         <br>
                    <div class="row pad-lr-20">
-                        <div class="col-lg-12 pad-lr-30" v-if="logsCollection.length <= 0 && !postloading" v-cloak>
+                        <div class="col-lg-12 pad-lr-30" v-if="logsCollection.length <= 0 && !dataloading" v-cloak>
                             <div class="alert blue-text text-center" >Result Not Found</div>
                         </div>
                         <div class="col-md-12 pad-lr-10 pad-tb-10" v-for="p in logsCollection">
@@ -136,121 +136,7 @@
         </a>
     </div>  
     @include('includes.footerscripts')
-    <script type="text/javascript">
-    var timeout=null;
-        new Vue({
-            el : "#panel51",
-            data:{
-                text: "",
-                users: [],
-                userloading:false,
-                colors:['red darken-1', 'grey darken-3', 'pink darken-1', 'teal darken-3', 'purple darken-2', 'yellow darken-2', 'indigo accent-4', 'green darken-2', 'deep-orange', 'deep-purple darken-3', 'mdb-color darken-3', 'cyan darken-2', 'brown']
-            },
-            mounted:function () {
-                self=this;
-                self.userloading=true
-                    axios.post('/api/search',{ 'type':'user', 'offset':0 , 'limit':12 , 'qry':"" })
-                      .then(function (response) {
-                        self.users=response.data.collection;
-                        self.userloading=false;
-                      });
-            },
-
-            methods:{
-                typed: function (e) {
-                    clearTimeout(timeout);
-                    self=this;
-                    timeout = setTimeout(function () {
-                    self.userloading=true
-                        
-                    axios.post('/api/search',{ 'type':'user', 'offset':0 , 'limit':12 , 'qry':self.text })
-                      .then(function (response) {
-                        // user
-                        self.users=response.data.collection;
-                        self.userloading=false;
-                      })
-                  }, 200);
-                },
-                getColor: function(name,salt1,salt2){
-                        name = name+"_"+salt1+"+6"+salt2;
-                        var t = 0;
-                          for (var i = 0; i < name.length; i++){ 
-                             name.charCodeAt(i).toString(2).split('').map(function(n){ t+=parseInt(n) });
-                          }
-                          t = t % this.colors.length;
-                          return this.colors[t];
-                }
-            }   
-        });
-
-        new Vue({
-            el : "#panel52",
-            data:{
-                text: "",
-                categories : [],
-                collection:[],
-                logsCollection:[],
-                postloading:false,
-            },
-          
-            methods:{
-                typed: function (e) {
-                    clearTimeout(timeout);
-                    var self=this;
-                    timeout = setTimeout(function () {
-                        self.search();
-                    }, 200);
-                },
-                search:function (e) {
-                    var self=this;
-                    var chkCat=self.categories.filter(function (element) {
-                            return element.checked
-                        });
-                    // console.log(chkCat);
-                    postloading:true;
-                    axios.post('/api/search',{ 'type':'post', 'offset':0 , 'limit':12 , 'qry':self.text , 'categories':chkCat})
-                      .then(function (response) {
-                        //  logs
-                        self.logsCollection=response.data.collection;
-                        postloading:false;
-
-                      })
-                },
-                makeUrl : function(){
-                    var x = "";
-                    if(arguments.length > 0){
-                        for( var i in arguments ){
-                            x += "/"+arguments[i];
-                        }
-                        return x;
-                    }
-                    return "/";
-                },
-                getLimit:function(str,lmt){
-                    // console.log(str,lmt);
-                    if( str.length > lmt+5 ){
-                        var s = str.substr(0,lmt);
-                        s = s.split(" ");
-                        s.pop();
-                        return s.join(" ")+"...";
-                    }
-                    return str;
-                }
-
-            },
-            mounted:function () {
-                var self = this;
-                    self.search();
-                    axios.post('/api/category', {}).then(function (response) {
-                            self.categories = response.data.collection.map(function (e) {
-                                e.checked = false;
-                                return e;
-                            });
-                        });   
-            }, 
-        })
-
-    </script>
+    <script type="text/javascript" src='/js/home-app.js'>
     </script>
 </body>
 
