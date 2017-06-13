@@ -1,3 +1,8 @@
+$.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
+        });
+        
+
 Array.prototype.extend = function ( ar ) {
     ar.forEach(function (v) {
         this.push(v)
@@ -14,8 +19,7 @@ var panel51 = new Vue({
         pdata       : [],
         lastOffset  : 0,
         end_of_results: false,
-        requestID   : 0,
-        expectedFrom : 0,
+        searchRequest : $.ajax(),
         colors      : ['red darken-1', 'grey darken-3', 'pink darken-1', 'teal darken-3', 'purple darken-2', 'yellow darken-2', 'indigo accent-4', 'green darken-2', 'deep-orange', 'deep-purple darken-3', 'mdb-color darken-3', 'cyan darken-2', 'brown']
     },
     mounted: function () {
@@ -31,32 +35,28 @@ var panel51 = new Vue({
               self.end_of_results = false;
               self.lastOffset = 0;
               self.users = [];
+              self.searchRequest.abort();
               self.search();
-            }, 200);
+            }, 500);
         },
         search: function(){
+
             var self = this;
-            self.requestID += 1;
-            self.expectedFrom = self.requestID;
             self.dataloading = true;
 
-                axios.post('/api/search', {
+                self.searchRequest = $.post('/api/search', {
                     'type': 'user',
                     'offset': self.lastOffset,
                     'limit': self.lastOffset + collectionSize,
                     'qry': self.text,
-                    'requestID' : self.requestID,
                 })
-                .then(function (response) {
-                    if( response.data.requestID == self.expectedFrom )
-                    {                    
-                        self.users.extend(response.data.collection);
+                .done(function (response) {              
+                        self.users.extend(response.collection);
                         self.lastOffset += self.users.length;
                         self.dataloading = false;
-                        if( response.data.collection.length == 0 ){
+                        if( response.collection.length == 0 ){
                             self.end_of_results = true;
                         }
-                    }
                 })
         },
         getColor: function (name, salt1, salt2) {
@@ -94,7 +94,7 @@ var panel52 = new Vue({
                 self.lastOffset = 0;
                 self.logsCollection = [];
                 self.search();
-            }, 200);
+            }, 500);
         },
         search: function (e) {
             var self = this;
@@ -103,18 +103,18 @@ var panel52 = new Vue({
             });
             // console.log(chkCat);
             self.dataloading = true;
-            axios.post('/api/search', {
+            $.post('/api/search', {
                     'type': 'post',
                     'offset': self.lastOffset,
                     'limit': self.lastOffset + collectionSize,
                     'qry': self.text,
                     'categories': chkCat
                 })
-                .then(function (response) {
-                    self.logsCollection.extend(response.data.collection);
+                .done(function (response) {
+                    self.logsCollection.extend(response.collection);
                     self.lastOffset += self.logsCollection.length;
                     self.dataloading = false;
-                    if( response.data.collection.length == 0 ){
+                    if( response.collection.length == 0 ){
                         self.end_of_results = true;
                     }
                 })
@@ -150,8 +150,8 @@ var panel52 = new Vue({
     mounted: function () {
         var self = this;
         self.search();
-        axios.post('/api/category', {}).then(function (response) {
-            self.categories = response.data.collection.map(function (e) {
+        $.post('/api/category', {}).done(function (response) {
+            self.categories = response.collection.map(function (e) {
                 e.checked = false;
                 return e;
             });

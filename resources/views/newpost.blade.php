@@ -110,6 +110,9 @@
         // window.history.pushState('obj', '', '/?tab=recent');
 
         axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        $.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
+        });
           
           var tm = tinymce.init({ 
                     selector:'#post_content',
