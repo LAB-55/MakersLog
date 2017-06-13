@@ -32,6 +32,8 @@ class SearchController extends Controller
       foreach ($result as $key => $r) {
           $r->post_count=Post::where('provider_id',$r->provider_id)->count();
       }
+      sleep(1);
+
       return $result;
     }
     public function byPost($r)
@@ -53,6 +55,8 @@ class SearchController extends Controller
                     $q->where('categories','like','%'.$value['c_name'].',%');
                   }
               })->where('is_latest','1')->where('delete','0')->offset($offset)->limit($limit)->get();
+          sleep(1);
+
       return $result;
     }
 }

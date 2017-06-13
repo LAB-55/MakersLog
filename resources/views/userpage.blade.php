@@ -65,7 +65,7 @@
                                                 <p class="mb-1">{ { p.p_short_dec. } }</p>
                                               </a>
                                             </div>
-
+                                            
                                         </div>
                                         <!--/.Card content-->
                                     </div>

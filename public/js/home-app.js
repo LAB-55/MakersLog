@@ -13,6 +13,7 @@ var panel51 = new Vue({
         dataloading : false,
         pdata       : [],
         lastOffset  : 0,
+        end_of_results: false,
         colors      : ['red darken-1', 'grey darken-3', 'pink darken-1', 'teal darken-3', 'purple darken-2', 'yellow darken-2', 'indigo accent-4', 'green darken-2', 'deep-orange', 'deep-purple darken-3', 'mdb-color darken-3', 'cyan darken-2', 'brown']
     },
     mounted: function () {
@@ -36,6 +37,7 @@ var panel51 = new Vue({
             clearTimeout(timeout);
             var self = this;
             timeout = setTimeout(function () {
+              self.end_of_results = true;
               self.search();
             }, 200);
         },
@@ -53,6 +55,9 @@ var panel51 = new Vue({
                     self.users.extend(response.data.collection);
                     self.lastOffset += self.users.length;
                     self.dataloading = false;
+                    if( response.data.collection.length == 0 ){
+                        self.end_of_results = true;
+                    }
                 })
         },
         getColor: function (name, salt1, salt2) {
@@ -78,6 +83,7 @@ var panel52 = new Vue({
         logsCollection: [],
         dataloading: false,
         lastOffset: 0,
+        end_of_results: false,
     },
 
     methods: {
@@ -85,6 +91,7 @@ var panel52 = new Vue({
             clearTimeout(timeout);
             var self = this;
             timeout = setTimeout(function () {
+                self.end_of_results = false;
                 self.search();
             }, 200);
         },
@@ -107,7 +114,9 @@ var panel52 = new Vue({
                     self.logsCollection.extend(response.data.collection);
                     self.lastOffset += self.logsCollection.length;
                     self.dataloading = false;
-
+                    if( response.data.collection.length == 0 ){
+                        self.end_of_results = true;
+                    }
                 })
         },
         makeUrl: function () {

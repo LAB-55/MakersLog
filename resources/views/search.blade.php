@@ -69,8 +69,7 @@
                                 </div>
                                 </div>
                             </div>
-
-
+                            <div v-if="dataloading && !end_of_results" class="text-center col-sm-4 offset-sm-4"> @include('includes.isloading')</div>
 
                     </div>
 
@@ -112,14 +111,16 @@
                             </div>
                             <hr />
                         </div>
+                        <div v-if="dataloading && !end_of_results" class="text-center col-sm-4 offset-sm-4"> @include('includes.isloading')</div>
                     </div>
-                </div>
                 <!--/.Panel 2-->
+                </div>
 
             </div>
             <br>
 
         </div>
+        <br><br>
     </main>
     <!--/Main layout-->
 
