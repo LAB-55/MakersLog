@@ -13,14 +13,14 @@ class SearchController extends Controller
     {
       try {
         if($r->type=="user"){
-          return(['requestID' => $r->requestID, 'status'=>'1' , "collection" =>$this->byUser($r) ]);
+          return(['status'=>'1' , "collection" =>$this->byUser($r) ]);
         } elseif ($r->type=="post") {
-          return(['requestID' => $r->requestID, 'status'=>'1' , "collection" =>$this->byPost($r) ]);
+          return(['status'=>'1' , "collection" =>$this->byPost($r) ]);
         }else{
-          return json(['requestID' => $r->requestID, 'status'=>'0','error'=>"Undefined Search Category"]);
+          return json(['status'=>'0','error'=>"Undefined Search Category"]);
         }     	
       } catch (Exception $e) {
-      	return json(['requestID' => $r->requestID, 'status'=>'0','error'=>$e]);
+      	return json(['status'=>'0','error'=>$e]);
       }
     }
     public function byUser($r)
@@ -41,7 +41,7 @@ class SearchController extends Controller
       $txt=$r->qry;
       $offset=$r->offset;
       $limit=$r->limit;
-      $cat=$r->categories;
+      $cat=$r->categories ?? [];
       $result=DB::table('users')
               ->join('post_master','users.provider_id','=','post_master.provider_id')
               ->where(function ($q) use($txt){
