@@ -14,11 +14,12 @@ var panel51 = new Vue({
         pdata       : [],
         lastOffset  : 0,
         end_of_results: false,
+        newSearch : true,
         colors      : ['red darken-1', 'grey darken-3', 'pink darken-1', 'teal darken-3', 'purple darken-2', 'yellow darken-2', 'indigo accent-4', 'green darken-2', 'deep-orange', 'deep-purple darken-3', 'mdb-color darken-3', 'cyan darken-2', 'brown']
     },
     mounted: function () {
         var self            = this;
-        self.dataloading    = true
+        self.dataloading    = true;
         axios.post('/api/search', {
                 'type'  : 'user',
                 'offset': 0,
@@ -37,7 +38,9 @@ var panel51 = new Vue({
             clearTimeout(timeout);
             var self = this;
             timeout = setTimeout(function () {
-              self.end_of_results = true;
+              self.end_of_results = false;
+              self.newSearch = true;
+              self.lastOffset = 0,
               self.search();
             }, 200);
         },
@@ -51,7 +54,9 @@ var panel51 = new Vue({
                     'qry': self.text
                 })
                 .then(function (response) {
-                    // user
+                    if( self.newSearch ){
+                        self.users = []
+                    }
                     self.users.extend(response.data.collection);
                     self.lastOffset += self.users.length;
                     self.dataloading = false;
@@ -92,6 +97,8 @@ var panel52 = new Vue({
             var self = this;
             timeout = setTimeout(function () {
                 self.end_of_results = false;
+                self.newSearch  = true;
+                self.lastOffset = 0,
                 self.search();
             }, 200);
         },
@@ -110,7 +117,9 @@ var panel52 = new Vue({
                     'categories': chkCat
                 })
                 .then(function (response) {
-                    //  logs
+                    if( self.newSearch ){
+                        self.logsCollection = [];
+                    }
                     self.logsCollection.extend(response.data.collection);
                     self.lastOffset += self.logsCollection.length;
                     self.dataloading = false;
@@ -138,7 +147,11 @@ var panel52 = new Vue({
                 return s.join(" ") + "...";
             }
             return str;
-        }
+        },
+        searchOnCheck : function(){
+            this.newSearch = true;
+            this.search();
+        },
 
     },
     mounted: function () {
@@ -151,6 +164,7 @@ var panel52 = new Vue({
             });
         });
     },
+    
 })
 
 var MainScope = new Vue({
@@ -179,6 +193,7 @@ var MainScope = new Vue({
 
                 if ($window.scrollTop() + $window.height() > $document.height() - 50) {
                     if (!panel.dataloading) {
+                        panel.newSearch = false;
                         panel.search();
                     }
                 }

@@ -83,7 +83,7 @@
                     </div>
                     <form class="scrollmenu new-scroll">
                             <fieldset class="form-group" v-for="(c, index) in categories">
-                                <input type="checkbox" class="filled-in" v-on:click="search" v-model="c.checked" v-bind:id="'chk' + index.toString()">
+                                <input type="checkbox" class="filled-in" v-on:click="searchOnCheck" v-model="c.checked" v-bind:id="'chk' + index.toString()">
                                 <label v-bind:for="'chk' + index.toString()" >@{{ c.c_name }}</label>
                             </fieldset>
                         </form>
