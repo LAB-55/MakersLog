@@ -13,14 +13,14 @@ class SearchController extends Controller
     {
       try {
         if($r->type=="user"){
-          return(['status'=>'1' , "collection" =>$this->byUser($r) ]);
+          return(['requestID' => $r->requestID, 'status'=>'1' , "collection" =>$this->byUser($r) ]);
         } elseif ($r->type=="post") {
-          return(['status'=>'1' , "collection" =>$this->byPost($r) ]);
+          return(['requestID' => $r->requestID, 'status'=>'1' , "collection" =>$this->byPost($r) ]);
         }else{
-          return json(['status'=>'0','error'=>"Undefined Search Category"]);
+          return json(['requestID' => $r->requestID, 'status'=>'0','error'=>"Undefined Search Category"]);
         }     	
       } catch (Exception $e) {
-      	return json(['status'=>'0','error'=>$e]);
+      	return json(['requestID' => $r->requestID, 'status'=>'0','error'=>$e]);
       }
     }
     public function byUser($r)

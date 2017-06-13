@@ -49,7 +49,8 @@
                             <div class="col-lg-12 pad-lr-30" v-if="users.length <= 0 && !dataloading" v-cloak>
                                 <div class="alert blue-text text-center" >Result Not Found</div>
                             </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 pad-lr-10 pad-tb-10" v-for="user in users">
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 pad-lr-10 pad-tb-10" 
+                            v-for="user in users">
                                 <div class="card testimonial-card view overlay hm-white-slight" v-cloak>
                                 
                                 <div class="card-up" :class="getColor(user.g_username,user.first_name,user.last_name)"></div>
@@ -69,7 +70,7 @@
                                 </div>
                                 </div>
                             </div>
-                            <div v-if="dataloading && !end_of_results" class="text-center col-sm-4 offset-sm-4"> @include('includes.isloading')</div>
+                            <div v-if="dataloading && !end_of_results" class="text-center row col-sm-12"> @include('includes.isloading')</div>
 
                     </div>
 
@@ -93,7 +94,9 @@
                         <div class="col-lg-12 pad-lr-30" v-if="logsCollection.length <= 0 && !dataloading" v-cloak>
                             <div class="alert blue-text text-center" >Result Not Found</div>
                         </div>
-                        <div class="col-md-12 pad-lr-10 pad-tb-10" v-for="p in logsCollection">
+                        <div class="col-md-12 pad-lr-10 pad-tb-10" 
+                            v-if="!dataloading && !self.newSearch"
+                            v-for="p in logsCollection">
                             <div class="media mb-1">
                                 <a target="_blank" :href="makeUrl(p.g_username)" class="media-left waves-light">
                                     <img class="rounded-circle-imp" v-bind:src="p.avatar" alt="image of @{{p.first_name}}" width="80">
@@ -111,7 +114,7 @@
                             </div>
                             <hr />
                         </div>
-                        <div v-if="dataloading && !end_of_results" class="text-center col-sm-4 offset-sm-4"> @include('includes.isloading')</div>
+                        <div v-if="dataloading && !end_of_results" class="text-center row col-sm-12"> @include('includes.isloading')</div>
                     </div>
                 <!--/.Panel 2-->
                 </div>

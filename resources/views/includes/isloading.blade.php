@@ -1,4 +1,4 @@
-
+<div class="col-sm-4 offset-sm-4"> 
   <div class="preloader-wrapper big active">
     <div class="preloader-wrapper big active">
        <div class="preloader-wrapper big active">
@@ -16,3 +16,4 @@
       </div>
     </div>
   </div> 
+</div>

@@ -14,23 +14,13 @@ var panel51 = new Vue({
         pdata       : [],
         lastOffset  : 0,
         end_of_results: false,
-        newSearch : true,
+        requestID   : 0,
+        expectedFrom : 0,
         colors      : ['red darken-1', 'grey darken-3', 'pink darken-1', 'teal darken-3', 'purple darken-2', 'yellow darken-2', 'indigo accent-4', 'green darken-2', 'deep-orange', 'deep-purple darken-3', 'mdb-color darken-3', 'cyan darken-2', 'brown']
     },
     mounted: function () {
-        var self            = this;
-        self.dataloading    = true;
-        axios.post('/api/search', {
-                'type'  : 'user',
-                'offset': 0,
-                'limit' : collectionSize,
-                'qry'   : "",
-            })
-            .then(function (response) {
-                self.users.extend(response.data.collection);
-                self.dataloading  = false;
-                self.lastOffset  += self.users.length;
-            });
+        var self = this;
+        self.search();
     },
 
     methods: {
@@ -39,29 +29,33 @@ var panel51 = new Vue({
             var self = this;
             timeout = setTimeout(function () {
               self.end_of_results = false;
-              self.newSearch = true;
-              self.lastOffset = 0,
+              self.lastOffset = 0;
+              self.users = [];
               self.search();
             }, 200);
         },
         search: function(){
             var self = this;
-            self.dataloading = true
-            axios.post('/api/search', {
+            self.requestID += 1;
+            self.expectedFrom = self.requestID;
+            self.dataloading = true;
+
+                axios.post('/api/search', {
                     'type': 'user',
                     'offset': self.lastOffset,
                     'limit': self.lastOffset + collectionSize,
-                    'qry': self.text
+                    'qry': self.text,
+                    'requestID' : self.requestID,
                 })
                 .then(function (response) {
-                    if( self.newSearch ){
-                        self.users = []
-                    }
-                    self.users.extend(response.data.collection);
-                    self.lastOffset += self.users.length;
-                    self.dataloading = false;
-                    if( response.data.collection.length == 0 ){
-                        self.end_of_results = true;
+                    if( response.data.requestID == self.expectedFrom )
+                    {                    
+                        self.users.extend(response.data.collection);
+                        self.lastOffset += self.users.length;
+                        self.dataloading = false;
+                        if( response.data.collection.length == 0 ){
+                            self.end_of_results = true;
+                        }
                     }
                 })
         },
@@ -97,8 +91,8 @@ var panel52 = new Vue({
             var self = this;
             timeout = setTimeout(function () {
                 self.end_of_results = false;
-                self.newSearch  = true;
-                self.lastOffset = 0,
+                self.lastOffset = 0;
+                self.logsCollection = [];
                 self.search();
             }, 200);
         },
@@ -117,9 +111,6 @@ var panel52 = new Vue({
                     'categories': chkCat
                 })
                 .then(function (response) {
-                    if( self.newSearch ){
-                        self.logsCollection = [];
-                    }
                     self.logsCollection.extend(response.data.collection);
                     self.lastOffset += self.logsCollection.length;
                     self.dataloading = false;
@@ -149,7 +140,9 @@ var panel52 = new Vue({
             return str;
         },
         searchOnCheck : function(){
-            this.newSearch = true;
+            self.end_of_results = false;
+            self.lastOffset = 0;
+            self.logsCollection = [];
             this.search();
         },
 
@@ -193,7 +186,6 @@ var MainScope = new Vue({
 
                 if ($window.scrollTop() + $window.height() > $document.height() - 50) {
                     if (!panel.dataloading) {
-                        panel.newSearch = false;
                         panel.search();
                     }
                 }
