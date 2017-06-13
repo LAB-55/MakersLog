@@ -95,7 +95,6 @@
                             <div class="alert blue-text text-center" >Result Not Found</div>
                         </div>
                         <div class="col-md-12 pad-lr-10 pad-tb-10" 
-                            v-if="!dataloading && !self.newSearch"
                             v-for="p in logsCollection">
                             <div class="media mb-1">
                                 <a target="_blank" :href="makeUrl(p.g_username)" class="media-left waves-light">

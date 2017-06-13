@@ -41,7 +41,7 @@ class SearchController extends Controller
       $txt=$r->qry;
       $offset=$r->offset;
       $limit=$r->limit;
-      $cat=$r->categories;
+      $cat=$r->categories ?? [];
       $result=DB::table('users')
               ->join('post_master','users.provider_id','=','post_master.provider_id')
               ->where(function ($q) use($txt){

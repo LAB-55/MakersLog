@@ -1,6 +1,6 @@
 $.ajaxSetup({
-            headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
-        });
+    headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
+});
         
 
 Array.prototype.extend = function ( ar ) {
@@ -19,7 +19,7 @@ var panel51 = new Vue({
         pdata       : [],
         lastOffset  : 0,
         end_of_results: false,
-        searchRequest : $.ajax(),
+        searchRequest : { abort : function(){} },
         colors      : ['red darken-1', 'grey darken-3', 'pink darken-1', 'teal darken-3', 'purple darken-2', 'yellow darken-2', 'indigo accent-4', 'green darken-2', 'deep-orange', 'deep-purple darken-3', 'mdb-color darken-3', 'cyan darken-2', 'brown']
     },
     mounted: function () {
@@ -35,15 +35,14 @@ var panel51 = new Vue({
               self.end_of_results = false;
               self.lastOffset = 0;
               self.users = [];
-              self.searchRequest.abort();
               self.search();
             }, 500);
         },
-        search: function(){
+        search: function(e){
 
             var self = this;
             self.dataloading = true;
-
+            self.searchRequest.abort();
                 self.searchRequest = $.post('/api/search', {
                     'type': 'user',
                     'offset': self.lastOffset,
@@ -73,6 +72,15 @@ var panel51 = new Vue({
     }
 });
 
+
+
+
+
+
+
+
+
+
 var panel52 = new Vue({
     el: "#panel52",
     data: {
@@ -83,8 +91,18 @@ var panel52 = new Vue({
         dataloading: false,
         lastOffset: 0,
         end_of_results: false,
+        searchRequest : { abort : function(){} },
     },
-
+    mounted: function () {
+        var self = this;
+        $.post('/api/category', {}).done(function (response) {
+            self.categories = response.collection.map(function (e) {
+                e.checked = false;
+                return e;
+            });
+        }); 
+        self.search();
+    },
     methods: {
         typed: function (e) {
             clearTimeout(timeout);
@@ -98,19 +116,21 @@ var panel52 = new Vue({
         },
         search: function (e) {
             var self = this;
+            self.dataloading = true;
+            self.searchRequest.abort();
+
             var chkCat = self.categories.filter(function (element) {
                 return element.checked
             });
-            // console.log(chkCat);
-            self.dataloading = true;
-            $.post('/api/search', {
+                self.searchRequest = $.post('/api/search', {
                     'type': 'post',
                     'offset': self.lastOffset,
                     'limit': self.lastOffset + collectionSize,
+                    'categories': chkCat,
                     'qry': self.text,
-                    'categories': chkCat
                 })
                 .done(function (response) {
+
                     self.logsCollection.extend(response.collection);
                     self.lastOffset += self.logsCollection.length;
                     self.dataloading = false;
@@ -140,22 +160,12 @@ var panel52 = new Vue({
             return str;
         },
         searchOnCheck : function(){
-            self.end_of_results = false;
-            self.lastOffset = 0;
-            self.logsCollection = [];
+            this.end_of_results = false;
+            this.lastOffset = 0;
+            this.logsCollection = [];
             this.search();
         },
 
-    },
-    mounted: function () {
-        var self = this;
-        self.search();
-        $.post('/api/category', {}).done(function (response) {
-            self.categories = response.collection.map(function (e) {
-                e.checked = false;
-                return e;
-            });
-        });
     },
     
 })
@@ -180,6 +190,7 @@ var MainScope = new Vue({
             } else {
                 panel = panel52;
             }
+            console.log(panel.$el)
             //throttle event:
             clearTimeout( throttleTimer );
              throttleTimer  = setTimeout(function () {
