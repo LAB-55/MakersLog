@@ -38,7 +38,7 @@
                             </div>
                         <div class="tasks_open">
                             <!--Card Primary-->
-                            <div class="card card-primary text-center task_card" v-for="(t, index) in tasks.open">
+                            <div class="card card-primary text-center task_card" v-for="(t, index) in tasks.open" :ref="'opencard'+index">
                                 <div class="card-block">
                                     <p class="white-text">@{{ t.task }}</p>
                                 </div>
@@ -69,7 +69,7 @@
                         </div>
                         <div class="card-block">
                             <div class="tasks">
-                            <div class="card card-warning text-center task_card" v-for="(t, index) in tasks.help">
+                            <div class="card card-warning text-center task_card" v-for="(t, index) in tasks.help" :ref="'helpcard'+index">
                                 <div class="card-block">
                                     <p class="white-text">@{{ t.task }}</p>
 
@@ -102,7 +102,7 @@
                         </div>
                         <div class="card-block">
                             <div class="tasks">
-                            <div class="card card-success text-center task_card" v-for="(t, index) in tasks.closed">
+                            <div class="card card-success text-center task_card" v-for="(t, index) in tasks.closed" :ref="'closedcard'+index">
                                 <div class="card-block">
                                     <p class="white-text">@{{ t.task }}</p>
                                 </div>
@@ -147,8 +147,12 @@
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
         });
-          
-       new Vue ({    
+          function AnimTask(refElm, style, fn ){
+            this.refElm = refElm;
+            this.style  = style;
+            this.fn = fn;
+          }
+       var task = new Vue ({    
             
             el: "#task",
             
@@ -159,8 +163,29 @@
                     help : [],
                     closed : [],
                 },
+                toAnimateBefore: [], 
+                toAnimateAfter: [], 
             },
-            
+            beforeUpdate : function(){
+                if( this.toAnimateBefore.length > 0 ){
+                    while(this.toAnimateBefore.length != 0 ){
+                        var animTask = this.toAnimateBefore.shift();
+                        // console.log('beforeUpdate', animTask.refElm )
+                        $( this.$refs[animTask.refElm][0] ).animateCss( animTask.style );
+                    }
+                        if( animTask.fn != undefined )
+                            setTimeout( animTask.fn, 750 );
+                }
+            },
+            updated:function(){
+                if( this.toAnimateAfter.length > 0 ){
+                    while(this.toAnimateAfter.length != 0 ){
+                        var animTask = this.toAnimateAfter.shift();
+                        // console.log('After Update', animTask.refElm )
+                        $( this.$refs[animTask.refElm][0] ).animateCss( animTask.style );
+                    }
+                }
+            },
             mounted:function () {
                 var self = this;
                 axios.post('/api/{{ $gusermail }}/tasks/show/', {})
@@ -182,17 +207,29 @@
                            toastr.info(self.newTask + " Added");
                             self.newTask = "";
                             self.tasks['open'].unshift(response.data.elm);
+                            self.toAnimateAfter.push( new AnimTask("opencard0", 'flipInX') )
                         });
                     }
+                    console.log(this.$refs);
                 },
                 deleteTask : function ( t, index, targetFrom ) {
                     if(confirm('Are you sure to delete?')){
                         var self = this;
+                        console.log(self.$refs[targetFrom+"card"+index][0]);
                         axios.post('/api/{{ $gusermail }}/tasks/delete', {
                                 id: t.id,
                         }).then(function (response) {
                             toastr.error(t.task + " Deleted");
-                            self.tasks[targetFrom].splice(index,1);
+                            var animTask =   new AnimTask ( 
+                                                            targetFrom+"card"+index,
+                                                            'rollOut', 
+                                                            function(){
+                                                             self.tasks[targetFrom].splice(index,1);
+                                                            }
+                                                        );
+                            self.toAnimateBefore.push( animTask );
+                            // $(self.$refs["opencard"+index][0]).animateCss('');
+
                         });
                     }
                 },
@@ -203,8 +240,20 @@
                     }).then(function (response) {
                         t.updated_at = response.data.updated_at;
                         toastr.info(t.task + " Added in to Remaining");
-                        self.tasks[targetFrom].splice(index,1);
+
+                        self.toAnimateBefore.push( new AnimTask ( 
+                                                            targetFrom + "card" + index,
+                                                            targetFrom == 'help' ? 'slideOutLeft' : 'slideOutRight',
+                                                            function(){  self.tasks[targetFrom].splice(index,1)  }
+                                                        )
+                                                 );
+
                         self.tasks.open.unshift(t);
+                        self.toAnimateAfter.push( new AnimTask (
+                                                        "opencard0",
+                                                        targetFrom == 'help' ? 'slideInRight' : 'slideInLeft',
+                                                    )
+                                                );
                     });
                 },
                 helpTask : function ( t, index, targetFrom) {
@@ -214,8 +263,19 @@
                     }).then(function (response) {
                         t.updated_at = response.data.updated_at;
                         toastr.warning(t.task + " Added in to Help Wanted!");
-                        self.tasks[targetFrom].splice(index,1);
+
+                        self.toAnimateBefore.push( new AnimTask (
+                                                        targetFrom + "card" + index,
+                                                        targetFrom == 'closed' ? 'slideOutLeft' : 'slideOutRight',
+                                                        function(){ self.tasks[targetFrom].splice(index,1); }
+                                                    )
+                                                );
                         self.tasks.help.unshift(t);
+                        self.toAnimateAfter.push( new AnimTask (
+                                                        "helpcard0",
+                                                        targetFrom == 'closed' ? 'slideInRight' : 'slideInLeft',
+                                                    )
+                                                );
                     });
                 },
                 closedTask : function ( t, index, targetFrom) {
@@ -226,8 +286,21 @@
                     }).then(function (response) {
                         t.updated_at = response.data.updated_at;
                         toastr.success(t.task + " Added in to Completed");
-                        self.tasks[targetFrom].splice(index,1);
+                        
+                        self.toAnimateBefore.push( new AnimTask (
+                                                        targetFrom + "card" + index,
+                                                        targetFrom == 'open' ? 'slideOutLeft' : 'slideOutRight',
+                                                        function(){ self.tasks[targetFrom].splice(index,1); }
+                                                    )
+                                                );
+                        
                         self.tasks.closed.unshift(t);
+                        self.toAnimateAfter.push( new AnimTask (
+                                                        "closedcard0",
+                                                        targetFrom == 'open' ? 'slideInRight' : 'slideInLeft',
+                                                    )
+                                                );                       
+
                     });
                 },
             },
