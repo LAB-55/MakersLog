@@ -25,10 +25,10 @@ class PostController extends Controller
 	    	// $input['created_at']=$t;
 	    	// $input['updated_at']=$t;
 	    	$i_cat = [];
-				
+
 				foreach ($r->categories as $key => $value)
 	    			array_push($i_cat, $value['name']);
-	    	
+
 	    	$input['categories']=implode(',',$i_cat ).",";
 	    	$id=Post::insertGetId($input);
 	    	foreach ($i_cat as $key => $cname) {
@@ -39,12 +39,12 @@ class PostController extends Controller
 	    		$catmap->save();
 	    	}
     		return(['status'=>'1']);
-    		
+
     	} catch (Exception $e) {
     		return(['status'=>'0','error'=>$e]);
     	}
-    	
-    	
+
+
     }
     public function update(Request $r)
     {
@@ -55,24 +55,27 @@ class PostController extends Controller
 	    	$input['p_short_dec']=$r->p_short_desc;
 	    	$input['p_content']=$r->p_content;
 	    	$input['uri']= str_slug($r->p_title, "-");
-	    	$c_at=Post::select('created_at')->first();
-	    	$t=time();
-	    	$input['created_at']=$c_at;
-	    	$input['updated_at']=$t;
+	    	$c_at=Post::select('created_at')->where('p_id',$r->p_id)->first();
+	    	$input['created_at']=$c_at['created_at'];
 	    	Post::where('p_id',$input['p_id'])->update(['is_latest' => '0']);
-	    	$input['categories']=implode(',', $r->categories).",";
+        $i_cat = [];
+
+				foreach ($r->categories as $key => $value)
+	    			array_push($i_cat, $value['name']);
+
+	    	$input['categories']=implode(',',$i_cat ).",";
 	    	$id=Post::insertGetId($input);
 	    	$cats=$r->categories;
 	    	CategoryMap::where('p_id',$input['p_id'])->delete();
-	    	foreach ($cats as $key => $cname) {
+        foreach ($i_cat as $key => $cname) {
 	    		$catmap=new CategoryMap;
 	    		$catmap->p_id=$input['p_id'];
 	    		$catmap->provider_id=$input['provider_id'];
-	    		$catmap->$cname;
+	    		$catmap->c_name = $cname;
 	    		$catmap->save();
 	    	}
     		return(['status'=>'1']);
-    		
+
     	} catch (Exception $e) {
     		return(['status'=>'0','error'=>$e]);
     	}

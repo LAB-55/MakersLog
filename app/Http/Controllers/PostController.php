@@ -35,4 +35,14 @@ class PostController extends Controller
         }
         return (["say"=> base64_encode("bhai e back button maryu.") ]);
     }
+    public function update(Request $r,$id)
+    {
+      $provider_id=Auth::user()->provider_id;
+      $post=Post::where('p_id',$id)->where('is_latest','1')->where('delete','0')->first();
+      if ($post->provider_id != $provider_id) {
+          return '<h1>404 Not Found</h1>';
+      }
+      //dd($post->categories);
+      return view('editpost')->with('p',$post)->with('meta',Meta::get('Edit Log'));;
+    }
 }
