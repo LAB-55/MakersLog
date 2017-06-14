@@ -14,7 +14,7 @@
     </header>
 
     <!--Main layout-->
-     <main class="">
+     <main class="" id="app-main">
             <div class="container-fluid">
                 <!-- First row -->
                 <div class="row">
@@ -57,13 +57,21 @@
                                         <div class="card-block">
 
                                             <div class="list-group">
-                                              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                                              
+                                              <a class="list-group-item list-group-item-action flex-column align-items-start"
+                                                v-cloak
+                                                v-for="(p, index) in logsCollection"
+                                                :href="getUrl(p)"
+                                              >
                                                 <div class="d-flex w-100 justify-content-between">
-                                                  <h4 class="mb-1">Lambu Lambu title { { p.title } } </h4>
-                                                  <small> { { p.time_ago } }</small>
+                                                  <h4 class="mb-1 blue-text"> @{{ p.p_title }} </h4>
+                                                  <small class="blue-grey-text">
+                                                  <i class="fa fa-clock-o " area-hidden="true"></i>
+                                                   @{{ p.created_at }}</small>
                                                 </div>
-                                                <p class="mb-1">{ { p.p_short_dec. } }</p>
+                                                <p class="mb-1">@{{ p.p_short_dec }}</p>
                                               </a>
+
                                             </div>
                                             
                                         </div>
@@ -82,12 +90,37 @@
         </main>
     <!--/Main layout-->
 
-    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-        <a data-toggle="tooltip" data-placement="left" title="Add new log" class="btn-floating btn-large red">
+    <div class="fx-action-btn" style="bottom: 45px; right: 24px;">
+        <a data-toggle="tooltip" href="/log/new" data-placement="left" title="Add new log" class="btn-floating btn-large red">
             <i class="fa fa-pencil"></i>
         </a>
     </div>
     @include('includes.footerscripts')
+    <script type="text/javascript">
+
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        var RootScope = new Vue({
+            el: "#app-main",
+            data : {
+                logsCollection : [],
+                dataloading : false,
+                gusermail : document.location.pathname.replace( /\//g,""),
+            },
+            methods:{
+              getUrl: function (p) {
+                    return "/"+this.gusermail+"/"+p.p_id+"/"+p.uri;
+                },
+            },
+            mounted:function () {
+                var self = this;
+                axios.post('/api/logs/'+this.gusermail,{ }).then(function( response ){
+                    self.logsCollection = response.data.collection;
+                })
+            }   
+
+        })
+    </script>
 </body>
 
 </html>

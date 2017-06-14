@@ -2,7 +2,6 @@ $.ajaxSetup({
     headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
 });
         
-
 Array.prototype.extend = function ( ar ) {
     ar.forEach(function (v) {
         this.push(v)
@@ -175,7 +174,7 @@ var MainScope = new Vue({
     mounted: function () {
         var self = this;
         var throttleTimer = null;
-        var throttleDelay = 100;
+        var throttleDelay = 200;
         var $window = $(window);
         var $document = $(document);
 
@@ -190,7 +189,7 @@ var MainScope = new Vue({
             } else {
                 panel = panel52;
             }
-            console.log(panel.$el)
+            // console.log(panel.$el)
             //throttle event:
             clearTimeout( throttleTimer );
              throttleTimer  = setTimeout(function () {
