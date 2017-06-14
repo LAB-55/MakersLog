@@ -109,7 +109,7 @@
             },
             methods:{
               getUrl: function (p) {
-                    return "/"+self.gusermail+"/"+p.p_id+"/"+p.uri;
+                    return "/"+this.gusermail+"/"+p.p_id+"/"+p.uri;
                 },
             },
             mounted:function () {

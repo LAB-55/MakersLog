@@ -51,7 +51,7 @@
                         <div>
                                <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">Publish</button>
                                 <button 
-                                    v-on:click="justShow"
+                                    v-on:click="discardPost"
                                     class="btn red btn-danger waves-effect offset-md-2"> Discard</button> 
                         </div>
                         <br>
@@ -105,9 +105,9 @@
             <!-- /.Section: Create Page -->
         </div>
     </main>
+    @include('includes.footerscripts')
     @include('includes.models')
     <!--/Main layout-->
-    @include('includes.footerscripts')
     <script type="text/javascript">
     
         // window.history.pushState('obj', '', '/?tab=recent');
@@ -241,20 +241,26 @@
 
                             }).then(function (response) {
                                 pushing = false;
+                                this.justShow();
                                 // console.log(response.data);
 
                                 // toastr.success("Post added");
-                                // location.reload();
                             })
 
                     return false;
-                }, justShow:function(){           
-                    $('#publishedModalInfo').modal({
-                            backdrop:'static'
-                    }).modal('show')
- 
-                    // $('#publishedModalInfo').modal('show')
-                }
+                }, justShow:function(){
+                    try {
+                        $('#publishedModalInfo').modal({
+                                backdrop:'static'
+                        })    
+                        $('#publishedModalInfo').modal('show')
+                    }catch(ex){
+                        console.info("Caught: model is transitioning")
+                    }
+                 },
+                 discardPost : function(){
+                    confirm('Are you sure to discard all these?') ? location.reload() : null;
+                 }
 
             },//methods
             watch: {
