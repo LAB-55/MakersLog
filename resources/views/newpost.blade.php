@@ -50,7 +50,9 @@
 
                         <div>
                                <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">Publish</button>
-                                <button class="btn red btn-danger waves-effect offset-md-2"> Discard</button> 
+                                <button 
+                                    v-on:click="discardPost"
+                                    class="btn red btn-danger waves-effect offset-md-2"> Discard</button> 
                         </div>
                         <br>
                         <!-- Second card -->
@@ -103,8 +105,9 @@
             <!-- /.Section: Create Page -->
         </div>
     </main>
-    <!--/Main layout-->
     @include('includes.footerscripts')
+    @include('includes.models')
+    <!--/Main layout-->
     <script type="text/javascript">
     
         // window.history.pushState('obj', '', '/?tab=recent');
@@ -237,14 +240,27 @@
                                     categories: categoriesToPush,
 
                             }).then(function (response) {
-                                // pushing = false;
-                                console.log(response.data);
-                                toastr.success("Post added");
-                                location.reload();
+                                pushing = false;
+                                this.justShow();
+                                // console.log(response.data);
+
+                                // toastr.success("Post added");
                             })
 
                     return false;
-                }
+                }, justShow:function(){
+                    try {
+                        $('#publishedModalInfo').modal({
+                                backdrop:'static'
+                        })    
+                        $('#publishedModalInfo').modal('show')
+                    }catch(ex){
+                        console.info("Caught: model is transitioning")
+                    }
+                 },
+                 discardPost : function(){
+                    confirm('Are you sure to discard all these?') ? location.reload() : null;
+                 }
 
             },//methods
             watch: {
@@ -259,4 +275,4 @@
     </script>
 </body>
 
-</html>
+</html>`

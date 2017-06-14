@@ -77,7 +77,7 @@ class PresentationController extends Controller
         // $file = Input::file('ppt');
         // $extension = $file->extension();
         // $filename = $title.'.'.$extension;
-        // //$filename = $file->getClientOriginalName();
+        // $filename = $file->getClientOriginalName();
         // $file->move(public_path().'/presentation', $filename);
         
         // $content = file_get_contents(public_path().'/presentation/'.$filename);
