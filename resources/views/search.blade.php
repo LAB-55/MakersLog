@@ -29,7 +29,7 @@
                         Fellow Makers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link waves-light" data-toggle="tab" href="#panel52" role="tab">
+                        <a class="nav-link waves-light" id="recentLogs" data-toggle="tab" href="#panel52" role="tab">
                         <i class="fa fa-list-ul pad-lr-10"></i>
                         Recent Logs</a>
                     </li>
