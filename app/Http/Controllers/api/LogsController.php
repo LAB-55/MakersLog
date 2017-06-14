@@ -18,7 +18,9 @@ class LogsController extends Controller
 	    		$logs = Post::Select('*')
 	    						->Where('provider_id', $user->provider_id)
 	    						->Where('is_latest', '1')
-	    						->Where('delete', '0')->get();
+	    						->Where('delete', '0')
+								->orderBy('created_at', 'desc')
+	    						->get();
 		    	
 		    	return ['status'=>'1' , "collection" =>$logs ];
 	    	}

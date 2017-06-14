@@ -13252,3 +13252,36 @@ ul.striped li {
 .mdb-skin .dropdown-primary .dropdown-content li a:hover,
 .mdb-skin .dropdown-primary .dropdown-content li span:hover {
   background-color: #1dade2; }
+
+/*modals*/
+
+.modal-dialog.modal-notify.modal-success .badge,
+.modal-dialog.modal-notify.modal-success .modal-header {
+    background-color: #01d36b
+}
+.modal-dialog.modal-notify.modal-success .fa {
+    color: #01d36b
+}
+.modal-dialog.modal-notify.modal-success .btn-primary-modal {
+    background: #01d36b
+}
+.modal-dialog.modal-notify.modal-success .btn-primary-modal:active,
+.modal-dialog.modal-notify.modal-success .btn-primary-modal:focus,
+.modal-dialog.modal-notify.modal-success .btn-primary-modal:hover {
+    background-color: #01ec78!important
+}
+.modal-dialog.modal-notify.modal-success .btn-primary-modal.active {
+    background-color: #016d38!important
+}
+.modal-dialog.modal-notify.modal-success .btn-outline-secondary-modal {
+    border: 2px solid #01d36b;
+    color: #01d36b!important
+}
+
+#publishedModalInfo{
+  margin-top:  8rem;
+}
+.modal-dialog.modal-notify.modal-success .btn-primary-modal.active,{
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15)
+}

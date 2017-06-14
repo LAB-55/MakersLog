@@ -50,7 +50,9 @@
 
                         <div>
                                <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">Publish</button>
-                                <button class="btn red btn-danger waves-effect offset-md-2"> Discard</button> 
+                                <button 
+                                    v-on:click="justShow"
+                                    class="btn red btn-danger waves-effect offset-md-2"> Discard</button> 
                         </div>
                         <br>
                         <!-- Second card -->
@@ -103,6 +105,7 @@
             <!-- /.Section: Create Page -->
         </div>
     </main>
+    @include('includes.models')
     <!--/Main layout-->
     @include('includes.footerscripts')
     <script type="text/javascript">
@@ -237,13 +240,20 @@
                                     categories: categoriesToPush,
 
                             }).then(function (response) {
-                                // pushing = false;
-                                console.log(response.data);
-                                toastr.success("Post added");
-                                location.reload();
+                                pushing = false;
+                                // console.log(response.data);
+
+                                // toastr.success("Post added");
+                                // location.reload();
                             })
 
                     return false;
+                }, justShow:function(){           
+                    $('#publishedModalInfo').modal({
+                            backdrop:'static'
+                    }).modal('show')
+ 
+                    // $('#publishedModalInfo').modal('show')
                 }
 
             },//methods
@@ -259,4 +269,4 @@
     </script>
 </body>
 
-</html>
+</html>`

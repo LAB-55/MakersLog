@@ -65,7 +65,7 @@
                         $l = count( $ar );
                         for($i = 0; $i < $l - 1 ; $i++) {
                             $val = $ar[$i];
-                            echo "<a target='_blank' class='btn btn-outline-secondary light-blue lighten-4 waves-effect ' href='/?cat=".$val."'>".$val."</a>";
+                            echo "<a target='_blank' class='btn btn-outline-secondary light-blue lighten-4 waves-effect' href='/?cat=".$val."'>".$val."</a>";
                             
                         }
                     }
