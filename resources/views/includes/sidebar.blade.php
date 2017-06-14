@@ -60,6 +60,7 @@
                     <li><a href="invoice.html" class="collapsible-header waves-effect arrow-r"><i class="fa fa-money"></i> Invoice</a>
                     <li><a href="support.html" class="collapsible-header waves-effect arrow-r"><i class="fa fa-support"></i> Support</a>
                     <li><a href="faq.html" class="collapsible-header waves-effect arrow-r"><i class="fa fa-question-circle" aria-hidden="true"></i> FAQ</a> -->
+                    <li><a href="{{ route('gusermail', ['gusermail' => $meta['gusermail']] ) }}" class="waves-effect">My Logs</a></li>
                     <li><a href="{{ route('getProfile', ['gusermail' => $meta['gusermail']] ) }}" class="waves-effect">Edit Account</a></li>
                     <li><a href="{{ route('presentations', ['gusermail' => $meta['gusermail']] ) }}" class="waves-effect">Presentations</a></li>
                     <li><a href="{{ route('tasks', ['gusermail' => $meta['gusermail']] ) }}" class="waves-effect">Tasks</a></li>
