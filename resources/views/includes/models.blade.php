@@ -21,4 +21,13 @@
         <!--/.Content-->
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#publishedModalInfo').on('hidden.bs.modal', function (e) {
+            location.reload();                    
+        })
+
+    })
+
+</script>
 <!-- Central Modal Medium Info-->
