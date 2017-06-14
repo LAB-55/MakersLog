@@ -73,14 +73,14 @@ class PresentationController extends Controller
     }
 
     public function uploadPresentation(Request $request, $gusermail) {
-        // $title = $request->title;
-        // $file = Input::file('ppt');
-        // $extension = $file->extension();
-        // $filename = $title.'.'.$extension;
-        // $filename = $file->getClientOriginalName();
-        // $file->move(public_path().'/presentation', $filename);
+        $title = $request->title;
+        $file = Input::file('ppt');
+        $extension = $file->extension();
+        $filename = $title.'.'.$extension;
+        $filename = $file->getClientOriginalName();
+        $file->move(public_path().'/presentation', $filename);
         
-        // $content = file_get_contents(public_path().'/presentation/'.$filename);
+        $content = file_get_contents(public_path().'/presentation/'.$filename);
 
         $client = $this->getClient();
         $service = new Google_Service_Drive($client);
