@@ -136,13 +136,22 @@
 
 
 /* task.blade.php */
-.card-block.tasks {
-    height: 500px;
+.tasks_open {
+    height: 390px;
+    overflow-y: auto;
+}
+
+.tasks {
+    height: 460px;
     overflow-y: auto;
 }
 
 .task_card {
 	margin-top: 10px;
 	margin-bottom: 10px;
+}
+
+.task_card .card-data ul li i {
+	cursor: pointer;
 }
 /* task.blade.php */

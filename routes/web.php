@@ -33,7 +33,13 @@ Route::group(['prefix' => 'api','namespace'=>'api'], function () {
     Route::post('log/update','PostController@update');
     Route::post('category','CategoryController@index');
     Route::post('category/add','CategoryController@create');
-    Route::get('logs/{gusermail}','LogsController@index');
+    Route::post('logs/{gusermail}','LogsController@index');
+	Route::post('/{gusermail}/tasks/show', 'TasksController@showTasks');
+	Route::post('/{gusermail}/tasks/add', 'TasksController@create');
+    Route::post('/{gusermail}/tasks/delete', 'TasksController@delete');
+    Route::post('/{gusermail}/tasks/open', 'TasksController@openUpdate');
+	Route::post('/{gusermail}/tasks/help', 'TasksController@helpUpdate');
+	Route::post('/{gusermail}/tasks/closed', 'TasksController@closedUpdate');
 });
 
 // ---------------------------------------------------
@@ -47,6 +53,6 @@ Route::get('/{gusermail}/presentations', 'PresentationController@presentations')
 Route::post('/{gusermail}/presentations', 'PresentationController@uploadPresentation')->name('uploadPresentation');
 Route::get('/{gusermail}/presentations/{title}', 'PresentationController@presentationView')->name('presentationView');
 
-Route::get('/{gusermail}/tasks', 'TasksController@showTasks')->name('showTasks');
+Route::get('/{gusermail}/tasks', 'TasksController@index')->name('tasks');
 
 Route::get('/{gusermail}/{pid}/{slug}', 'PostController@individual')->name('individial');

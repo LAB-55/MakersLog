@@ -10,7 +10,6 @@ class Task extends Model
     protected $fillable = [
        'id',
        'provider_id',
-       'task_id',
        'task',
        'status'
    ];

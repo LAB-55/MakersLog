@@ -3,6 +3,7 @@
 
 <head>
     @include('includes.head')
+    <script type="text/javascript" src="/js/vendor/tinymce/tinymce.min.js"></script>
 </head>
 
     <body class="@if(Auth::check()) fixed-sn @else hidden-sn @endif white-skin">
@@ -14,175 +15,102 @@
     </header>
 
     <!--Main layout-->
-    <main class="">
-        <div class="container-fluid">
+    <main class="" id="task">
+        <div class="container-fluid" v-cloak>
             <div class="row">
-                
+
                 <!-- First Col -->
                 <div class="col-md-4">
                     <!--Panel-->
                     <div class="card">
-                        <div class="card-header primary-color white-text">
-                            Remaining
+                        <div class="card-header blue-color darken-2 white-text">
+                           <i class="fa fa-sticky-note pad-lr-20"></i> Remaining
                         </div>
-                        <div class="card-block tasks">
+                        <div class="card-block">
                             <div class="form-group">
-                                <input type="text" id="addtask" class="form-control" name="addtask" placeholder="Add New Task" name="addtask" />
+                                <input  type="text" 
+                                        id="task" 
+                                        class="form-control" 
+                                        name="task" 
+                                        placeholder="Add New Task"
+                                        v-model="newTask"
+                                        v-on:keyup.enter="addTask" />
                             </div>
+                        <div class="tasks_open">
                             <!--Card Primary-->
-                            <div class="card card-primary text-center z-depth-2 task_card">
+                            <div class="card card-primary text-center task_card" v-for="(t, index) in tasks.open">
                                 <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                    <p class="white-text">@{{ t.task }}</p>
+                                </div>
+                                <div class="card-data">
+                                    <ul>
+                                        <li><i type="submit" class="fa fa-question pad-lr-20" v-on:click="helpTask(t,index,'open')" title="Help Wanted!"></i></li>
+                                        <li><i type="submit" class="fa fa-check pad-lr-20" v-on:click="closedTask(t,index,'open')" title="Completed"></i></li>
+                                        <li><i type="submit" class="fa fa-trash pad-lr-20" v-on:click="deleteTask(t,index,'open')" title="Delete"></i></li>
+                                    </ul>
                                 </div>
                             </div>
                             <!--/.Card Primary-->
-                            <!--Card Danger-->
-                            <div class="card card-danger text-center z-depth-2 task_card">
-                                <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
-                            </div>
-                            <!--/.Card Danger-->
-                            <!--Card Success-->
-                            <div class="card card-success text-center z-depth-2 task_card">
-                                <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
-                            </div>
-                            <!--/.Card Success-->
-                            <!--Card Warning-->
-                            <div class="card card-warning text-center z-depth-2 task_card">
-                                <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
-                            </div>
-                            <!--/.Card Warning-->
-                            <!--Card Info-->
-                            <div class="card card-info text-center z-depth-2 task_card">
-                                <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
-                            </div>
-                            <!--/.Card Info-->
-                            <!--Card Default-->
-                            <div class="card default-color text-center z-depth-2 task_card">
-                                <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
-                            </div>
-                            <!--/.Card Default-->
+                        </div>
                         </div>
                     </div>
                     <!--/.Panel-->
                 </div>
                 <!--/.First Col -->
 
-                <!-- First Col -->
+                <!-- Second Col -->
                 <div class="col-md-4">
                     <!--Panel-->
                     <div class="card">
-                        <div class="card-header primary-color white-text">
-                            Help Me
+                        <div class="card-header warning-color white-text">
+                            <i class="fa fa-question pad-lr-20"></i> Help Wanted
                         </div>
-                        <div class="card-block tasks">
-                            <!--Card Primary-->
-                            <div class="card card-primary text-center z-depth-2 task_card">
+                        <div class="card-block">
+                            <div class="tasks">
+                            <div class="card card-warning text-center task_card" v-for="(t, index) in tasks.help">
                                 <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                    <p class="white-text">@{{ t.task }}</p>
+
                                 </div>
+                                <div class="card-data">
+                                    <ul>
+                                        <li><i type="submit" class="fa fa-sticky-note pad-lr-20" v-on:click="openTask(t,index,'help')" title="Remaining"></i></li>
+                                        <li><i type="submit" class="fa fa-check pad-lr-20" v-on:click="closedTask(t,index,'help')" title="Completed"></i></li>
+                                        <li><i type="submit" class="fa fa-trash pad-lr-20" v-on:click="deleteTask(t,index,'help')" title="Delete"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
                             </div>
                             <!--/.Card Primary-->
-                            <!--Card Danger-->
-                            <div class="card card-danger text-center z-depth-2 task_card">
-                                <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
-                            </div>
-                            <!--/.Card Danger-->
-                            <!--Card Success-->
-                            <div class="card card-success text-center z-depth-2 task_card">
-                                <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
-                            </div>
-                            <!--/.Card Success-->
-                            <!--Card Warning-->
-                            <div class="card card-warning text-center z-depth-2 task_card">
-                                <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
-                            </div>
-                            <!--/.Card Warning-->
-                            <!--Card Info-->
-                            <div class="card card-info text-center z-depth-2 task_card">
-                                <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
-                            </div>
-                            <!--/.Card Info-->
-                            <!--Card Default-->
-                            <div class="card default-color text-center z-depth-2 task_card">
-                                <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
-                            </div>
-                            <!--/.Card Default-->
                         </div>
+                            
                     </div>
                     <!--/.Panel-->
                 </div>
-                <!--/.First Col -->
+                <!--/.Second Col -->
 
-                <!-- First Col -->
+                <!-- Third Col -->
                 <div class="col-md-4">
                     <!--Panel-->
                     <div class="card">
-                        <div class="card-header primary-color white-text">
-                            Completed
+                        <div class="card-header success-color white-text">
+                            <i class="fa fa-check pad-lr-20"></i> Completed
                         </div>
-                        <div class="card-block tasks">
-                            <!--Card Primary-->
-                            <div class="card card-primary text-center z-depth-2 task_card">
+                        <div class="card-block">
+                            <div class="tasks">
+                            <div class="card card-success text-center task_card" v-for="(t, index) in tasks.closed">
                                 <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                    <p class="white-text">@{{ t.task }}</p>
+                                </div>
+                                <div class="card-data">
+                                    <ul>     
+                                        <li><i type="submit" class="fa fa-sticky-note pad-lr-20" v-on:click="openTask(t,index,'closed')" title="Remaining"></i></li>
+                                        <li><i type="submit" class="fa fa-question pad-lr-20" v-on:click="helpTask(t,index,'closed')" title="Help Wanted!"></i></li>
+                                        <li><i type="submit" class="fa fa-trash pad-lr-20" v-on:click="deleteTask(t,index,'closed')" title="Delete"></i></li>
+                                    </ul>
                                 </div>
                             </div>
-                            <!--/.Card Primary-->
-                            <!--Card Danger-->
-                            <div class="card card-danger text-center z-depth-2 task_card">
-                                <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
                             </div>
-                            <!--/.Card Danger-->
-                            <!--Card Success-->
-                            <div class="card card-success text-center z-depth-2 task_card">
-                                <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
-                            </div>
-                            <!--/.Card Success-->
-                            <!--Card Warning-->
-                            <div class="card card-warning text-center z-depth-2 task_card">
-                                <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
-                            </div>
-                            <!--/.Card Warning-->
-                            <!--Card Info-->
-                            <div class="card card-info text-center z-depth-2 task_card">
-                                <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
-                            </div>
-                            <!--/.Card Info-->
-                            <!--Card Default-->
-                            <div class="card default-color text-center z-depth-2 task_card">
-                                <div class="card-block">
-                                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
-                            </div>
-                            <!--/.Card Default-->
                         </div>
                     </div>
                     <!--/.Panel-->
@@ -205,6 +133,105 @@
         </a>
     </div>
     @include('includes.footerscripts')
+    <script type="text/javascript">
+    
+        // window.history.pushState('obj', '', '/?tab=recent');
+
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        $.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
+        });
+          
+       new Vue ({    
+            
+            el: "#task",
+            
+            data : {
+                newTask : "",
+                tasks   : {
+                    open : [],
+                    help : [],
+                    closed : [],
+                },
+            },
+            
+            mounted:function () {
+                var self = this;
+                axios.post('/api/{{ $gusermail }}/tasks/show/', {})
+                .then(function (response) {
+                    response.data.collection.forEach(function(elm, index){
+                        self.tasks[ elm.status ].unshift(elm);
+                    })
+               })
+            },
+            
+            methods: {
+                addTask : function ( e ) {
+                    if( this.newTask != "" ) {
+                        var self = this;
+                        axios.post('/api/{{ $gusermail }}/tasks/add', {
+                                task: self.newTask,
+                        }).then(function (response) {
+                           toastr.info(self.newTask + " Added");
+                            self.newTask = "";
+                            self.tasks['open'].unshift(response.data.elm);
+                        });
+                    }
+                },
+                deleteTask : function ( t, index, targetFrom ) {
+                    if(confirm('Are you sure to delete?')){
+                        var self = this;
+                        axios.post('/api/{{ $gusermail }}/tasks/delete', {
+                                id: t.id,
+                        }).then(function (response) {
+                            toastr.error(t.task + " Deleted");
+                            self.tasks[targetFrom].splice(index,1);
+                        });
+                    }
+                },
+                openTask : function ( t, index, targetFrom) {
+                    var self = this;
+                    axios.post('/api/{{ $gusermail }}/tasks/open', {
+                            id: t.id,
+                    }).then(function (response) {
+                        toastr.info(t.task + " Added in to Remaining");
+                        self.tasks[targetFrom].splice(index,1);
+                        self.tasks.open.unshift(t);
+                    });
+                },
+                helpTask : function ( t, index, targetFrom) {
+                    var self = this;             
+                    axios.post('/api/{{ $gusermail }}/tasks/help', {
+                            id: t.id,
+                    }).then(function (response) {
+                        toastr.warning(t.task + " Added in to Help Wanted!");
+                        self.tasks[targetFrom].splice(index,1);
+                        self.tasks.help.unshift(t);
+                    });
+                },
+                closedTask : function ( t, index, targetFrom) {
+                    var self = this;
+                              
+                    axios.post('/api/{{ $gusermail }}/tasks/closed', {
+                            id: t.id,
+                    }).then(function (response) {
+                        toastr.success(t.task + " Added in to Completed");
+                        self.tasks[targetFrom].splice(index,1);
+                        self.tasks.closed.unshift(t);
+                    });
+                },
+            },
+            watch: {
+                page :function( val ){
+                    if( !this.page ){
+                        window.location = "/?auth=0&failed=true";
+                    }
+                }
+            },
+        })
+
+    </script>
+
 </body>
 
 </html>
