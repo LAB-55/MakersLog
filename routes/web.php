@@ -18,9 +18,10 @@ Route::get('/', 'RootController@index')->name('indexroot');
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('/log/view/{id}', 'RootController@showPost');
 Route::group(['middleware' => 'auth'], function () {
   Route::get('/log/new', 'PostController@index');
-   Route::get('/log/edit/{id}', 'PostController@update');
+  Route::get('/log/edit/{id}', 'PostController@update');
 });
 
 
@@ -33,19 +34,19 @@ Route::group(['prefix' => 'api','namespace'=>'api'], function () {
     Route::post('category','CategoryController@index');
     Route::post('category/add','CategoryController@create');
     Route::post('logs/{gusermail}','LogsController@index');
-	Route::post('/{gusermail}/tasks/show', 'TasksController@showTasks');
-	Route::post('/{gusermail}/tasks/add', 'TasksController@create');
+	  Route::post('/{gusermail}/tasks/show', 'TasksController@showTasks');
+	  Route::post('/{gusermail}/tasks/add', 'TasksController@create');
     Route::post('/{gusermail}/tasks/delete', 'TasksController@delete');
     Route::post('/{gusermail}/tasks/open', 'TasksController@openUpdate');
-	Route::post('/{gusermail}/tasks/help', 'TasksController@helpUpdate');
-	Route::post('/{gusermail}/tasks/closed', 'TasksController@closedUpdate');
+	  Route::post('/{gusermail}/tasks/help', 'TasksController@helpUpdate');
+	  Route::post('/{gusermail}/tasks/closed', 'TasksController@closedUpdate');
 });
 
 // ---------------------------------------------------
 
 Route::get('/{gusermail}', 'RootController@userpage')->name('gusermail');
 Route::get('/{gusermail}/profile', 'ProfileController@index')->name('getProfile');
-Route::post('/{gusermail}/profile', 'ProfileController@store')->name('postProfile');
+Route::post('/{gusermail}/profile', 'ProfileController@store');
 Route::get('/{gusermail}/presentations', 'PresentationController@presentations')->name('presentations');
 Route::post('/{gusermail}/presentations', 'PresentationController@uploadPresentation')->name('uploadPresentation');
 Route::get('/{gusermail}/presentations/{title}', 'PresentationController@presentationView')->name('presentationView');
