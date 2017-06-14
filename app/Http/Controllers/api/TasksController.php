@@ -9,6 +9,7 @@ use App\User;
 use App\Task;
 use Auth;
 use Redirect;
+use Carbon;
 
 class TasksController extends Controller
 {
@@ -23,6 +24,13 @@ class TasksController extends Controller
 			$tasks = Task::Select('*')
 									->Where('provider_id', $provider_id['provider_id'])
 									->get();
+            if ($tasks) {
+                $tasks = collect($tasks)->map(function ($item) {
+                    $data               = $item->toArray();
+                    $data['updated_at'] = $item->updated_at->diffForHumans();
+                    return $data;
+                });
+            }
 			return ['status'=>'1' , "collection" =>$tasks ];
         }
         catch (Exception $e) {
@@ -43,7 +51,8 @@ class TasksController extends Controller
             $task->status = 'open';
             $task->save();
             $id = $task->id;
-    		return(['status'=>'1','elm'=>$task]);
+            $time = Carbon\Carbon::now()->diffForHumans();
+    		return(['status'=>'1','elm'=>$task, 'updated_at'=>$time]);
     	} catch (Exception $e) {
     		return(['status'=>'0','error'=>$e]);
     	}
@@ -59,6 +68,7 @@ class TasksController extends Controller
            Task::Where("id",$r->id)
                                 ->Where("provider_id",$provider_id['provider_id'])
                                 ->delete();
+
             return(['status'=>'1']);
         } catch (Exception $e) {
             return(['status'=>'0','error'=>$e]);
@@ -66,16 +76,15 @@ class TasksController extends Controller
     }
 
     public function openUpdate(Request $r, $gusermail) {
-        
         try {
-            
+            $time = Carbon\Carbon::now()->diffForHumans();
             $provider_id = User::Select('provider_id')
                                     ->Where('g_username', $gusermail)
                                     ->first()->toArray();
             Task::Where("id",$r->id)
                                 ->Where("provider_id",$provider_id['provider_id'])
                                 ->update(["status" => "open"]);
-            return(['status'=>'1']);
+            return(['status'=>'1' , 'updated_at' => $time]);
         } catch (Exception $e) {
             return(['status'=>'0','error'=>$e]);
         }
@@ -85,14 +94,14 @@ class TasksController extends Controller
     public function helpUpdate(Request $r, $gusermail) {
         
         try {
-            
+            $time = Carbon\Carbon::now()->diffForHumans();
             $provider_id = User::Select('provider_id')
                                     ->Where('g_username', $gusermail)
                                     ->first()->toArray();
             Task::Where("id",$r->id)
                                 ->Where("provider_id",$provider_id['provider_id'])
                                 ->update(["status" => "help"]);
-            return(['status'=>'1']);
+            return(['status'=>'1' , 'updated_at' => $time]);
         } catch (Exception $e) {
             return(['status'=>'0','error'=>$e]);
         }
@@ -102,14 +111,14 @@ class TasksController extends Controller
     public function closedUpdate(Request $r, $gusermail) {
         
         try {
-            
+            $time = Carbon\Carbon::now()->diffForHumans();
             $provider_id = User::Select('provider_id')
                                     ->Where('g_username', $gusermail)
                                     ->first()->toArray();
             Task::Where("id",$r->id)
                                 ->Where("provider_id",$provider_id['provider_id'])
                                 ->update(["status" => "closed"]);
-            return(['status'=>'1']);
+            return(['status'=>'1' , 'updated_at' => $time]);
         } catch (Exception $e) {
             return(['status'=>'0','error'=>$e]);
         }

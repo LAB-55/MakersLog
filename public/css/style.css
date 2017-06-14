@@ -154,4 +154,8 @@
 .task_card .card-data ul li i {
 	cursor: pointer;
 }
+
+.time_right {
+	float: right;
+}
 /* task.blade.php */

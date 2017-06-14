@@ -17,6 +17,7 @@ class TasksController extends Controller
             return view('task')
             		->with('gusermail', $gusermail)
             		->with('meta',Meta::get('Kalpit Akhawat / New Log'));
+
         }
         else {
             return redirect(route('gusermail', ['gusermail' => $gusermail]));

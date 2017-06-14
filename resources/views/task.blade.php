@@ -24,7 +24,7 @@
                     <!--Panel-->
                     <div class="card">
                         <div class="card-header blue-color darken-2 white-text">
-                           <i class="fa fa-sticky-note pad-lr-20"></i> Remaining
+                           <i class="fa fa-sticky-note pad-lr-10"></i> Remaining
                         </div>
                         <div class="card-block">
                             <div class="form-group">
@@ -43,10 +43,12 @@
                                     <p class="white-text">@{{ t.task }}</p>
                                 </div>
                                 <div class="card-data">
-                                    <ul>
-                                        <li><i type="submit" class="fa fa-question pad-lr-20" v-on:click="helpTask(t,index,'open')" title="Help Wanted!"></i></li>
-                                        <li><i type="submit" class="fa fa-check pad-lr-20" v-on:click="closedTask(t,index,'open')" title="Completed"></i></li>
-                                        <li><i type="submit" class="fa fa-trash pad-lr-20" v-on:click="deleteTask(t,index,'open')" title="Delete"></i></li>
+                                    <ul class="text-left">
+                                        <li><i type="submit" class="fa fa-question pad-lr-10" v-on:click="helpTask(t,index,'open')" title="Help Wanted!"></i></li>
+                                        <li><i type="submit" class="fa fa-check pad-lr-10" v-on:click="closedTask(t,index,'open')" title="Completed"></i></li>
+                                        <li><i type="submit" class="fa fa-trash pad-lr-10" v-on:click="deleteTask(t,index,'open')" title="Delete"></i></li>
+                                        <li class="time_right"><i class="fa fa-clock-o " area-hidden="true"></i>
+                                                   @{{ t.updated_at }}</small></li>
                                     </ul>
                                 </div>
                             </div>
@@ -63,7 +65,7 @@
                     <!--Panel-->
                     <div class="card">
                         <div class="card-header warning-color white-text">
-                            <i class="fa fa-question pad-lr-20"></i> Help Wanted
+                            <i class="fa fa-question pad-lr-10"></i> Help Wanted
                         </div>
                         <div class="card-block">
                             <div class="tasks">
@@ -73,10 +75,12 @@
 
                                 </div>
                                 <div class="card-data">
-                                    <ul>
-                                        <li><i type="submit" class="fa fa-sticky-note pad-lr-20" v-on:click="openTask(t,index,'help')" title="Remaining"></i></li>
-                                        <li><i type="submit" class="fa fa-check pad-lr-20" v-on:click="closedTask(t,index,'help')" title="Completed"></i></li>
-                                        <li><i type="submit" class="fa fa-trash pad-lr-20" v-on:click="deleteTask(t,index,'help')" title="Delete"></i></li>
+                                    <ul class="text-left">
+                                        <li><i type="submit" class="fa fa-sticky-note pad-lr-10" v-on:click="openTask(t,index,'help')" title="Remaining"></i></li>
+                                        <li><i type="submit" class="fa fa-check pad-lr-10" v-on:click="closedTask(t,index,'help')" title="Completed"></i></li>
+                                        <li><i type="submit" class="fa fa-trash pad-lr-10" v-on:click="deleteTask(t,index,'help')" title="Delete"></i></li>
+                                        <li class="time_right"><i class="fa fa-clock-o " area-hidden="true"></i>
+                                                   @{{ t.updated_at }}</small></li>
                                     </ul>
                                 </div>
                             </div>
@@ -94,7 +98,7 @@
                     <!--Panel-->
                     <div class="card">
                         <div class="card-header success-color white-text">
-                            <i class="fa fa-check pad-lr-20"></i> Completed
+                            <i class="fa fa-check pad-lr-10"></i> Completed
                         </div>
                         <div class="card-block">
                             <div class="tasks">
@@ -103,10 +107,12 @@
                                     <p class="white-text">@{{ t.task }}</p>
                                 </div>
                                 <div class="card-data">
-                                    <ul>     
-                                        <li><i type="submit" class="fa fa-sticky-note pad-lr-20" v-on:click="openTask(t,index,'closed')" title="Remaining"></i></li>
-                                        <li><i type="submit" class="fa fa-question pad-lr-20" v-on:click="helpTask(t,index,'closed')" title="Help Wanted!"></i></li>
-                                        <li><i type="submit" class="fa fa-trash pad-lr-20" v-on:click="deleteTask(t,index,'closed')" title="Delete"></i></li>
+                                    <ul class="text-left">     
+                                        <li><i type="submit" class="fa fa-sticky-note pad-lr-10" v-on:click="openTask(t,index,'closed')" title="Remaining"></i></li>
+                                        <li><i type="submit" class="fa fa-question pad-lr-10" v-on:click="helpTask(t,index,'closed')" title="Help Wanted!"></i></li>
+                                        <li><i type="submit" class="fa fa-trash pad-lr-10" v-on:click="deleteTask(t,index,'closed')" title="Delete"></i></li>
+                                        <li class="time_right"><i class="fa fa-clock-o " area-hidden="true"></i>
+                                                   @{{ t.updated_at }}</small></li>
                                     </ul>
                                 </div>
                             </div>
@@ -172,6 +178,7 @@
                         axios.post('/api/{{ $gusermail }}/tasks/add', {
                                 task: self.newTask,
                         }).then(function (response) {
+                            response.data.elm.updated_at = response.data.updated_at;
                            toastr.info(self.newTask + " Added");
                             self.newTask = "";
                             self.tasks['open'].unshift(response.data.elm);
@@ -194,6 +201,7 @@
                     axios.post('/api/{{ $gusermail }}/tasks/open', {
                             id: t.id,
                     }).then(function (response) {
+                        t.updated_at = response.data.updated_at;
                         toastr.info(t.task + " Added in to Remaining");
                         self.tasks[targetFrom].splice(index,1);
                         self.tasks.open.unshift(t);
@@ -204,6 +212,7 @@
                     axios.post('/api/{{ $gusermail }}/tasks/help', {
                             id: t.id,
                     }).then(function (response) {
+                        t.updated_at = response.data.updated_at;
                         toastr.warning(t.task + " Added in to Help Wanted!");
                         self.tasks[targetFrom].splice(index,1);
                         self.tasks.help.unshift(t);
@@ -215,6 +224,7 @@
                     axios.post('/api/{{ $gusermail }}/tasks/closed', {
                             id: t.id,
                     }).then(function (response) {
+                        t.updated_at = response.data.updated_at;
                         toastr.success(t.task + " Added in to Completed");
                         self.tasks[targetFrom].splice(index,1);
                         self.tasks.closed.unshift(t);
