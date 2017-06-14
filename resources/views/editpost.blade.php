@@ -255,7 +255,7 @@
                                 // pushing = false;
                                 console.log(response.data);
                                 toastr.success("Post added");
-                                location.reload();
+                                window.location = "/log/view/"+"{!! $p->p_id !!}";
                             })
 
                     return false;

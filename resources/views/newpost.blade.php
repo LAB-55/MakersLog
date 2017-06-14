@@ -7,12 +7,12 @@
 </head>
 
     <body class="@if(Auth::check()) fixed-sn @else hidden-sn @endif white-skin" style="display: none">
-        
+
      <header>
         @include('includes.sidebar')
         @include('includes.navbar')
 
-        
+
     </header>
 
     <!--Main layout-->
@@ -38,11 +38,11 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="card mb-r">
                             <textarea v-model="logcontent.content" id="post_content" placeholder="Write content here.." ></textarea>
                         </div>
-                        
+
                     </div>
                     <!-- /.First col -->
                     <!-- Second col -->
@@ -50,9 +50,9 @@
 
                         <div>
                                <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">Publish</button>
-                                <button 
+                                <button
                                     v-on:click="discardPost"
-                                    class="btn red btn-danger waves-effect offset-md-2"> Discard</button> 
+                                    class="btn red btn-danger waves-effect offset-md-2"> Discard</button>
                         </div>
                         <br>
                         <!-- Second card -->
@@ -66,31 +66,31 @@
                                 <!--Card content-->
                                 <div class="card-block ">
                                     <div id="new-scroll" class="check-list new-scroll grey lighten-5 pad-lr-10 pad-tb-10">
-                                        
+
                                         <fieldset :ref= "'chk' + index.toString()" v-for="(c, index) in categories" class="form-group">
-                                            
-                                            <input  type="checkbox" 
-                                                    v-model="c.checked" 
+
+                                            <input  type="checkbox"
+                                                    v-model="c.checked"
                                                     v-el="'chk' + index.toString()"
                                                     v-bind:id="'chk' + index.toString()"
                                                     :disabled="pushing"
                                                  >
                                             <label v-bind:for="'chk' + index.toString()">@{{ c.name }}</label>
-                                        </fieldset>                               
+                                        </fieldset>
 
                                     </div>
                                     <div class="form-group">
 
                                             <input  type="text"
-                                                    id="newcategory" 
+                                                    id="newcategory"
                                                     v-model="newCategoryName"
-                                                    v-on:keyup.enter="addCategory" 
+                                                    v-on:keyup.enter="addCategory"
                                                     class="form-control"
                                                     name="newcategory"
-                                                    placeholder="Make new category" 
+                                                    placeholder="Make new category"
                                                     :disabled='catAddInProcess || pushing'
-                                                    name="newcategory" />       
-                                        
+                                                    name="newcategory" />
+
                                     </div>
                                 </div>
                                 <!--/.Card content-->
@@ -109,22 +109,22 @@
     @include('includes.models')
     <!--/Main layout-->
     <script type="text/javascript">
-    
+
         // window.history.pushState('obj', '', '/?tab=recent');
 
         axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
         });
-          
-          var tm = tinymce.init({ 
+
+          var tm = tinymce.init({
                     selector:'#post_content',
                     menubar: false,
                     height : "270",
                     plugins: "paste",
              });
 
-       new Vue({    
+       new Vue({
             el: "#editor-scope",
             data : {
                 pushing: false,
@@ -149,8 +149,8 @@
                     axios.get('/root/initial?'+Date.now().toString()+Math.floor(Math.random()*9999)+Date.now().toString()+Math.floor(Math.random()*9999) )
                     .then(function (r) {
                             r.data.say != "YmFyb2JhciBjaGUuIGFnYWwgamF2YSBkZQ==" ? (function () { window.location = "/?auth=0&failed=true"; self.page = false })() : $('body').show();
-                    });   
-                  
+                    });
+
                     axios.post('/api/category', {}).then(function (response) {
                         self.categories = response.data.collection.map(function (e) {
                             e.name = e.c_name;
@@ -179,8 +179,8 @@
 
                             if ( e.name == self.newCategoryName ) {
                                 toastr.info(self.newCategoryName + " checked");
-                                e.checked = true; 
-                                notFound = false; 
+                                e.checked = true;
+                                notFound = false;
                                 self.catAddInProcess = false;
                                 self.newCategoryName = "";
 
@@ -198,7 +198,7 @@
                                 self.categories.push({ name: self.newCategoryName, checked:true });
                                 self.catAddInProcess = false;
                                 self.newCategoryName = "",
-                                
+
                                 em = 'chk'+ (self.categories.length - 1);
                                 console.log(em,self.categories.length);
                                 self.haveToScroll = true;
@@ -213,11 +213,11 @@
                     return;
                 },
                 publish : function(e){
-                    // validate all 
+                    // validate all
                     var self = this;
                     this.logcontent.content = tinymce.get('post_content').getContent();
                     if( this.logcontent.title.trim() == "" )
-                    {   
+                    {
                         toastr.error("Log Title is required");
                          return;
                     }
@@ -241,7 +241,7 @@
 
                             }).then(function (response) {
                                 pushing = false;
-                                this.justShow();
+                                self.justShow();
                                 // console.log(response.data);
 
                                 // toastr.success("Post added");
@@ -252,7 +252,7 @@
                     try {
                         $('#publishedModalInfo').modal({
                                 backdrop:'static'
-                        })    
+                        })
                         $('#publishedModalInfo').modal('show')
                     }catch(ex){
                         console.info("Caught: model is transitioning")

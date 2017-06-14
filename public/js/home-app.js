@@ -186,7 +186,7 @@ var MainScope = new Vue({
             var panel;
             if ($("#fellowMakers").hasClass('active')) {
                 panel = panel51;
-            } else {
+            } else if($("#recentLogs").hasClass('active')) {
                 panel = panel52;
             }
             // console.log(panel.$el)

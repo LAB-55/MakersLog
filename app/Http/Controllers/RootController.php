@@ -8,7 +8,7 @@ use App\User;
 use App\Post;
 class RootController extends Controller
 {
-	
+
 
 	public function index( Request $r )
 	{
@@ -20,7 +20,7 @@ class RootController extends Controller
 	    		->with('meta',Meta::get('Search') );
 	}
 
-	public function userpage($gusermail) 
+	public function userpage($gusermail)
 	{
 		$user = User::where('g_username',$gusermail)->first();
 		// $post = Post::where('provider_id',$user->provider_id)
@@ -37,5 +37,11 @@ class RootController extends Controller
     			->with('meta',Meta::get(""))
     			->with('user',$user)
     			->with('postcount',$count);
+	}
+	public function showPost($id)
+	{
+		$post=Post::where('p_id',$id)->where('is_latest','1')->where('delete','0')->first();
+		$user=User::where('provider_id',$post->provider_id)->first();
+		return redirect('/'.$user->g_username.'/'.$id.'/'.$post->uri);
 	}
 }
