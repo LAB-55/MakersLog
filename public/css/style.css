@@ -158,6 +158,13 @@
 .time_right {
 	float: right;
 }
+
+.task_btn.btn-flat {
+	margin: 0;
+	padding: 0;
+	color: #F5F5F5;
+}
+
 /* task.blade.php */
 
 .fade-enter-active, .fade-leave-active {
@@ -166,7 +173,6 @@
 .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
   opacity: 0
 }
-
 textarea.md-textarea {
     min-height: 2rem!important;
 }
