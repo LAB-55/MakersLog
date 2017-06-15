@@ -46,7 +46,7 @@ Route::group(['prefix' => 'api','namespace'=>'api'], function () {
 
 Route::get('/{gusermail}', 'RootController@userpage')->name('gusermail');
 Route::get('/{gusermail}/profile', 'ProfileController@index')->name('getProfile');
-Route::post('/{gusermail}/profile', 'ProfileController@store');
+Route::post('/{gusermail}/profile', 'ProfileController@store')->name('postProfile');
 Route::get('/{gusermail}/presentations', 'PresentationController@presentations')->name('presentations');
 Route::post('/{gusermail}/presentations', 'PresentationController@uploadPresentation')->name('uploadPresentation');
 Route::get('/{gusermail}/presentations/{presentation_id}', 'PresentationController@presentationView')->name('presentationView');
