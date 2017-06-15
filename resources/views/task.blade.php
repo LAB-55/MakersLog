@@ -44,9 +44,9 @@
                                 </div>
                                 <div class="card-data">
                                     <ul class="text-left">
-                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="helpTask(t,index,'open')"><i class="fa fa-question pad-lr-10" title="Help Wanted!"></i></button></li>
-                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="closedTask(t,index,'open')"><i class="fa fa-check pad-lr-10" title="Completed"></i></button></li>
-                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="deleteTask(t,index,'open')"><i class="fa fa-trash pad-lr-10" title="Delete"></i></button></li>
+                                        <li><button class="task_btn btn-flat" v-on:click="helpTask(t,index,'open')"><i class="fa fa-question pad-lr-10" title="Help Wanted!"></i></button></li>
+                                        <li><button class="task_btn btn-flat" v-on:click="closedTask(t,index,'open')"><i class="fa fa-check pad-lr-10" title="Completed"></i></button></li>
+                                        <li><button class="task_btn btn-flat" v-on:click="deleteTask(t,index,'open')"><i class="fa fa-trash pad-lr-10" title="Delete"></i></button></li>
                                         <li class="time_right"><i class="fa fa-clock-o " area-hidden="true"></i>
                                                    @{{ t.updated_at }}</small></li>
                                     </ul>
@@ -76,9 +76,9 @@
                                 </div>
                                 <div class="card-data">
                                     <ul class="text-left">
-                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="openTask(t,index,'help')"><i class="fa fa-sticky-note pad-lr-10" title="Remaining"></i></button></li>
-                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="closedTask(t,index,'help')"><i class="fa fa-check pad-lr-10" title="Completed"></i></button></li>
-                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="deleteTask(t,index,'help')"><i class="fa fa-trash pad-lr-10" title="Delete"></i></button></li>
+                                        <li><button class="task_btn btn-flat" v-on:click="openTask(t,index,'help')"><i class="fa fa-sticky-note pad-lr-10" title="Remaining"></i></button></li>
+                                        <li><button class="task_btn btn-flat" v-on:click="closedTask(t,index,'help')"><i class="fa fa-check pad-lr-10" title="Completed"></i></button></li>
+                                        <li><button class="task_btn btn-flat" v-on:click="deleteTask(t,index,'help')"><i class="fa fa-trash pad-lr-10" title="Delete"></i></button></li>
                                         <li class="time_right"><i class="fa fa-clock-o " area-hidden="true"></i>
                                                    @{{ t.updated_at }}</small></li>
                                     </ul>
@@ -108,9 +108,9 @@
                                 </div>
                                 <div class="card-data">
                                     <ul class="text-left">     
-                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="openTask(t,index,'closed')"><i class="fa fa-sticky-note pad-lr-10" title="Remaining"></i></button></li>
-                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="helpTask(t,index,'closed')"><i class="fa fa-question pad-lr-10" title="Help Wanted!"></i></button></li>
-                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="deleteTask(t,index,'closed')"><i class="fa fa-trash pad-lr-10" title="Delete"></i></button></li>
+                                        <li><button class="task_btn btn-flat" v-on:click="openTask(t,index,'closed')"><i class="fa fa-sticky-note pad-lr-10" title="Remaining"></i></button></li>
+                                        <li><button class="task_btn btn-flat" v-on:click="helpTask(t,index,'closed')"><i class="fa fa-question pad-lr-10" title="Help Wanted!"></i></button></li>
+                                        <li><button class="task_btn btn-flat" v-on:click="deleteTask(t,index,'closed')"><i class="fa fa-trash pad-lr-10" title="Delete"></i></button></li>
                                         <li class="time_right"><i class="fa fa-clock-o " area-hidden="true"></i>
                                                    @{{ t.updated_at }}</small></li>
                                     </ul>
@@ -165,7 +165,8 @@
                 },
                 toAnimateBefore: [], 
                 toAnimateAfter: [],
-                moving: false,
+                clicks: 0,
+                timer: null
             },
             beforeUpdate : function(){
                 if( this.toAnimateBefore.length > 0 ){
@@ -175,7 +176,7 @@
                         $( this.$refs[animTask.refElm][0] ).animateCss( animTask.style );
                     }
                         if( animTask.fn != undefined )
-                            setTimeout( animTask.fn, 750 );
+                            setTimeout( animTask.fn, 0 );
                 }
             },
             updated:function(){
@@ -211,7 +212,6 @@
                             self.toAnimateAfter.push( new AnimTask("opencard0", 'flipInX') )
                         });
                     }
-                    console.log(this.$refs);
                 },
                 deleteTask : function ( t, index, targetFrom ) {
                     if(confirm('Are you sure to delete?')){
@@ -233,6 +233,7 @@
 
                         });
                     }
+                    
                 },
                 openTask : function ( t, index, targetFrom) {
                     var self = this;
@@ -255,7 +256,7 @@
                                                         targetFrom == 'help' ? 'slideInRight' : 'slideInLeft',
                                                     )
                                                 );
-                    });
+                    });        
                 },
                 helpTask : function ( t, index, targetFrom) {
                     var self = this;             
@@ -280,8 +281,8 @@
                     });
                 },
                 closedTask : function ( t, index, targetFrom) {
+                    this.moving = true;
                     var self = this;
-                              
                     axios.post('/api/{{ $gusermail }}/tasks/closed', {
                             id: t.id,
                     }).then(function (response) {
