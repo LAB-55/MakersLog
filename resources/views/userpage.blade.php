@@ -18,7 +18,7 @@
             <div class="container-fluid">
                 <!-- First row -->
                 <div class="row">
-                    @if( $user->provider_id != Auth::user()->provider_id )
+                    @if( !Auth::check() ||  (Auth::check() && $user->provider_id != Auth::user()->provider_id) )
                     <div class="col-md-3 mb-1">
                         <div class="card contact-card with-padding">
                             <div class="card-body text-center text-overflow-ellipsis">
@@ -125,8 +125,8 @@
                 },
                 deletePost: function( p_id ){
                     // console.log(p_id);
-                    if( confirm("Are you sure to delete this? ")){
-                    
+                    if( confirm("Are you sure to delete that post? ")){
+
                     }
                 }
             },
