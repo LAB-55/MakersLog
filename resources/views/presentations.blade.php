@@ -35,9 +35,6 @@
                             <label>Presentation: </label>
                             <input type="file" class="form-control" name="ppt" value="ppt" required> 
                         </div>
-                        <div id="progress">
-                            <div class="bar" style="width: 0%;"></div>
-                        </div>
                         <button type="submit" value="Submit"  class="btn btn-success" name="submit">Upload</button>
                     </form>
                     </div>
