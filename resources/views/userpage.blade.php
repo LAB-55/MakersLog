@@ -61,20 +61,27 @@
                                                     v-if="logsCollection.length <= 0" v-cloak>
                                                     <div class="alert blue-text text-center" >Can not find any logs here.</div>
                                                 </div>   
-                                              <div v-cloak
+
+                                              <div class="list-group-item list-group-item-action flex-column align-items-start" v-cloak
                                                 v-for="(p, index) in logsCollection">
                                                   
-                                              <a class="list-group-item list-group-item-action flex-column align-items-start"
-                                                :href="getUrl(p)"
-                                              >
                                                 <div class="d-flex w-100 justify-content-between">
-                                                  <h4 class="mb-1 blue-text"> @{{ p.p_title }} </h4>
+                                                    <a :href="getUrl(p)">
+                                                        <h4 class="mb-1 blue-text"> @{{ p.p_title }} </h4>
+                                                    </a>
                                                   <small class="blue-grey-text">
-                                                  <i class="fa fa-clock-o " area-hidden="true"></i>
-                                                   @{{ p.created_at }}</small>
+                                                    <div class="btn-group">
+                                                        <a class="btn btn-floating orange med-btn-fonts" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-chevron-circle-down"></i> </a>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" :href="'/log/edit/'+p.p_id">Edit</a>
+                                                            <a class="dropdown-item" v-on:click="deletePost(p.p_id)">Delete</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item grey-text" href="">Rights</a>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                    <p class="mb-1">@{{ p.p_short_dec }}</p>
-                                              </a>
+                                                <p class="mb-1">@{{ p.p_short_dec }}</p>
+                                                <i class="fa fa-clock-o" area-hidden="true"></i> @{{ p.created_at }}</small>
                                               </div>
 
                                             </div>
@@ -116,6 +123,12 @@
               getUrl: function (p) {
                     return "/"+this.gusermail+"/"+p.p_id+"/"+p.uri;
                 },
+                deletePost: function( p_id ){
+                    // console.log(p_id);
+                    if( confirm("Are you sure to delete this? ")){
+                    
+                    }
+                }
             },
             mounted:function () {
                 var self = this;
