@@ -39,14 +39,14 @@ class PresentationController extends Controller
         }
     }
 
-    public function presentationView($gusermail, $title) {
+    public function presentationView($gusermail, $presentation_id) {
     	if(Auth::check() &&  Auth::user()->g_username == $gusermail ) {
         	$provider_id = User::Select('provider_id')
         							->Where('g_username', $gusermail)
         							->first()->toArray();
 			$presentation = Presentation::Select('*')
 											->Where('provider_id', $provider_id['provider_id'])
-											->Where('title', $title)
+											->Where('presentation_id', $presentation_id)
 											->first()->toArray();
             return view('presentation_view')
             		->with('presentation', $presentation)
@@ -73,11 +73,10 @@ class PresentationController extends Controller
     }
 
     public function uploadPresentation(Request $request, $gusermail) {
-        $title = $request->title;
         $file = Input::file('ppt');
         $extension = $file->extension();
-        $filename = $title.'.'.$extension;
         $filename = $file->getClientOriginalName();
+        
         $file->move(public_path().'/presentation', $filename);
         
         $content = file_get_contents(public_path().'/presentation/'.$filename);
@@ -116,19 +115,19 @@ class PresentationController extends Controller
         $thumbnail_url = 'https://lh3.google.com/u/0/d/'.$presentation_id.'=w200-h150-p-k-nu-iv1';
         $provider_id = User::Select('provider_id')->Where('g_username', $gusermail)->first()->toArray();
 
-        $presentation_name = sha1($provider_id['provider_id'].$presentation_id.$title);
+        $presentation_name = sha1($provider_id['provider_id'].$presentation_id.$filename);
 
 
         $presentation_data = new Presentation();
         $presentation_data->provider_id = $provider_id['provider_id'];
-        $presentation_data->title = $title;
+        $presentation_data->title = $filename;
         $presentation_data->presentation_name = $presentation_name;
         $presentation_data->presentation_id = $presentation_id;
         $presentation_data->presentation_url = $presentation_url;
         $presentation_data->thumbnail_url = $thumbnail_url;
         $presentation_data->save();
 
-        Session::flash("success","$title Uploaded");
+        Session::flash("success","$filename Uploaded");
         return redirect(route('presentations', ['gusermail' => $gusermail ]));
     }
 }

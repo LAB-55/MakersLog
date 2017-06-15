@@ -49,6 +49,6 @@ Route::get('/{gusermail}/profile', 'ProfileController@index')->name('getProfile'
 Route::post('/{gusermail}/profile', 'ProfileController@store');
 Route::get('/{gusermail}/presentations', 'PresentationController@presentations')->name('presentations');
 Route::post('/{gusermail}/presentations', 'PresentationController@uploadPresentation')->name('uploadPresentation');
-Route::get('/{gusermail}/presentations/{title}', 'PresentationController@presentationView')->name('presentationView');
+Route::get('/{gusermail}/presentations/{presentation_id}', 'PresentationController@presentationView')->name('presentationView');
 Route::get('/{gusermail}/tasks', 'TasksController@index')->name('tasks');
 Route::get('/{gusermail}/{pid}/{slug}', 'PostController@individual')->name('individial');

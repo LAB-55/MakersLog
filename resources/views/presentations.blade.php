@@ -25,27 +25,38 @@
                 </div>
             </div>
         @endif
-        <div class="container-fluid">
-                <div class="row">
+        <div class="container">
+                <div class="card">
+                    <h3 class="card-header default-color-dark white-text text-center">Upload Presentation</h3>
+                    <div class="card-block">
                     <form action="{{ route('presentations', ['gusermail' => $meta['gusermail']] ) }}" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                         <div class="form-group" id="ppt">
-                            <label>Title: </label>
-                            <input type="text" class="form-control" name="title" placeholder="MakersLog" required>
                             <label>Presentation: </label>
                             <input type="file" class="form-control" name="ppt" value="ppt" required> 
                         </div>
+                        <div id="progress">
+                            <div class="bar" style="width: 0%;"></div>
+                        </div>
                         <button type="submit" value="Submit"  class="btn btn-success" name="submit">Upload</button>
                     </form>
-                </div>
-                <h2 class="text-center">Presentations</h2>
-                <div class="row">
-                    @foreach($presentations as $pre)
-                    <div class="col-lg-2 text-center">
-                        <a href="{{ route( 'presentationView', ['gusermail' => $meta['gusermail'], 'title' => $pre->title] ) }}" target="_blank"><img src="{{ $pre->thumbnail_url }}"></a>
-                        <a href="{{ route( 'presentationView', ['gusermail' => $meta['gusermail'], 'title' => $pre->title] ) }}" target="_blank">{{ $pre->title }}</a>
                     </div>
-                    @endforeach
+                </div>
+                <div class="card">
+                    <h3 class="card-header default-color-dark white-text text-center">Presentations</h3>
+                    <div class="card-block">
+                        <div class="row pad-lr-15">
+                            @foreach($presentations as $pre)
+                            <div class="jumbotron p-card">
+                                <a href="{{ route( 'presentationView', ['gusermail' => $meta['gusermail'], 'presentation_id' => $pre->presentation_id] ) }}" target="_blank"><img src="{{ $pre->thumbnail_url }}" class="img-fluid">
+                                    <div class="p-card-title text-center teal-text">
+                                        {{ $pre->title }}
+                                    </div>
+                                </a>
+                            </div>
+                            @endforeach     
+                        </div>
+                    </div>
                 </div>
         </div>
     </main>
