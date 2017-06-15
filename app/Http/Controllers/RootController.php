@@ -44,4 +44,8 @@ class RootController extends Controller
 		$user=User::where('provider_id',$post->provider_id)->first();
 		return redirect('/'.$user->g_username.'/'.$id.'/'.$post->uri);
 	}
+	public function reportbug(Request $r)
+	{
+		return view('reportbug');
+	}
 }

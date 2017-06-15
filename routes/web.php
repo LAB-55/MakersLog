@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/feedback/reportbug', 'RootController@reportbug');
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('root/initial', 'PostController@validateInitial');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
