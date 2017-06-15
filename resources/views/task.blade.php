@@ -44,9 +44,9 @@
                                 </div>
                                 <div class="card-data">
                                     <ul class="text-left">
-                                        <li><i type="submit" class="fa fa-question pad-lr-10" v-on:click="helpTask(t,index,'open')" title="Help Wanted!"></i></li>
-                                        <li><i type="submit" class="fa fa-check pad-lr-10" v-on:click="closedTask(t,index,'open')" title="Completed"></i></li>
-                                        <li><i type="submit" class="fa fa-trash pad-lr-10" v-on:click="deleteTask(t,index,'open')" title="Delete"></i></li>
+                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="helpTask(t,index,'open')"><i class="fa fa-question pad-lr-10" title="Help Wanted!"></i></button></li>
+                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="closedTask(t,index,'open')"><i class="fa fa-check pad-lr-10" title="Completed"></i></button></li>
+                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="deleteTask(t,index,'open')"><i class="fa fa-trash pad-lr-10" title="Delete"></i></button></li>
                                         <li class="time_right"><i class="fa fa-clock-o " area-hidden="true"></i>
                                                    @{{ t.updated_at }}</small></li>
                                     </ul>
@@ -76,9 +76,9 @@
                                 </div>
                                 <div class="card-data">
                                     <ul class="text-left">
-                                        <li><i type="submit" class="fa fa-sticky-note pad-lr-10" v-on:click="openTask(t,index,'help')" title="Remaining"></i></li>
-                                        <li><i type="submit" class="fa fa-check pad-lr-10" v-on:click="closedTask(t,index,'help')" title="Completed"></i></li>
-                                        <li><i type="submit" class="fa fa-trash pad-lr-10" v-on:click="deleteTask(t,index,'help')" title="Delete"></i></li>
+                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="openTask(t,index,'help')"><i class="fa fa-sticky-note pad-lr-10" title="Remaining"></i></button></li>
+                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="closedTask(t,index,'help')"><i class="fa fa-check pad-lr-10" title="Completed"></i></button></li>
+                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="deleteTask(t,index,'help')"><i class="fa fa-trash pad-lr-10" title="Delete"></i></button></li>
                                         <li class="time_right"><i class="fa fa-clock-o " area-hidden="true"></i>
                                                    @{{ t.updated_at }}</small></li>
                                     </ul>
@@ -108,9 +108,9 @@
                                 </div>
                                 <div class="card-data">
                                     <ul class="text-left">     
-                                        <li><i type="submit" class="fa fa-sticky-note pad-lr-10" v-on:click="openTask(t,index,'closed')" title="Remaining"></i></li>
-                                        <li><i type="submit" class="fa fa-question pad-lr-10" v-on:click="helpTask(t,index,'closed')" title="Help Wanted!"></i></li>
-                                        <li><i type="submit" class="fa fa-trash pad-lr-10" v-on:click="deleteTask(t,index,'closed')" title="Delete"></i></li>
+                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="openTask(t,index,'closed')"><i class="fa fa-sticky-note pad-lr-10" title="Remaining"></i></button></li>
+                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="helpTask(t,index,'closed')"><i class="fa fa-question pad-lr-10" title="Help Wanted!"></i></button></li>
+                                        <li><button class="task_btn btn-flat" :disabled="moving" v-on:click="deleteTask(t,index,'closed')"><i class="fa fa-trash pad-lr-10" title="Delete"></i></button></li>
                                         <li class="time_right"><i class="fa fa-clock-o " area-hidden="true"></i>
                                                    @{{ t.updated_at }}</small></li>
                                     </ul>
@@ -164,7 +164,8 @@
                     closed : [],
                 },
                 toAnimateBefore: [], 
-                toAnimateAfter: [], 
+                toAnimateAfter: [],
+                moving: false,
             },
             beforeUpdate : function(){
                 if( this.toAnimateBefore.length > 0 ){
