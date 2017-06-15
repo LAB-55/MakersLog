@@ -177,6 +177,7 @@
 .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
   opacity: 0
 }
+
 .p-card{
 	width: 192.34px!important;
 	height: 186.25px!important;
@@ -188,4 +189,11 @@
 .p-card-title{
 	padding: 5px;
 	line-height: 2;
+}
+
+textarea.md-textarea {
+    min-height: 2rem!important;
+}
+.page-footer{
+	z-index: -1!important;
 }

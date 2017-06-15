@@ -32,6 +32,7 @@
                                     <input type="text" v-model="logcontent.title" class="form-control" name="logcontent-title" :disabled="pushing" >
                                     <label for="form1" class="">Blog title</label>
                                 </div>
+                                <br>
                                 <div class="md-form mb-0">
                                     <textarea name="logcontent-content" v-model="logcontent.desc" type="text" class="md-textarea" rows="1" :disabled="pushing" ></textarea>
                                     <label for="form7">Blog Description in 140 characters</label>
@@ -122,6 +123,9 @@
                     menubar: false,
                     height : "270",
                     plugins: "paste",
+                    paste_data_images: true,
+                    valid_elements: "b,a,p,strong,i,em,h1,h2,h3,h4,h5,ul,ol,li,,img,span",
+                    invalid_elements:"*['class']"
              });
 
        new Vue({
@@ -216,6 +220,8 @@
                     // validate all
                     var self = this;
                     this.logcontent.content = tinymce.get('post_content').getContent();
+                    // console.log(this.logcontent.content);
+                    // return false;
                     if( this.logcontent.title.trim() == "" )
                     {
                         toastr.error("Log Title is required");

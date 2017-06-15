@@ -18,16 +18,21 @@
             <div class="container-blog">
             <!--Section heading-->
 
-                <div class="card-block jumbotron">
+                <div class="card card-block jumbotron">
                     <div class="row">
                         <div class="col-md-2 col-sm-2 text-right">
 
                             <a target="_blank" href="/{{ $u->g_username }}" class="media-left waves-light waves-effect waves-light"><img src="{{ $u->avatar }}" alt="image of {{$p->first_name}}" width="80" class="rounded-circle-imp"></a>
+                               
                         </div>
                         <div class="col-md-10 col-sm-10">
                             <h3 class="section-heading text-left"> {{ $p->p_title}}</h3>
                             <div class="rating inline-ul">
                                         by <a target="_blank" href="/{{ $u->g_username }}">{{$u->first_name}} {{$u->last_name}}</a>
+                                        <p class="time_right blue-grey-text">
+                                            <i class="fa fa-clock-o"></i>
+                                            {{ $p->updated_at->diffForHumans() }}
+                                        </p>
                             </div>
                         </div>
                         <div class="container-blog">
@@ -46,9 +51,7 @@
                 </div>
             </div>
         </div>
-    </main>
-    <!--/Main layout-->
-
+    
 
 <footer class="page-footer blue center-on-small-only">
 
@@ -95,6 +98,9 @@
     <!--/.Copyright-->
 
 </footer>
+</main>
+    <!--/Main layout-->
+
 
     <div class="fx-action-btn" style="bottom: 45px; right: 24px;">
         <a href="/log/new" data-toggle="tooltip" data-placement="left" title="Add new log" class="btn-floating btn-large red">

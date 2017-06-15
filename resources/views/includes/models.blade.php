@@ -14,7 +14,7 @@
 
             <!--Footer-->
             <div class="modal-footer justify-content-center">
-                <a type="button"  href="/log/{{Auth::user()->g_username}}"  class="btn btn-primary-modal">Goto your logs</a>
+                <a type="button"  href="/{{Auth::user()->g_username}}"  class="btn btn-primary-modal">Goto your logs</a>
                 <a type="button" href="/log/new" class="btn btn-outline-secondary-modal waves-effect" data-dismiss="modal">Make another one</a>
             </div>
         </div>

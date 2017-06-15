@@ -18,7 +18,7 @@
             <div class="container-fluid">
                 <!-- First row -->
                 <div class="row">
-                    @if( $user->provider_id != Auth::user()->provider_id )
+                    @if( !Auth::check() ||  (Auth::check() && $user->provider_id != Auth::user()->provider_id) )
                     <div class="col-md-3 mb-1">
                         <div class="card contact-card with-padding">
                             <div class="card-body text-center text-overflow-ellipsis">
@@ -57,20 +57,32 @@
                                         <div class="card-block">
 
                                             <div class="list-group">
-                                              
-                                              <a class="list-group-item list-group-item-action flex-column align-items-start"
-                                                v-cloak
-                                                v-for="(p, index) in logsCollection"
-                                                :href="getUrl(p)"
-                                              >
+                                                <div class="col-lg-12 pad-lr-30"
+                                                    v-if="logsCollection.length <= 0" v-cloak>
+                                                    <div class="alert blue-text text-center" >Can not find any logs here.</div>
+                                                </div>   
+
+                                              <div class="list-group-item list-group-item-action flex-column align-items-start" v-cloak
+                                                v-for="(p, index) in logsCollection">
+                                                  
                                                 <div class="d-flex w-100 justify-content-between">
-                                                  <h4 class="mb-1 blue-text"> @{{ p.p_title }} </h4>
+                                                    <a :href="getUrl(p)">
+                                                        <h4 class="mb-1 blue-text"> @{{ p.p_title }} </h4>
+                                                    </a>
                                                   <small class="blue-grey-text">
-                                                  <i class="fa fa-clock-o " area-hidden="true"></i>
-                                                   @{{ p.created_at }}</small>
+                                                    <div class="btn-group">
+                                                        <a class="btn btn-floating orange med-btn-fonts" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-chevron-circle-down"></i> </a>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" :href="'/log/edit/'+p.p_id">Edit</a>
+                                                            <a class="dropdown-item" v-on:click="deletePost(p.p_id)">Delete</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item grey-text" href="">Rights</a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <p class="mb-1">@{{ p.p_short_dec }}</p>
-                                              </a>
+                                                <i class="fa fa-clock-o" area-hidden="true"></i> @{{ p.created_at }}</small>
+                                              </div>
 
                                             </div>
                                             
@@ -111,6 +123,12 @@
               getUrl: function (p) {
                     return "/"+this.gusermail+"/"+p.p_id+"/"+p.uri;
                 },
+                deletePost: function( p_id ){
+                    // console.log(p_id);
+                    if( confirm("Are you sure to delete that post? ")){
+
+                    }
+                }
             },
             mounted:function () {
                 var self = this;
