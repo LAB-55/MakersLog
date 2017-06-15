@@ -7,7 +7,7 @@ Array.prototype.extend = function ( ar ) {
         this.push(v)
     }, this)
 };
-var collectionSize  = 2, timeout = null;
+var collectionSize  = 12, timeout = null;
 
 var panel51 = new Vue({
     el: "#panel51",

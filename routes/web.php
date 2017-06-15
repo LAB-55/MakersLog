@@ -20,7 +20,7 @@ Route::post('/login', 'Auth\LoginController@login');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/log/view/{id}', 'RootController@showPost');
 Route::group(['middleware' => 'auth'], function () {
-  Route::get('/log/new', 'PostController@index');
+  Route::get('/log/new', 'PostController@index')->name('createLog');;
   Route::get('/log/edit/{id}', 'PostController@update');
 });
 
@@ -31,6 +31,7 @@ Route::group(['prefix' => 'api','namespace'=>'api'], function () {
     Route::post('search','SearchController@index');
     Route::post('log/publish','PostController@create');
     Route::post('log/update','PostController@update');
+    Route::post('log/delete','PostController@delete');
     Route::post('category','CategoryController@index');
     Route::post('category/add','CategoryController@create');
     Route::post('logs/{gusermail}','LogsController@index');

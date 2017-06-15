@@ -128,10 +128,10 @@
 
     @if( Auth::check() )
     <div class="fx-action-btn" style="bottom: 45px; right: 24px;">
-        <a title="Add new log" class="btn-floating btn-large red" href="/log/new">
+        <a href="{{ route('createLog') }}" data-toggle="tooltip" data-placement="left" title="Add new log" class="btn-floating btn-large red">
             <i class="fa fa-pencil"></i>
         </a>
-    </div>  
+    </div> 
     @endif
      <div class="fx-action-btn" style="bottom: 55px; right: 95px;">
         <a data-toggle="tooltip" data-placement="left" title="Goto top" class="btn-floating btn-med green">

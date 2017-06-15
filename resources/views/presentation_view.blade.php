@@ -26,8 +26,8 @@
     
 </form>
 
-    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-        <a data-toggle="tooltip" data-placement="left" title="Add new log" class="btn-floating btn-large red">
+    <div class="fx-action-btn" style="bottom: 45px; right: 24px;">
+        <a href="{{ route('createLog') }}" data-toggle="tooltip" data-placement="left" title="Add new log" class="btn-floating btn-large red">
             <i class="fa fa-pencil"></i>
         </a>
     </div>

@@ -37,7 +37,9 @@
                                     <!-- Card content -->
                                     <div class="card-block text-center">
                                         <img src="{{ $meta['avatar']}}" alt="User Photo" class="rounded-circle contact-avatar my-2 mx-auto" /></br>
-                                        <button class="btn btn-primary">Upload New Photo</button>
+                                        <h3>{{ $meta['firstName']}} {{ $meta['lastName']}}</h3>
+                                        <h5>{{ $meta['gusermail']}}</h5>
+                                        {{-- <button class="btn btn-primary">Upload New Photo</button> --}}
                                     </div>
                                     <!-- /.Card content -->
                                 </div>
@@ -228,8 +230,8 @@
     </main>
     <!--/Main layout-->
 
-    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-        <a data-toggle="tooltip" data-placement="left" title="Add new log" class="btn-floating btn-large red">
+    <div class="fx-action-btn" style="bottom: 45px; right: 24px;">
+        <a href="{{ route('createLog') }}" data-toggle="tooltip" data-placement="left" title="Add new log" class="btn-floating btn-large red">
             <i class="fa fa-pencil"></i>
         </a>
     </div>

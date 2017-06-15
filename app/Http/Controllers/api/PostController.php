@@ -80,4 +80,21 @@ class PostController extends Controller
     		return(['status'=>'0','error'=>$e]);
     	}
     }
+
+    public function delete(Request $r)
+    {
+    	try {
+           	
+           	Post::Where("p_id",$r->p_id)
+                    ->update([
+                	"delete" => "1",
+            ]);
+
+            return(['status'=>'1');
+        } catch (Exception $e) {
+            return(['status'=>'0','error'=>$e]);
+        }
+    }
+
+
 }

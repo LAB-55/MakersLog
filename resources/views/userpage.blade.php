@@ -70,15 +70,17 @@
                                                         <h4 class="mb-1 blue-text"> @{{ p.p_title }} </h4>
                                                     </a>
                                                   <small class="blue-grey-text">
+                                                   @if (Auth::check())
                                                     <div class="btn-group">
                                                         <a class="btn btn-floating orange med-btn-fonts" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-chevron-circle-down"></i> </a>
                                                         <div class="dropdown-menu">
                                                             <a class="dropdown-item" :href="'/log/edit/'+p.p_id">Edit</a>
-                                                            <a class="dropdown-item" v-on:click="deletePost(p.p_id)">Delete</a>
+                                                            <a class="dropdown-item" v-on:click="deletePost(p.p_id, index)">Delete</a>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item grey-text" href="">Rights</a>
                                                         </div>
                                                     </div>
+                                                    @endif
                                                 </div>
                                                 <p class="mb-1">@{{ p.p_short_dec }}</p>
                                                 <i class="fa fa-clock-o" area-hidden="true"></i> @{{ p.created_at }}</small>
@@ -103,7 +105,7 @@
     <!--/Main layout-->
 
     <div class="fx-action-btn" style="bottom: 45px; right: 24px;">
-        <a data-toggle="tooltip" href="/log/new" data-placement="left" title="Add new log" class="btn-floating btn-large red">
+        <a href="{{ route('createLog') }}" data-toggle="tooltip" data-placement="left" title="Add new log" class="btn-floating btn-large red">
             <i class="fa fa-pencil"></i>
         </a>
     </div>
@@ -123,10 +125,16 @@
               getUrl: function (p) {
                     return "/"+this.gusermail+"/"+p.p_id+"/"+p.uri;
                 },
-                deletePost: function( p_id ){
+                deletePost: function( p_id, index ){
                     // console.log(p_id);
-                    if( confirm("Are you sure to delete that post? ")){
-
+                    if( confirm("Are you sure to delete that post? ") ) {
+                        var self = this;
+                        axios.post('/api/log/delete', {
+                            p_id: p_id,
+                            }).then( function (response) {
+                            toastr.error(p_id + " Deleted");
+                            self.logsCollection.splice(index,1);
+                        });
                     }
                 }
             },

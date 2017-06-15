@@ -133,8 +133,8 @@
     
 </form>
 
-    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-        <a data-toggle="tooltip" data-placement="left" title="Add new log" class="btn-floating btn-large red">
+    <div class="fx-action-btn" style="bottom: 45px; right: 24px;">
+        <a href="{{ route('createLog') }}" data-toggle="tooltip" data-placement="left" title="Add new log" class="btn-floating btn-large red">
             <i class="fa fa-pencil"></i>
         </a>
     </div>
@@ -216,7 +216,7 @@
                 deleteTask : function ( t, index, targetFrom ) {
                     if(confirm('Are you sure to delete?')){
                         var self = this;
-                        console.log(self.$refs[targetFrom+"card"+index][0]);
+                        // console.log(self.$refs[targetFrom+"card"+index][0]);
                         axios.post('/api/{{ $gusermail }}/tasks/delete', {
                                 id: t.id,
                         }).then(function (response) {
