@@ -167,3 +167,6 @@
   opacity: 0
 }
 
+textarea.md-textarea {
+    min-height: 2rem!important;
+}

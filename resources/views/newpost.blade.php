@@ -32,6 +32,7 @@
                                     <input type="text" v-model="logcontent.title" class="form-control" name="logcontent-title" :disabled="pushing" >
                                     <label for="form1" class="">Blog title</label>
                                 </div>
+                                <br>
                                 <div class="md-form mb-0">
                                     <textarea name="logcontent-content" v-model="logcontent.desc" type="text" class="md-textarea" rows="1" :disabled="pushing" ></textarea>
                                     <label for="form7">Blog Description in 140 characters</label>
