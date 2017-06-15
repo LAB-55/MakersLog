@@ -57,10 +57,14 @@
                                         <div class="card-block">
 
                                             <div class="list-group">
-                                              
+                                                <div class="col-lg-12 pad-lr-30"
+                                                    v-if="logsCollection.length <= 0" v-cloak>
+                                                    <div class="alert blue-text text-center" >Can not find any logs here.</div>
+                                                </div>   
+                                              <div v-cloak
+                                                v-for="(p, index) in logsCollection">
+                                                  
                                               <a class="list-group-item list-group-item-action flex-column align-items-start"
-                                                v-cloak
-                                                v-for="(p, index) in logsCollection"
                                                 :href="getUrl(p)"
                                               >
                                                 <div class="d-flex w-100 justify-content-between">
@@ -69,8 +73,9 @@
                                                   <i class="fa fa-clock-o " area-hidden="true"></i>
                                                    @{{ p.created_at }}</small>
                                                 </div>
-                                                <p class="mb-1">@{{ p.p_short_dec }}</p>
+                                                    <p class="mb-1">@{{ p.p_short_dec }}</p>
                                               </a>
+                                              </div>
 
                                             </div>
                                             
