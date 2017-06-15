@@ -9,7 +9,7 @@
      <header>
         @include('includes.sidebar')
         @include('includes.navbar')
-        
+
     </header>
 
     <!--Main layout-->
@@ -21,8 +21,8 @@
                 <div class="card-block jumbotron">
                     <div class="row">
                         <div class="col-md-2 col-sm-2 text-right">
-                            
-                            <a target="_blank" href="/{{ $u->g_username }}" class="media-left waves-light waves-effect waves-light"><img src="https://lh4.googleusercontent.com/-yIfvqErBAzA/AAAAAAAAAAI/AAAAAAAAAjg/DJ2vTnUnDdE/photo.jpg?sz=100" alt="image of {{$p->first_name}}" width="80" class="rounded-circle-imp"></a>
+
+                            <a target="_blank" href="/{{ $u->g_username }}" class="media-left waves-light waves-effect waves-light"><img src="{{ $u->avatar }}" alt="image of {{$p->first_name}}" width="80" class="rounded-circle-imp"></a>
                         </div>
                         <div class="col-md-10 col-sm-10">
                             <h3 class="section-heading text-left"> {{ $p->p_title}}</h3>
@@ -36,14 +36,14 @@
                                     {{$p->p_short_dec}}
                                 </p>
                             <hr>
-                            
+
                             <p class="text-left">
                                     {!! $p->p_content !!}
                             </p>
                         </div>
                     </div>
-                    
-                </div>        
+
+                </div>
             </div>
         </div>
     </main>
@@ -59,14 +59,14 @@
             <!--First column-->
             <div class="col-md-8">
                 <h5 class="title">Tags</h5>
-                <p><?php 
+                <p><?php
                     if( strlen($p->categories) > 1 ){
                         $ar = explode(",",$p->categories);
                         $l = count( $ar );
                         for($i = 0; $i < $l - 1 ; $i++) {
                             $val = $ar[$i];
                             echo "<a target='_blank' class='btn btn-outline-secondary light-blue lighten-4 waves-effect' href='/?cat=".$val."'>".$val."</a>";
-                            
+
                         }
                     }
                 ?></p>
