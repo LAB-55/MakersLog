@@ -176,3 +176,6 @@
 textarea.md-textarea {
     min-height: 2rem!important;
 }
+.page-footer{
+	z-index: -1!important;
+}

@@ -123,6 +123,9 @@
                     menubar: false,
                     height : "270",
                     plugins: "paste",
+                    paste_data_images: true,
+                    valid_elements: "b,a,p,strong,i,em,h1,h2,h3,h4,h5,ul,ol,li,,img,span",
+                    invalid_elements:"*['class']"
              });
 
        new Vue({
@@ -217,6 +220,8 @@
                     // validate all
                     var self = this;
                     this.logcontent.content = tinymce.get('post_content').getContent();
+                    // console.log(this.logcontent.content);
+                    // return false;
                     if( this.logcontent.title.trim() == "" )
                     {
                         toastr.error("Log Title is required");
