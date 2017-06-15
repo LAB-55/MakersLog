@@ -27,7 +27,7 @@
                         <div class="col-md-10 col-sm-10">
                             <h3 class="section-heading text-left"> {{ $p->p_title}}</h3>
                             <div class="rating inline-ul">
-                                        by <a target="_blank" href="/fotariyajimish">{{$u->first_name}} {{$u->last_name}}</a>
+                                        by <a target="_blank" href="/{{ $u->g_username }}">{{$u->first_name}} {{$u->last_name}}</a>
                             </div>
                         </div>
                         <div class="container-blog">
