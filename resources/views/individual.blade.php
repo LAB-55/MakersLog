@@ -51,6 +51,7 @@
                 </div>
             </div>
         </div>
+</main>
     
 
 <footer class="page-footer blue center-on-small-only">
@@ -98,7 +99,6 @@
     <!--/.Copyright-->
 
 </footer>
-</main>
     <!--/Main layout-->
     @if( Auth::check() )
     <div class="fx-action-btn" style="bottom: 45px; right: 24px;">

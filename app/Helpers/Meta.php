@@ -81,25 +81,15 @@ class Meta
                     break;
 
                 case 'individial':
-                    $meta['title'] = str_replace("-", " ", Request::route('slug') )." | MakersLog";
-                    $meta['pageName'] = " / ";
+                    $meta['pageName'] = str_replace("-", " ", Request::route('slug') );
+                    $meta['title'] = $meta['pageName']. " | MakersLog";
                     break;
                                         
                 default:
                     # code...
                     break;
             }
-            return $meta;
-
-        // elseif () {
-            
-        // }
-        // >name('createLog');
-        // return [
-        //     'title' => $title,
-        //     'pageName' => $title, 
-        // ];
-        
+            return $meta;      
        
     }
 }

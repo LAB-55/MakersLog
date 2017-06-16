@@ -20,7 +20,6 @@
                             <div class="card-block">
                             Sign up or Login with
                             <a href="/auth/google" type="button" class="btn btn-lg btn-gplus"><i class="fa fa-google left"></i> Google</a>
-
                     </div>
                     <!--/Form with header-->
 
