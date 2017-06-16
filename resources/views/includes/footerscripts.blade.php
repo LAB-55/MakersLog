@@ -14,6 +14,11 @@
 	        });
 	    }
 	});
+	$(document).ready(function () {
+		$('#gotoTop').click(function () {
+			$('body').animate({scrollTop:0},200);
+		})
+	})
 </script>
 <script type="text/javascript" src="/js/clamp.min.js"></script>
 <script type="text/javascript" src="/js/tether.min.js"></script>
