@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Post;
@@ -20,10 +21,7 @@ class PostController extends Controller
             $input['p_short_dec'] = $r->p_short_desc;
             $input['p_content']   = $r->p_content;
             $input['uri']         = str_slug($r->p_title, "-");
-            // date_default_timezone_set('Asia/Kolkata');
-            // $t=time();
-            // $input['created_at']=$t;
-            // $input['updated_at']=$t;
+            $input['created_at']  = Carbon::now(getenv('APP_TIMEZONE'));
             $i_cat = [];
 
             foreach ($r->categories as $key => $value) {
