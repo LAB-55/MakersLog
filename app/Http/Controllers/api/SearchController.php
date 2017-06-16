@@ -30,7 +30,7 @@ class SearchController extends Controller
       $limit=$r->limit;
       $result=User::where('first_name','like','%'.$txt.'%')->orWhere('last_name','like','%'.$txt.'%')->orWhere('g_username','like','%'.$txt.'%')->offset($offset)->limit($limit)->get();
       foreach ($result as $key => $r) {
-          $r->post_count=Post::where('provider_id',$r->provider_id)->count();
+          $r->post_count=Post::where('provider_id',$r->provider_id)->where('is_latest', '1')->where('delete', '0')->count();
       }
       sleep(1);
 
