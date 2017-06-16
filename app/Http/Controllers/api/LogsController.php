@@ -17,12 +17,12 @@ class LogsController extends Controller
                 $logs = Post::where('provider_id', $user->provider_id)
                     ->where('is_latest', '1')
                     ->where('delete', '0')
-                    ->orderBy('created_at', 'desc')
+                    ->orderBy('updated_at', 'desc')
                     ->get();
                 if ($logs) {
                     $logs = collect($logs)->map(function ($item) {
                         $data               = $item->toArray();
-                        $data['created_at'] = $item->created_at->diffForHumans();
+                        $data['updated_at'] = $item->updated_at->diffForHumans();
                         return $data;
                     });
                 }

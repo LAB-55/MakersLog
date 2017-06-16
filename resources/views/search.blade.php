@@ -100,7 +100,7 @@
                                 <a target="_blank" :href="makeUrl(p.g_username)" class="media-left waves-light">
                                     <img class="rounded-circle-imp" v-bind:src="p.avatar" alt="image of @{{p.first_name}}" width="80">
                                 </a>
-                                    <div class="media-body pad-lr-20">
+                                <div class="media-body pad-lr-20">
                                     <a target="_blank" :href="makeUrl(p.g_username,p.p_id,p.uri)">
                                         <h5 class="media-heading">@{{getLimit(p.p_title,100)}}</h5>
                                     </a>
@@ -108,8 +108,11 @@
                                         by <a target="_blank" :href="makeUrl(p.g_username)">@{{ p.first_name+" "+p.last_name }}</a>
                                     </ul>
                                     <p>@{{getLimit(p.p_short_dec,140)}}</p>
-                                   
-                                    </div>
+                                </div>
+                                <p class="time_right blue-grey-text">
+                                    <i class="fa fa-clock-o"></i>
+                                    @{{ p.updated_at }}
+                                </p>
                             </div>
                             <hr />
                         </div>

@@ -83,7 +83,7 @@
                                                     @endif
                                                 </div>
                                                 <p class="mb-1">@{{ p.p_short_dec }}</p>
-                                                <i class="fa fa-clock-o" area-hidden="true"></i> @{{ p.created_at }}</small>
+                                                <i class="fa fa-clock-o" area-hidden="true"></i> @{{ p.updated_at }}</small>
                                               </div>
 
                                             </div>

@@ -38,12 +38,11 @@ class SearchController extends Controller
     }
     public function byPost($r)
     {
-      $txt=$r->qry;
-      $offset=$r->offset;
-      $limit=$r->limit;
-      $cat=$r->categories ?? [];
-      $result=DB::table('users')
-              ->join('post_master','users.provider_id','=','post_master.provider_id')
+      $txt = $r->qry;
+      $offset = $r->offset;
+      $limit = $r->limit;
+      $cat = $r->categories ?? [];
+      $result = User::join('post_master','users.provider_id','=','post_master.provider_id')
               ->where(function ($q) use($txt){
                 $q->orWhere('post_master.p_title','like','%'.$txt.'%')
                   ->orWhere('post_master.p_short_dec','like','%'.$txt.'%')
@@ -54,9 +53,15 @@ class SearchController extends Controller
                   foreach ($cat as $key => $value) {
                     $q->where('categories','like','%'.$value['c_name'].',%');
                   }
-              })->where('is_latest','1')->where('delete','0')->offset($offset)->limit($limit)->get();
+              })->where('is_latest','1')->where('delete','0')->orderBy('post_master.updated_at', 'desc')->offset($offset)->limit($limit)->get();
           sleep(1);
-
-      return $result;
+      if ($result) {
+        $result = collect($result)->map(function ($item) {
+            $data               = $item->toArray();
+            $data['updated_at'] = $item->updated_at->diffForHumans();
+            return $data;
+        });
+        return $result;
+      }
     }
 }
