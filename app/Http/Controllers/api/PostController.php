@@ -90,7 +90,7 @@ class PostController extends Controller
                 	"delete" => "1",
             ]);
 
-            return(['status'=>'1');
+            return(['status'=>'1']);
         } catch (Exception $e) {
             return(['status'=>'0','error'=>$e]);
         }

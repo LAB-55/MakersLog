@@ -20,8 +20,8 @@ Route::post('/login', 'Auth\LoginController@login');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/log/view/{id}', 'RootController@showPost');
 Route::group(['middleware' => 'auth'], function () {
-  Route::get('/log/new', 'PostController@index')->name('createLog');;
-  Route::get('/log/edit/{id}', 'PostController@update');
+  Route::get('/log/new', 'PostController@index')->name('createLog');
+  Route::get('/log/edit/{id}', 'PostController@update')->name('editLog');
 });
 
 
