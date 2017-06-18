@@ -56,20 +56,14 @@
                                     class="btn red btn-danger waves-effect offset-md-2"> Discard</button>
                         </div>
                         <br>
-                        <!-- Second card -->
                         <div class="card card-cascade narrower mb-r">
                             <div class="admin-panel info-admin-panel">
-                                <!--Card image-->
                                 <div class="view primary-color">
                                     <h5>Categories</h5>
                                 </div>
-                                <!--/Card image-->
-                                <!--Card content-->
                                 <div class="card-block ">
                                     <div id="new-scroll" class="check-list new-scroll grey lighten-5 pad-lr-10 pad-tb-10">
-
                                         <fieldset :ref= "'chk' + index.toString()" v-for="(c, index) in categories" class="form-group">
-
                                             <input  type="checkbox"
                                                     v-model="c.checked"
                                                     v-el="'chk' + index.toString()"
@@ -78,10 +72,8 @@
                                                  >
                                             <label v-bind:for="'chk' + index.toString()">@{{ c.name }}</label>
                                         </fieldset>
-
                                     </div>
                                     <div class="form-group">
-
                                             <input  type="text"
                                                     id="newcategory"
                                                     v-model="newCategoryName"
@@ -91,16 +83,42 @@
                                                     placeholder="Make new category"
                                                     :disabled='catAddInProcess || pushing'
                                                     name="newcategory" />
-
                                     </div>
                                 </div>
-                                <!--/.Card content-->
                             </div>
                         </div>
-                        <br>
-                        <!-- /.Second card -->
-                        <div>
-                               <a class="btn btn-success waves-effect waves-light"><i class="fa fa-plus fa-fw"></i>&nbsp; Add Attachments</a>
+                        <button id="uploadFilesPopUpBtn" class="btn btn-success waves-effect waves-light"><i class="fa fa-plus"></i>&nbsp; Add Attachments</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header" style="padding:35px 50px;">
+                                        @if (Session::has('success'))
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="alert alert-info alert-dismissable">
+                                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                        {{ Session::get('success') }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4><span class="glyphicon glyphicon-lock"></span>Upload Attachments</h4>
+                                    </div>
+                                    <div class="modal-body" style="padding:40px 50px;">
+                                        <form role="form" action="{{ route('uploadDocuments', ['gusermail' => $meta['gusermail']] ) }}" method="post" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                            <div class="form-group" id="documents">
+                                                <label>Documents: </label>
+                                                <input type="file" class="form-control" name="documents" value="documents" required> 
+                                            </div>
+                                            <button type="submit" value="Submit"  class="btn btn-success" name="submit">Upload Documents</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- /.Second col -->
@@ -113,6 +131,14 @@
     @include('includes.footerscripts')
     @include('includes.models')
     <!--/Main layout-->
+<script>
+$(document).ready(function(){
+    $("#uploadFilesPopUpBtn").click(function(){
+        $("#myModal").modal();
+    });
+});
+</script>
+
     <script type="text/javascript">
 
         // window.history.pushState('obj', '', '/?tab=recent');

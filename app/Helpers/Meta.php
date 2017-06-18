@@ -7,6 +7,7 @@ use Auth;
 use Route;
 use App\User;
 use App\Presentation;
+use App\Document;
 use App\Post;
 
 class Meta
@@ -73,6 +74,17 @@ class Meta
                     $p = Presentation::where('presentation_id', Request::route('presentation_id'))->first();
                     $meta['title'] = "Presentation of ".$p['title']." | MakersLog";
                     $meta['pageName'] = $AuthUser->first_name." ".$AuthUser->last_name." / Presentation View";
+                    break;
+
+                case 'documents':
+                    $meta['title'] = "Documents | MakersLog";
+                    $meta['pageName'] = $AuthUser->first_name." ".$AuthUser->last_name." / Documents";
+                    break;
+
+                case 'documentView':
+                    $d = Document::where('googledrive_id', Request::route('googledrive_id'))->first();
+                    $meta['title'] = "Document of ".$d['document_name']." | MakersLog";
+                    $meta['pageName'] = $AuthUser->first_name." ".$AuthUser->last_name." / Document View";
                     break;
 
                 case 'tasks':

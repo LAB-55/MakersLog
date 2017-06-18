@@ -197,3 +197,11 @@ textarea.md-textarea {
 .page-footer{
 	z-index: -1!important;
 }
+
+
+.modal-header, h4, .close {
+	background-color: #5cb85c;
+	color:white !important;
+	text-align: center;
+	font-size: 30px;
+}

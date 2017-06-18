@@ -48,8 +48,14 @@ Route::group(['prefix' => 'api','namespace'=>'api'], function () {
 Route::get('/{gusermail}', 'RootController@userpage')->name('gusermail');
 Route::get('/{gusermail}/profile', 'ProfileController@index')->name('getProfile');
 Route::post('/{gusermail}/profile', 'ProfileController@store')->name('postProfile');
+
 Route::get('/{gusermail}/presentations', 'PresentationController@presentations')->name('presentations');
 Route::post('/{gusermail}/presentations', 'PresentationController@uploadPresentation')->name('uploadPresentation');
 Route::get('/{gusermail}/presentations/{presentation_id}', 'PresentationController@presentationView')->name('presentationView');
+
+Route::post('/{gusermail}/documents', 'DocumentController@uploadDocuments')->name('uploadDocuments');
+Route::get('/{gusermail}/documents', 'DocumentController@documents')->name('documents');
+Route::get('/{gusermail}/documents/{googledrive_id}', 'DocumentController@documentView')->name('documentView');
+
 Route::get('/{gusermail}/tasks', 'TasksController@index')->name('tasks');
 Route::get('/{gusermail}/{pid}/{slug}', 'PostController@individual')->name('individial');
