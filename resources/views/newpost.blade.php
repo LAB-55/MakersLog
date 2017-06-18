@@ -97,7 +97,11 @@
                                 <!--/.Card content-->
                             </div>
                         </div>
+                        <br>
                         <!-- /.Second card -->
+                        <div>
+                               <a class="btn btn-success waves-effect waves-light"><i class="fa fa-plus fa-fw"></i>&nbsp; Add Attachments</a>
+                        </div>
                     </div>
                     <!-- /.Second col -->
                 </div>
