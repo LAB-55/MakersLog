@@ -32,7 +32,7 @@ class SearchController extends Controller
       foreach ($result as $key => $r) {
           $r->post_count=Post::where('provider_id',$r->provider_id)->where('is_latest', '1')->where('delete', '0')->count();
       }
-      sleep(1);
+      // sleep(1);
 
       return $result;
     }
@@ -54,7 +54,7 @@ class SearchController extends Controller
                     $q->where('categories','like','%'.$value['c_name'].',%');
                   }
               })->where('is_latest','1')->where('delete','0')->orderBy('post_master.updated_at', 'desc')->offset($offset)->limit($limit)->get();
-          sleep(1);
+          // sleep(1);
       if ($result) {
         $result = collect($result)->map(function ($item) {
             $data               = $item->toArray();
