@@ -126,19 +126,13 @@
                 "searchreplace visualblocks fullscreen",
                 "insertdatetime media table contextmenu paste"
             ],
-            height:"270px",
+            height:"270",
             file_browser_callback_types: 'image',
             file_picker_types: 'image',
             paste_data_images: true,
-
-          //   file_browser_callback: function(field_name, url, type, win) {
-          //       win.document.getElementById(field_name).value = 'my browser value';
-          //   },
             
             file_picker_callback: function(callback, value, meta) {
-                // return console.log (meta);
-                // console.log(callback);
-                // return;
+                
             var input = document.createElement('input');
                 input.setAttribute('type', 'file');
                 input.setAttribute('accept', '.xlsx,.xls,.doc,.docx,.ppt, .pptx,.txt,.pdf,.ods,.odp,image/*,.mp4');
@@ -153,11 +147,6 @@
                     var base64 = reader.result.split(',')[1];
                     var blobInfo = blobCache.create(id, file, base64);
                     blobCache.add(blobInfo);
-
-                    // if () {
-
-                    // }
-                    // console.log( blobInfo.blobUri() );
                     callback(blobInfo.blobUri(), { title: file.name });
                   };
                 };

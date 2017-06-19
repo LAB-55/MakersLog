@@ -112,6 +112,7 @@
         axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
+        });
        tinymce.init({
             selector: "#post_content",
 
@@ -151,7 +152,7 @@
             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
             invalid_elements:"*['class'],button",
                   setup : function(editor){
-                    
+
                     editor.on('init', function () {
                       tinymce.get('post_content').setContent($('#post_content').text());
                     });
