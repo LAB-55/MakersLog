@@ -132,26 +132,28 @@
             paste_data_images: true,
             
             file_picker_callback: function(callback, value, meta) {
-                
-            var input = document.createElement('input');
-                input.setAttribute('type', 'file');
-                input.setAttribute('accept', '.xlsx,.xls,.doc,.docx,.ppt, .pptx,.txt,.pdf,.ods,.odp,image/*,.mp4');
-                input.onchange = function() {
-                  var file = this.files[0];
-                  
-                  var reader = new FileReader();
-                  reader.readAsDataURL(file);
-                  reader.onload = function () {
-                    var id = 'blobid' + (new Date()).getTime();
-                    var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-                    var base64 = reader.result.split(',')[1];
-                    var blobInfo = blobCache.create(id, file, base64);
-                    blobCache.add(blobInfo);
-                    callback(blobInfo.blobUri(), { title: file.name });
-                  };
-                };
-                
-                input.click();
+                                // return console.log(meta);
+                if( meta.filetype == 'image'){
+
+                var input = document.createElement('input');
+                    input.setAttribute('type', 'file');
+                    input.setAttribute('accept', '.xlsx,.xls,.doc,.docx,.ppt, .pptx,.txt,.pdf,.ods,.odp,image/*,.mp4');
+                    input.onchange = function() {
+                      var file = this.files[0];
+                      var reader = new FileReader();
+                      reader.readAsDataURL(file);
+                      reader.onload = function () {
+                        var id = 'blobid' + (new Date()).getTime();
+                        var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                        var base64 = reader.result.split(',')[1];
+                        var blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
+                        callback(blobInfo.blobUri(), { title: file.name });
+                      };
+                    };
+                    
+                    input.click();
+                } 
           },
             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
             invalid_elements:"*['class'],button",

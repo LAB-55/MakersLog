@@ -127,10 +127,10 @@
             paste_data_images: true,
             
             file_picker_callback: function(callback, value, meta) {
-                
+                return console.log(meta);
             var input = document.createElement('input');
                 input.setAttribute('type', 'file');
-                input.setAttribute('accept', '.xlsx,.xls,.doc,.docx,.ppt, .pptx,.txt,.pdf,.ods,.odp,image/*,.mp4');
+                input.setAttribute('accept', 'image/*');
                 input.onchange = function() {
                   var file = this.files[0];
                   
