@@ -160,6 +160,7 @@ class DocumentController extends Controller
                 $document_data[$key] = Document::Select('document_id', 'document_name')->Where('id',$document_data[$key]->id)->get();
                 $result = $result->merge($document_data[$key]); 
             }
+            
             return response()->json($result);
         }
 
@@ -173,6 +174,6 @@ class DocumentController extends Controller
         $document_name = Document::Select('document_name')->Where('document_id', $document_id)->first();
         File::delete(public_path().'/documents/'.$document_name['document_name']);
         Document::Where('document_id', $document_id)->delete();
-        return back();
+        return response()->json($document_id);
     }
 }

@@ -23,7 +23,7 @@ Route::get('/log/view/{id}', 'RootController@showPost');
 Route::group(['middleware' => 'auth'], function () {
   Route::get('/log/new', 'PostController@index')->name('createLog');
   Route::post('/document/upload', 'DocumentController@uploadDocuments')->name('uploadDocuments');
-  Route::get('/document/delete/{document_id}', 'DocumentController@deleteDocuments')->name('deleteDocuments');
+  Route::post('/document/delete/{document_id}', 'DocumentController@deleteDocuments')->name('deleteDocuments');
   Route::get('/log/edit/{id}', 'PostController@update')->name('editLog');
 });
 

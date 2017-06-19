@@ -146,6 +146,7 @@
             $('#multiFiles').change(function () {
                 $('#uploadDocuments').submit();
             });
+
             $('#uploadDocuments').on('submit', function () {
                 $.ajax({
                     url: "{{ route('uploadDocuments') }}",
@@ -163,7 +164,7 @@
                             var url = "/document/delete/" + data[index].document_id;
                             $('#files').append("<li class='list-group-item justify-content-between'>" 
                                                 + data[index].document_name + 
-                                                "<span class='badge badge-primary badge-pill'><a href='" + url + "'><i class='fa fa-close' style='color:#f5f5f5'></i></a></span></li>");
+                                                "<a class='deleteDoc' data-id='" + data[index].document_id + "'data-name='" + data[index].document_name + "' onClick='deleteDoc(this)'><span class='deleteDoc badge badge-primary badge-pill'><i class='fa fa-close' style='color:#f5f5f5'></i></span></a></li>");
                         })                        
                     },
                     error: function (response) {
@@ -172,6 +173,26 @@
                 });
             });
         });
+
+        function deleteDoc(obj) {
+            var document_id = obj.getAttribute('data-id'),
+                two = obj.getAttribute('data-name');
+            $.ajax({
+                url: "../document/delete/"+document_id,
+                dataType: 'text',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: document_id,
+                type: 'post',
+                success: function (response) {
+                    $('.deleteDoc').filter('[data-id =' + document_id + ']').parent().remove();
+                },
+                error: function (response) {
+                    $('#msg').html(response); // display error response from the PHP script
+                }
+            });
+        }
         
     </script>
 
