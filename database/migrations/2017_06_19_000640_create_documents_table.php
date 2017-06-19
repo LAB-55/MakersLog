@@ -17,11 +17,11 @@ class CreateDocumentsTable extends Migration
             $table->increments('id');
             $table->string('provider_id');
             $table->string('p_id')->nullable();
-            $table->string('document_id')->nullable();;
+            $table->string('document_id')->nullable();
             $table->string('document_name');
-            $table->string('googledrive_id');
-            $table->string('googledrive_url');
-            $table->string('thumbnail_url');
+            $table->string('googledrive_id')->nullable();
+            $table->string('googledrive_url')->nullable();
+            $table->string('thumbnail_url')->nullable();
             $table->timestamps();
         });
     }

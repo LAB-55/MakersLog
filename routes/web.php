@@ -19,8 +19,11 @@ Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/log/view/{id}', 'RootController@showPost');
+
 Route::group(['middleware' => 'auth'], function () {
   Route::get('/log/new', 'PostController@index')->name('createLog');
+  Route::post('/document/upload', 'DocumentController@uploadDocuments')->name('uploadDocuments');
+  Route::get('/document/delete/{document_id}', 'DocumentController@deleteDocuments')->name('deleteDocuments');
   Route::get('/log/edit/{id}', 'PostController@update')->name('editLog');
 });
 
@@ -53,7 +56,7 @@ Route::get('/{gusermail}/presentations', 'PresentationController@presentations')
 Route::post('/{gusermail}/presentations', 'PresentationController@uploadPresentation')->name('uploadPresentation');
 Route::get('/{gusermail}/presentations/{presentation_id}', 'PresentationController@presentationView')->name('presentationView');
 
-Route::post('/{gusermail}/documents', 'DocumentController@uploadDocuments')->name('uploadDocuments');
+// Route::post('/{gusermail}/documents', 'DocumentController@uploadDocuments')->name('uploadDocuments');
 Route::get('/{gusermail}/documents', 'DocumentController@documents')->name('documents');
 Route::get('/{gusermail}/documents/{googledrive_id}', 'DocumentController@documentView')->name('documentView');
 

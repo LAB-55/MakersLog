@@ -223,7 +223,7 @@
                     }
                     return;
                 },
-                publish : function(e){
+                publish : function(e) {
                     // validate all
                     var self = this;
                     this.logcontent.content = tinymce.get('post_content').getContent();
@@ -264,7 +264,7 @@
             },//methods
             watch: {
                 page :function( val ){
-                    if( !this.page ){
+                    if( !this.page ) {
                         window.location = "/?auth=0&failed=true";
                     }
                 }

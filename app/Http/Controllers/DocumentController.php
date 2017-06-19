@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Input;
 use App\Helpers\Meta;
 use App\User;
 use App\Document;
+use File;
+use Carbon;
 use Auth;
 use Session;
 use Redirect;
@@ -72,111 +76,103 @@ class DocumentController extends Controller
         return $client;
     }
 
-    public function uploadDocuments(Request $request, $gusermail) {
+    public function uploadDocuments(Request $request) {
         
-        $file = Input::file('documents');
-        $extension = $file->extension();
-        // dd($extension);
-        $filename = $file->getClientOriginalName();
-        // $filename = pathinfo($fullfilename, PATHINFO_FILENAME);
-        // $extension = pathinfo($fullfilename, PATHINFO_EXTENSION);
+        $result = new Collection();
+
+        $files = Input::file('documents');
         
-        if(	$extension == "pptx" || $extension == "ppt" || 
-        	$extension == "xlsx" || $extension == "xls" || 
-        	$extension == "docx" || $extension == "doc" || 
-        	$extension == "txt" ) {
+        if ($files) {
 
-	        $file->move(public_path().'/documents', $filename);
-	        
-	        $content = file_get_contents(public_path().'/documents/'.$filename);
-            
-            $client = $this->getClient();
-            $service = new Google_Service_Drive($client);
+            foreach($files as $key => $value) {
 
-            /* Create folder in Drive */
-
-            // $fileMetadata = new Google_Service_Drive_DriveFile(array(
-            //                     'name' => 'Invoices',
-            //                     'mimeType' => 'application/vnd.google-apps.folder'));
-            // $folder = $service->files->create($fileMetadata, array(
-            //                     'fields' => 'id'));
-            // printf("Folder ID: %s\n", $folder->id);
-            // exit();
-
-            /* Create folder in Drive */
-
-            $folderId = env('GOOGLE_DRIVE_FOLDER_ID');
- 			
- 			if ( $extension == "pptx" || $extension == "ppt" ) {
-	 			$fileMetadata = new Google_Service_Drive_DriveFile(array(
-	              'name' => $filename,
-	              'mimeType' => 'application/vnd.google-apps.presentation',
-	              'parents' => array($folderId)
-	            ));
-	            $forUrl = "presentation";
- 			}
-
- 			elseif ( $extension == "xlsx" || $extension == "xls" ) {
-	 			$fileMetadata = new Google_Service_Drive_DriveFile(array(
-	              'name' => $filename,
-	              'mimeType' => 'application/vnd.google-apps.spreadsheet',
-	              'parents' => array($folderId)
-	            ));
-	            $forUrl = "spreadsheets";
- 			}
-
- 			else {
- 				$fileMetadata = new Google_Service_Drive_DriveFile(array(
-	              'name' => $filename,
-	              'mimeType' => 'application/vnd.google-apps.document',
-	              'parents' => array($folderId)
-	            ));
-	         	$forUrl = "document";   
- 			}
-
-            // dd($fileMetadata);
-            $googledrive = $service->files->create($fileMetadata, array(
-              'data' => $content,
-              'uploadType' => 'multipart',
-              'fields' => 'id')
-            );
-            //dd($googledrive);
-
-            $googledrive_id = $googledrive->id;
-
-            if ( $forUrl == "presentation" ) {
-				$googledrive_url = 'https://docs.google.com/presentation/d/'.$googledrive_id.'/embed?start=false&loop=false&delayms=3000';
- 			}
-
- 			elseif ( $forUrl == "spreadsheets" ) {
-				$googledrive_url = 'https://docs.google.com/spreadsheets/d/'.$googledrive_id.'/pubhtml?widget=true&amp;headers=false';
- 			}
-
- 			else {
-				$googledrive_url = 'https://docs.google.com/document/d/'.$googledrive_id.'/pub?embedded=true';
- 			}
-
-            $thumbnail_url = 'https://lh3.google.com/u/0/d/'.$googledrive_id.'=w200-h150-p-k-nu-iv1';
-            $provider_id = User::Select('provider_id')->Where('g_username', $gusermail)->first()->toArray();
-
-            // $presentation_name = sha1($provider_id['provider_id'].$presentation_id.$filename);
+                $extension = $files[$key]->extension();
+                // dd($extension);
+                $filename = $files[$key]->getClientOriginalName();
+                // $filename = pathinfo($fullfilename, PATHINFO_FILENAME);
+                // $extension = pathinfo($fullfilename, PATHINFO_EXTENSION);
+                
+                $files[$key]->move(public_path().'/documents', $filename);
+                    
+                $content = file_get_contents(public_path().'/documents/'.$filename);
 
 
-            $document_data = new Document();
-            $document_data->provider_id = $provider_id['provider_id'];
-            // $document_data->p_id = ;
-            // $document_data->document_id = ;
-            $document_data->document_name = $filename;
-            $document_data->googledrive_id = $googledrive_id;
-            $document_data->googledrive_url = $googledrive_url;
-            $document_data->thumbnail_url = $thumbnail_url;
-            $document_data->save();
-            Session::flash("success","$filename Uploaded");
+                if(	$extension == "pptx" || $extension == "ppt" || $extension == "odp" ) {
+
+                    $client = $this->getClient();
+                    $service = new Google_Service_Drive($client);
+
+                    /* Create folder in Drive */
+
+                    // $fileMetadata = new Google_Service_Drive_DriveFile(array(
+                    //                     'name' => 'Invoices',
+                    //                     'mimeType' => 'application/vnd.google-apps.folder'));
+                    // $folder = $service->files->create($fileMetadata, array(
+                    //                     'fields' => 'id'));
+                    // printf("Folder ID: %s\n", $folder->id);
+                    // exit();
+
+                    /* Create folder in Drive */
+
+                    $folderId = env('GOOGLE_DRIVE_FOLDER_ID');
+         			
+    	 			$fileMetadata = new Google_Service_Drive_DriveFile(array(
+    	              'name' => $filename,
+    	              'mimeType' => 'application/vnd.google-apps.presentation',
+    	              'parents' => array($folderId)
+    	            ));
+                    
+                    // dd($fileMetadata);
+                    $googledrive = $service->files->create($fileMetadata, array(
+                      'data' => $content,
+                      'uploadType' => 'multipart',
+                      'fields' => 'id')
+                    );
+                    //dd($googledrive);
+
+                    $googledrive_id = $googledrive->id;
+
+        			$googledrive_url = 'https://docs.google.com/presentation/d/'.$googledrive_id.'/embed?start=false&loop=false&delayms=3000';
+
+                    $thumbnail_url = 'https://lh3.google.com/u/0/d/'.$googledrive_id.'=w200-h150-p-k-nu-iv1';
+                }
+                else {
+                    $googledrive_id = "";
+                    $googledrive_url = "";
+                    $thumbnail_url = "";   
+                }
+
+                $gusermail = Auth::user()->g_username;
+                $provider_id = User::Select('provider_id')->Where('g_username', $gusermail)->first()->toArray();
+                $time = Carbon\Carbon::now();
+                $document_id = sha1($provider_id['provider_id'].$filename.$time);
+
+                $document_data[$key] = new Document();
+                $document_data[$key]->provider_id = $provider_id['provider_id'];
+                // $document_data[$key]->p_id = ;
+                $document_data[$key]->document_id = $document_id;
+                $document_data[$key]->document_name = $filename;
+                $document_data[$key]->googledrive_id = $googledrive_id;
+                $document_data[$key]->googledrive_url = $googledrive_url;
+                $document_data[$key]->thumbnail_url = $thumbnail_url;
+                $document_data[$key]->save();
+
+                $document_data[$key] = Document::Select('document_id', 'document_name')->Where('id',$document_data[$key]->id)->get();
+                $result = $result->merge($document_data[$key]); 
+            }
+            return response()->json($result);
         }
+
         else {
-        	Session::flash("error","File is not Supported.");	
+            return ;
         }
-        
-        // return redirect(route('presentations', ['gusermail' => $gusermail ]));
+    }
+
+    public function deleteDocuments(Request $request, $document_id)
+    {
+        $document_name = Document::Select('document_name')->Where('document_id', $document_id)->first();
+        File::delete(public_path().'/documents/'.$document_name['document_name']);
+        Document::Where('document_id', $document_id)->delete();
+        return back();
     }
 }

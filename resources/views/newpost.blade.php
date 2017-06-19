@@ -87,7 +87,11 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <button id="uploadFilesPopUpBtn" class="btn btn-success waves-effect waves-light"><i class="fa fa-plus"></i>&nbsp; Add Attachments</button>
+                        <ul id="files" class="list-group">
+                            
+                        </ul>
                         <!-- Modal -->
                         <div class="modal fade" id="myModal" role="dialog">
                             <div class="modal-dialog">
@@ -108,13 +112,13 @@
                                         <h4><span class="glyphicon glyphicon-lock"></span>Upload Attachments</h4>
                                     </div>
                                     <div class="modal-body" style="padding:40px 50px;">
-                                        <form role="form" action="{{ route('uploadDocuments', ['gusermail' => $meta['gusermail']] ) }}" method="post" enctype="multipart/form-data">
+                                        <form id="uploadDocuments" method="post" enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                             <div class="form-group" id="documents">
                                                 <label>Documents: </label>
-                                                <input type="file" class="form-control" name="documents" value="documents" required> 
+                                                <input type="file" id="multiFiles" class="form-control" name="documents[]" multiple required> 
                                             </div>
-                                            <button type="submit" value="Submit"  class="btn btn-success" name="submit">Upload Documents</button>
+                                            <button  type="hidden" value="Submit"  class="btn btn-success" name="submit">Upload Documents</button>
                                         </form>
                                     </div>
                                 </div>
@@ -131,13 +135,45 @@
     @include('includes.footerscripts')
     @include('includes.models')
     <!--/Main layout-->
-<script>
-$(document).ready(function(){
-    $("#uploadFilesPopUpBtn").click(function(){
-        $("#myModal").modal();
-    });
-});
-</script>
+    <script>
+        $(document).ready(function(){
+            $("#uploadFilesPopUpBtn").click(function(){
+                $("#myModal").modal();
+            });
+        });
+
+        $(document).ready(function (e) {
+            $('#multiFiles').change(function () {
+                $('#uploadDocuments').submit();
+            });
+            $('#uploadDocuments').on('submit', function () {
+                $.ajax({
+                    url: "{{ route('uploadDocuments') }}",
+                    dataType: 'text',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: new FormData(this),
+                    type: 'post',
+                    success: function (response) {
+                        $('#multiFiles').val('');
+                        $("#myModal").modal('hide');
+                        var data = JSON.parse(response);
+                        $.each(data, function (index) {
+                            var url = "/document/delete/" + data[index].document_id;
+                            $('#files').append("<li class='list-group-item justify-content-between'>" 
+                                                + data[index].document_name + 
+                                                "<span class='badge badge-primary badge-pill'><a href='" + url + "'><i class='fa fa-close' style='color:#f5f5f5'></i></a></span></li>");
+                        })                        
+                    },
+                    error: function (response) {
+                        $('#msg').html(response); // display error response from the PHP script
+                    }
+                });
+            });
+        });
+        
+    </script>
 
     <script type="text/javascript">
 
