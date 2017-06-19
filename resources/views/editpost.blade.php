@@ -287,7 +287,7 @@
                             }).then(function (response) {
                                 // pushing = false;
                                 console.log(response.data);
-                                toastr.success("Post added");
+                                toastr.success("Post updated");
                                 window.location = "/log/view/"+"{!! $p->p_id !!}";
                             })
 
