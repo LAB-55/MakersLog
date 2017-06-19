@@ -127,40 +127,43 @@
                 "insertdatetime media table contextmenu paste"
             ],
             height:"270px",
-            //file_browser_callback_types: 'file image media',
-            //file_picker_types: 'file image media',
+            file_browser_callback_types: 'image',
+            file_picker_types: 'image',
             paste_data_images: true,
 
           //   file_browser_callback: function(field_name, url, type, win) {
           //       win.document.getElementById(field_name).value = 'my browser value';
           //   },
             
-          //   file_picker_callback: function(callback, value, meta) {
-          //   var input = document.createElement('input');
-          //       input.setAttribute('type', 'file');
-          //       input.setAttribute('accept', '.xlsx,.xls,.doc,.docx,.ppt, .pptx,.txt,.pdf,.ods,.odp,image/*,.mp4');
-          //       input.onchange = function() {
-          //         var file = this.files[0];
+            file_picker_callback: function(callback, value, meta) {
+                // return console.log (meta);
+                // console.log(callback);
+                // return;
+            var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', '.xlsx,.xls,.doc,.docx,.ppt, .pptx,.txt,.pdf,.ods,.odp,image/*,.mp4');
+                input.onchange = function() {
+                  var file = this.files[0];
                   
-          //         var reader = new FileReader();
-          //         reader.readAsDataURL(file);
-          //         reader.onload = function () {
-          //           var id = 'blobid' + (new Date()).getTime();
-          //           var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-          //           var base64 = reader.result.split(',')[1];
-          //           var blobInfo = blobCache.create(id, file, base64);
-          //           blobCache.add(blobInfo);
+                  var reader = new FileReader();
+                  reader.readAsDataURL(file);
+                  reader.onload = function () {
+                    var id = 'blobid' + (new Date()).getTime();
+                    var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                    var base64 = reader.result.split(',')[1];
+                    var blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
 
-          //           // if () {
+                    // if () {
 
-          //           // }
-          //           // console.log( blobInfo.blobUri() );
-          //           // cb(blobInfo.blobUri(), { title: file.name });
-          //         };
-          //       };
+                    // }
+                    // console.log( blobInfo.blobUri() );
+                    callback(blobInfo.blobUri(), { title: file.name });
+                  };
+                };
                 
-          //       input.click();
-          // },
+                input.click();
+          },
             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
             invalid_elements:"*['class'],button",
 
