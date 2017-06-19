@@ -35,6 +35,7 @@ class PostController extends Controller
             $input['p_content']   = $pc;
             $input['uri']         = str_slug($r->p_title, "-");
             $input['created_at']  = Carbon::now(getenv('APP_TIMEZONE'));
+            $input['updated_at']  = Carbon::now(getenv('APP_TIMEZONE'));
             $i_cat = [];
 
             foreach ($r->categories as $key => $value) {
@@ -73,6 +74,8 @@ class PostController extends Controller
             $input['uri']         = str_slug($r->p_title, "-");
             $c_at                 = Post::select('created_at')->where('p_id', $r->p_id)->first();
             $input['created_at']  = $c_at['created_at'];
+            $input['updated_at']  = Carbon::now(getenv('APP_TIMEZONE'));
+            
             Post::where('p_id', $input['p_id'])->update(['is_latest' => '0']);
             $i_cat = [];
 
