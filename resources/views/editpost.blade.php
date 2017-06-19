@@ -49,7 +49,7 @@
                     <div class="col-lg-4" id="category-scope">
 
                         <div>
-                               <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">@{{ pushig ? 'Updating' : 'Update Changes' }}</button>
+                               <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">@{{ pushing ? 'Updating' : 'Update Changes' }}</button>
                                 <button class="btn red btn-danger waves-effect offset-md-2"> Discard</button>
                         </div>
                         <br>
