@@ -28,7 +28,7 @@ class PostController extends Controller
 
             $pc = public_path().'/_p_content/'.$this->generateRandomString(30);
             file_put_contents($pc, $r->p_content);
-
+            date_default_timezone_set('Asia/Kolkata');
             $input['provider_id'] = Auth::user()->provider_id;
             $input['p_title']     = $r->p_title;
             $input['p_short_dec'] = $r->p_short_desc;
