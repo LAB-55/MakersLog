@@ -13,4 +13,4 @@ npm-debug.log
 /public/presentation
 /composer.phar
 /composer.lock
-/public/pcontent
+/public/_p_content
