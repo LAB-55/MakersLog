@@ -47,6 +47,7 @@ class PostController extends Controller
       if ($post->provider_id != $provider_id) {
           return '<h1>404 Not Found</h1>';
       }
+      $post->p_content = file_get_contents($post->p_content); 
       //dd($post->categories);
       return view('editpost')->with('p',$post)->with('meta',Meta::get('Edit Log'));;
     }
