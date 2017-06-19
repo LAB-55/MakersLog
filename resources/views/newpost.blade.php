@@ -118,15 +118,53 @@
             headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
         });
 
-          var tm = tinymce.init({
-                    selector:'#post_content',
-                    menubar: false,
-                    height : "270",
-                    plugins: "paste",
-                    paste_data_images: true,
-                    valid_elements: "b,a,p,strong,i,em,h1,h2,h3,h4,h5,ul,ol,li,,img,span",
-                    invalid_elements:"*['class']"
-             });
+        tinymce.init({
+            selector: "#post_content",
+
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste"
+            ],
+            height:"270px",
+            file_browser_callback_types: 'file image media',
+            file_picker_types: 'file image media',
+            paste_data_images: true,
+
+            file_browser_callback: function(field_name, url, type, win) {
+                win.document.getElementById(field_name).value = 'my browser value';
+            },
+            
+            file_picker_callback: function(callback, value, meta) {
+            var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', '.xlsx,.xls,.doc,.docx,.ppt, .pptx,.txt,.pdf,.ods,.odp,image/*,.mp4');
+                input.onchange = function() {
+                  var file = this.files[0];
+                  
+                  var reader = new FileReader();
+                  reader.readAsDataURL(file);
+                  reader.onload = function () {
+                    var id = 'blobid' + (new Date()).getTime();
+                    var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                    var base64 = reader.result.split(',')[1];
+                    var blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
+
+                    // if () {
+                        
+                    // }
+                    // console.log( blobInfo.blobUri() );
+                    // cb(blobInfo.blobUri(), { title: file.name });
+                  };
+                };
+                
+                input.click();
+          },
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            invalid_elements:"*['class'],button",
+
+        });
 
        new Vue({
             el: "#editor-scope",

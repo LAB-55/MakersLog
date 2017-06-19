@@ -62,6 +62,7 @@
                     <li><a href="faq.html" class="collapsible-header waves-effect arrow-r"><i class="fa fa-question-circle" aria-hidden="true"></i> FAQ</a> -->
                     <li><a href="{{ route('indexroot') }}" class="waves-effect">Home</a></li>
                     <li><a href="{{ route('gusermail', ['gusermail' => $meta['gusermail']] ) }}" class="waves-effect">My Logs</a></li>
+                    <li><a href="{{ route('teams', ['teamsroot' => $meta['gusermail']] ) }}" class="waves-effect">My Teams</a></li>
                     <li><a href="{{ route('getProfile', ['gusermail' => $meta['gusermail']] ) }}" class="waves-effect">Edit Account</a></li>
                     <li><a href="{{ route('presentations', ['gusermail' => $meta['gusermail']] ) }}" class="waves-effect">Presentations</a></li>
                     <li><a href="{{ route('tasks', ['gusermail' => $meta['gusermail']] ) }}" class="waves-effect">Tasks</a></li>
