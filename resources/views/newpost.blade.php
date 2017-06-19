@@ -35,7 +35,7 @@
                                 <br>
                                 <div class="md-form mb-0">
                                     <textarea name="logcontent-content" v-model="logcontent.desc" type="text" class="md-textarea" rows="1" :disabled="pushing" ></textarea>
-                                    <label for="form7">Blog Description in 140 characters</label>
+                                    <label for="form7">Blog Description in around 140 characters</label>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                     <div class="col-lg-4" id="category-scope">
 
                         <div>
-                               <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">Publish</button>
+                               <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">@{{ pushing ? 'Publishing' : 'Publish'}} </button>
                                 <button
                                     v-on:click="discardPost"
                                     class="btn red btn-danger waves-effect offset-md-2"> Discard</button>
@@ -123,44 +123,44 @@
 
             plugins: [
                 "advlist autolink lists link image charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
+                "searchreplace visualblocks fullscreen",
                 "insertdatetime media table contextmenu paste"
             ],
             height:"270px",
-            file_browser_callback_types: 'file image media',
-            file_picker_types: 'file image media',
+            //file_browser_callback_types: 'file image media',
+            //file_picker_types: 'file image media',
             paste_data_images: true,
 
-            file_browser_callback: function(field_name, url, type, win) {
-                win.document.getElementById(field_name).value = 'my browser value';
-            },
+          //   file_browser_callback: function(field_name, url, type, win) {
+          //       win.document.getElementById(field_name).value = 'my browser value';
+          //   },
             
-            file_picker_callback: function(callback, value, meta) {
-            var input = document.createElement('input');
-                input.setAttribute('type', 'file');
-                input.setAttribute('accept', '.xlsx,.xls,.doc,.docx,.ppt, .pptx,.txt,.pdf,.ods,.odp,image/*,.mp4');
-                input.onchange = function() {
-                  var file = this.files[0];
+          //   file_picker_callback: function(callback, value, meta) {
+          //   var input = document.createElement('input');
+          //       input.setAttribute('type', 'file');
+          //       input.setAttribute('accept', '.xlsx,.xls,.doc,.docx,.ppt, .pptx,.txt,.pdf,.ods,.odp,image/*,.mp4');
+          //       input.onchange = function() {
+          //         var file = this.files[0];
                   
-                  var reader = new FileReader();
-                  reader.readAsDataURL(file);
-                  reader.onload = function () {
-                    var id = 'blobid' + (new Date()).getTime();
-                    var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-                    var base64 = reader.result.split(',')[1];
-                    var blobInfo = blobCache.create(id, file, base64);
-                    blobCache.add(blobInfo);
+          //         var reader = new FileReader();
+          //         reader.readAsDataURL(file);
+          //         reader.onload = function () {
+          //           var id = 'blobid' + (new Date()).getTime();
+          //           var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+          //           var base64 = reader.result.split(',')[1];
+          //           var blobInfo = blobCache.create(id, file, base64);
+          //           blobCache.add(blobInfo);
 
-                    // if () {
-                        
-                    // }
-                    // console.log( blobInfo.blobUri() );
-                    // cb(blobInfo.blobUri(), { title: file.name });
-                  };
-                };
+          //           // if () {
+
+          //           // }
+          //           // console.log( blobInfo.blobUri() );
+          //           // cb(blobInfo.blobUri(), { title: file.name });
+          //         };
+          //       };
                 
-                input.click();
-          },
+          //       input.click();
+          // },
             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
             invalid_elements:"*['class'],button",
 
@@ -277,6 +277,7 @@
                         return  elm.checked
                     });
                     tinymce.get('post_content').setMode('readonly');
+
                     axios.post('/api/log/publish', {
                                     p_title: self.logcontent.title ,
                                     p_short_desc: self.logcontent.desc,

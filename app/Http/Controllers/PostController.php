@@ -23,6 +23,7 @@ class PostController extends Controller
             ->where('is_latest', '1')->where('delete', '0')->first();
         if ($aPost) {
             $userDetails = User::where('provider_id', $aPost->provider_id)->first();
+            $aPost->p_content = file_get_contents($aPost->p_content);
             return view('individual')
                 ->with('p', $aPost)
                 ->with('u', $userDetails)

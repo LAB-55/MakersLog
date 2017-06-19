@@ -12,14 +12,27 @@ use Uuid;
 
 class PostController extends Controller
 {
+    public function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
     public function create(Request $r)
     {
         try {
             $input['p_id']        = Uuid::generate(5, Auth::user()->g_username . $r->p_title, Uuid::NS_DNS);
+
+            $pc = public_path().'/_p_content/'.$this->generateRandomString(30);
+            file_put_contents($pc, $r->p_content);
+
             $input['provider_id'] = Auth::user()->provider_id;
             $input['p_title']     = $r->p_title;
             $input['p_short_dec'] = $r->p_short_desc;
-            $input['p_content']   = $r->p_content;
+            $input['p_content']   = $pc;
             $input['uri']         = str_slug($r->p_title, "-");
             $input['created_at']  = Carbon::now(getenv('APP_TIMEZONE'));
             $i_cat = [];
@@ -52,8 +65,11 @@ class PostController extends Controller
             $input['p_id']        = $r->p_id;
             $input['provider_id'] = Auth::user()->provider_id;
             $input['p_title']     = $r->p_title;
+            $pc = public_path().'/_p_content/'.$this->generateRandomString(50);
+            file_put_contents($pc, $r->p_content);
+
             $input['p_short_dec'] = $r->p_short_desc;
-            $input['p_content']   = $r->p_content;
+            $input['p_content']   = $pc;
             $input['uri']         = str_slug($r->p_title, "-");
             $c_at                 = Post::select('created_at')->where('p_id', $r->p_id)->first();
             $input['created_at']  = $c_at['created_at'];
