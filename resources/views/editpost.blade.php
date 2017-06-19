@@ -50,7 +50,7 @@
 
                         <div>
                                <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">Update Changes</button>
-                                <button class="btn red btn-danger waves-effect offset-md-2"> Discard</button>
+                                <!-- <button class="btn red btn-danger waves-effect offset-md-2"> Discard</button> -->
                         </div>
                         <br>
                         <!-- Second card -->
