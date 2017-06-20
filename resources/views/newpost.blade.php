@@ -90,40 +90,11 @@
                         
                         <button id="uploadFilesPopUpBtn" class="btn btn-success waves-effect waves-light"><i class="fa fa-plus"></i>&nbsp; Add Attachments</button>
                         <ul id="files" class="list-group">
-                            
                         </ul>
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModal" role="dialog">
-                            <div class="modal-dialog">
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header" style="padding:35px 50px;">
-                                        @if (Session::has('success'))
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="alert alert-info alert-dismissable">
-                                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                                        {{ Session::get('success') }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4><span class="glyphicon glyphicon-lock"></span>Upload Attachments</h4>
-                                    </div>
-                                    <div class="modal-body" style="padding:40px 50px;">
-                                        <form id="uploadDocuments" method="post" enctype="multipart/form-data">
-                                        {{ csrf_field() }}
-                                            <div class="form-group" id="documents">
-                                                <label>Documents: </label>
-                                                <input type="file" id="multiFiles" class="form-control" name="documents[]" multiple required> 
-                                            </div>
-                                            <button  type="hidden" value="Submit"  class="btn btn-success" name="submit">Upload Documents</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <form id="uploadDocuments" method="post" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <input type="file" id="multiFiles" style="display: none;" name="documents[]" multiple> 
+                        </form>
                     </div>
                     <!-- /.Second col -->
                 </div>
@@ -138,16 +109,17 @@
     <script>
         $(document).ready(function(){
             $("#uploadFilesPopUpBtn").click(function(){
-                $("#myModal").modal();
+                $("#multiFiles").click();
             });
         });
 
-        $(document).ready(function (e) {
+        $(document).ready(function() {
             $('#multiFiles').change(function () {
                 $('#uploadDocuments').submit();
             });
 
-            $('#uploadDocuments').on('submit', function () {
+            $('#uploadDocuments').on('submit', function (e) {
+                e.preventDefault();
                 $.ajax({
                     url: "{{ route('uploadDocuments') }}",
                     dataType: 'text',
@@ -158,7 +130,7 @@
                     type: 'post',
                     success: function (response) {
                         $('#multiFiles').val('');
-                        $("#myModal").modal('hide');
+                        // $("#myModal").modal('hide');
                         var data = JSON.parse(response);
                         $.each(data, function (index) {
                             var url = "/document/delete/" + data[index].document_id;
@@ -168,9 +140,11 @@
                         })                        
                     },
                     error: function (response) {
-                        $('#msg').html(response); // display error response from the PHP script
+                        $('#msg').html(response);
                     }
+                   
                 });
+                return false;
             });
         });
 
@@ -192,6 +166,7 @@
                     $('#msg').html(response); // display error response from the PHP script
                 }
             });
+            return false;
         }
         
     </script>

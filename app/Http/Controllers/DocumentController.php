@@ -160,12 +160,10 @@ class DocumentController extends Controller
                 $document_data[$key] = Document::Select('document_id', 'document_name')->Where('id',$document_data[$key]->id)->get();
                 $result = $result->merge($document_data[$key]); 
             }
-            
             return response()->json($result);
         }
-
         else {
-            return ;
+            
         }
     }
 

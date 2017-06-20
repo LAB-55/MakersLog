@@ -11,3 +11,4 @@ npm-debug.log
 .env
 /app/Http/Controllers/client_secret.json
 /public/presentation
+/public/documents
