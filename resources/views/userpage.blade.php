@@ -70,7 +70,7 @@
                                                         <h4 class="mb-1 blue-text"> @{{ p.p_title }} </h4>
                                                     </a>
                                                   <small class="blue-grey-text">
-                                                   @if (Auth::check())
+                                                   @if (Auth::check() && $user->provider_id == Auth::user()->provider_id  )
                                                     <div class="btn-group">
                                                         <a class="btn btn-floating orange med-btn-fonts" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-chevron-circle-down"></i> </a>
                                                         <div class="dropdown-menu">

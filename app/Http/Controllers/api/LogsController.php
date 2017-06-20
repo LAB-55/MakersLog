@@ -19,14 +19,16 @@ class LogsController extends Controller
                     ->where('delete', '0')
                     ->orderBy('updated_at', 'desc')
                     ->get();
+
                 if ($logs) {
                     $logs = collect($logs)->map(function ($item) {
                         $data               = $item->toArray();
                         $data['updated_at'] = $item->updated_at->diffForHumans();
                         return $data;
                     });
+                   
                 }
-                return ['status' => '1', "collection" => $logs];
+             return ['status' => '1', "collection" => $logs];
             }
             return ['status' => '0', "error" => '404'];
         } catch (Exception $e) {

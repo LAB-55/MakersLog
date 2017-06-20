@@ -35,7 +35,7 @@
                                 <br>
                                 <div class="md-form mb-0">
                                     <textarea name="logcontent-content" v-model="logcontent.desc" type="text" class="md-textarea" rows="1" :disabled="pushing" ></textarea>
-                                    <label for="form7">Blog Description in 140 characters</label>
+                                    <label for="form7">Blog Description in around 140 characters</label>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                     <div class="col-lg-4" id="category-scope">
 
                         <div>
-                               <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">Publish</button>
+                               <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">@{{ pushing ? 'Publishing' : 'Publish'}} </button>
                                 <button
                                     v-on:click="discardPost"
                                     class="btn red btn-danger waves-effect offset-md-2"> Discard</button>
@@ -206,15 +206,47 @@
             headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
         });
 
-          var tm = tinymce.init({
-                    selector:'#post_content',
-                    menubar: false,
-                    height : "270",
-                    plugins: "paste",
-                    paste_data_images: true,
-                    valid_elements: "b,a,p,strong,i,em,h1,h2,h3,h4,h5,ul,ol,li,,img,span",
-                    invalid_elements:"*['class']"
-             });
+        tinymce.init({
+            selector: "#post_content",
+
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks fullscreen",
+                "insertdatetime media table contextmenu paste"
+            ],
+            height:"270",
+            file_browser_callback_types: 'image',
+            file_picker_types: 'image',
+            paste_data_images: true,
+            
+            file_picker_callback: function(callback, value, meta) {
+                                // return console.log(meta);
+                if( meta.filetype == 'image'){
+
+                var input = document.createElement('input');
+                    input.setAttribute('type', 'file');
+                    input.setAttribute('accept', 'image/*');
+                    input.onchange = function() {
+                      var file = this.files[0];
+                      var reader = new FileReader();
+                      reader.readAsDataURL(file);
+                      reader.onload = function () {
+                        var id = 'blobid' + (new Date()).getTime();
+                        var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                        var base64 = reader.result.split(',')[1];
+                        var blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
+                        callback(blobInfo.blobUri(), { title: file.name });
+                      };
+                    };
+                    
+                    input.click();
+                } 
+          },
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            invalid_elements:"*['class'],button",
+
+        });
 
        new Vue({
             el: "#editor-scope",
@@ -327,6 +359,7 @@
                         return  elm.checked
                     });
                     tinymce.get('post_content').setMode('readonly');
+
                     axios.post('/api/log/publish', {
                                     p_title: self.logcontent.title ,
                                     p_short_desc: self.logcontent.desc,

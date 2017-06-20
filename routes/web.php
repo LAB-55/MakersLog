@@ -61,4 +61,5 @@ Route::get('/{gusermail}/documents', 'DocumentController@documents')->name('docu
 Route::get('/{gusermail}/documents/{googledrive_id}', 'DocumentController@documentView')->name('documentView');
 
 Route::get('/{gusermail}/tasks', 'TasksController@index')->name('tasks');
+Route::get('/{gusermail}/teams', 'TeamsController@index')->name('teams');
 Route::get('/{gusermail}/{pid}/{slug}', 'PostController@individual')->name('individial');

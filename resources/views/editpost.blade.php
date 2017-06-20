@@ -49,7 +49,7 @@
                     <div class="col-lg-4" id="category-scope">
 
                         <div>
-                               <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">Update Changes</button>
+                               <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">@{{ pushing ? 'Updating' : 'Update Changes' }}</button>
                                 <button class="btn red btn-danger waves-effect offset-md-2"> Discard</button>
                         </div>
                         <br>
@@ -113,13 +113,46 @@
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
         });
-        var tm = tinymce.init({
-                  selector:'#post_content',
-                  menubar: false,
-                  height : "270",
-                  plugins: "paste",
+       tinymce.init({
+            selector: "#post_content",
+
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks fullscreen",
+                "insertdatetime media table contextmenu paste"
+            ],
+            height:"270",
+            file_browser_callback_types: 'image',
+            file_picker_types: 'image',
+            paste_data_images: true,
+            
+            file_picker_callback: function(callback, value, meta) {
+                return console.log(meta);
+            var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+                input.onchange = function() {
+                  var file = this.files[0];
+                  
+                  var reader = new FileReader();
+                  reader.readAsDataURL(file);
+                  reader.onload = function () {
+                    var id = 'blobid' + (new Date()).getTime();
+                    var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                    var base64 = reader.result.split(',')[1];
+                    var blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
+                    
+                    callback(blobInfo.blobUri(), { title: file.name });
+                  };
+                };
+                
+                input.click();
+          },
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            invalid_elements:"*['class'],button",
                   setup : function(editor){
-                    //console.log(editor);
+
                     editor.on('init', function () {
                       tinymce.get('post_content').setContent($('#post_content').text());
                     });
@@ -254,7 +287,7 @@
                             }).then(function (response) {
                                 // pushing = false;
                                 console.log(response.data);
-                                toastr.success("Post added");
+                                toastr.success("Post updated");
                                 window.location = "/log/view/"+"{!! $p->p_id !!}";
                             })
 
