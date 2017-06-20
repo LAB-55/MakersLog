@@ -12,6 +12,7 @@ npm-debug.log
 /app/Http/Controllers/client_secret.json
 /public/presentation
 /public/documents
+/public/documents.zip
 /composer.phar
 /composer.lock
 /public/_p_content

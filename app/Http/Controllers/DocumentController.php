@@ -11,6 +11,7 @@ use App\User;
 use App\Document;
 use File;
 use Carbon;
+use Zipper;
 use Auth;
 use Session;
 use Redirect;
@@ -173,5 +174,25 @@ class DocumentController extends Controller
         File::delete(public_path().'/documents/'.$document_name['document_name']);
         Document::Where('document_id', $document_id)->delete();
         return response()->json($document_id);
+    }
+
+
+    public function download()
+    {
+        $public_dir = public_path();
+        $zipFileName = 'documents.zip';
+        $filetopath= $public_dir.'/'.$zipFileName;
+
+        $files = glob($public_dir.'/documents/*');
+        Zipper::make($filetopath)->add($files)->close();
+
+        $headers = array(
+                'Content-Type' => 'application/octet-stream',
+            );
+
+        if(file_exists($filetopath)){
+            return response()->download($filetopath,$zipFileName,$headers);
+        }
+        return ['status'=>'file does not exist'];        
     }
 }

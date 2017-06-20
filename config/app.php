@@ -178,6 +178,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /* Zip - chumper/zipper": "1.0.x */
+        Chumper\Zipper\ZipperServiceProvider::class,
+
     ],
 
     /*
@@ -228,6 +231,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Uuid' => Webpatser\Uuid\Uuid::class,
+
+        /* Zip - chumper/zipper": "1.0.x */
+        'Zipper' => Chumper\Zipper\Zipper::class,
 
     ],
 

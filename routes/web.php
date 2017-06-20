@@ -20,6 +20,8 @@ Route::post('/login', 'Auth\LoginController@login');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/log/view/{id}', 'RootController@showPost');
 
+Route::get('/download', 'DocumentController@download')->name('download');
+
 Route::group(['middleware' => 'auth'], function () {
   Route::get('/log/new', 'PostController@index')->name('createLog');
   Route::post('/document/upload', 'DocumentController@uploadDocuments')->name('uploadDocuments');
