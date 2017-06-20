@@ -91,10 +91,17 @@
                         <button id="uploadFilesPopUpBtn" class="btn btn-success waves-effect waves-light"><i class="fa fa-plus"></i>&nbsp; Add Attachments</button>
                         <ul id="files" class="list-group">
                         </ul>
+                        <br>
                         <form id="uploadDocuments" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input type="file" id="multiFiles" style="display: none;" name="documents[]" multiple> 
                         </form>
+                        <div class="form-group">
+                            <div class="progress" style="height: 16px;">
+                                <div class="progress-bar progress-bar-success myprogress" role="progressbar" style="display: none; width:0%; height: 16px;">0%</div>
+                            </div>
+                            <div class="msg"></div>
+                        </div>
                     </div>
                     <!-- /.Second col -->
                 </div>
@@ -116,6 +123,8 @@
         $(document).ready(function() {
             $('#multiFiles').change(function () {
                 $('#uploadDocuments').submit();
+                $('#uploadFilesPopUpBtn').attr('disabled', 'disabled');
+                $('.msg').text('Uploading in progress...');
             });
 
             $('#uploadDocuments').on('submit', function (e) {
@@ -128,8 +137,21 @@
                     processData: false,
                     data: new FormData(this),
                     type: 'post',
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                percentComplete = parseInt(percentComplete * 100);
+                                $('.myprogress').css('display', 'block');
+                                $('.myprogress').text(percentComplete + '%');
+                                $('.myprogress').css('width', percentComplete + '%');
+                            }
+                        }, false);
+                        return xhr;
+                    },
                     success: function (response) {
-                        $('#multiFiles').val('');
+                        // $('#multiFiles').val('');
                         // $("#myModal").modal('hide');
                         var data = JSON.parse(response);
                         $.each(data, function (index) {
@@ -137,10 +159,14 @@
                             $('#files').append("<li class='list-group-item justify-content-between'>" 
                                                 + data[index].document_name + 
                                                 "<a class='deleteDoc' data-id='" + data[index].document_id + "'data-name='" + data[index].document_name + "' onClick='deleteDoc(this)'><span class='deleteDoc badge badge-primary badge-pill'><i class='fa fa-close' style='color:#f5f5f5'></i></span></a></li>");
-                        })                        
+                        });
+                        $('.myprogress').css('display', 'none');
+                        $('.myprogress').css('width', '0%');
+                        $('.msg').text('');
+                        $('#uploadFilesPopUpBtn').removeAttr('disabled');
                     },
                     error: function (response) {
-                        $('#msg').html(response);
+                        // $('#msg').html(response);
                     }
                    
                 });
