@@ -176,7 +176,7 @@
                         $( this.$refs[animTask.refElm][0] ).animateCss( animTask.style );
                     }
                         if( animTask.fn != undefined )
-                            setTimeout( animTask.fn, 0 );
+                            setTimeout( animTask.fn, 500 );
                 }
             },
             updated:function(){
