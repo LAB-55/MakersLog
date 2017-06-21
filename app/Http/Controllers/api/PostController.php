@@ -100,6 +100,11 @@ class PostController extends Controller
                 $catmap->c_name      = $cname;
                 $catmap->save();
             }
+
+            foreach ($r->documents as $doc) {
+                Document::Where('document_id', $doc)->update(['p_id' => $input['p_id']]);   
+            }
+
             return (['status' => '1']);
 
         } catch (Exception $e) {
@@ -115,6 +120,8 @@ class PostController extends Controller
                 ->update([
                     "delete" => "1",
                 ]);
+
+            Document::Where("p_id", $r->p_id)->delete();
 
             return (['status' => '1']);
         } catch (Exception $e) {

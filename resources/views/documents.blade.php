@@ -23,7 +23,7 @@
                             <tbody>
                                 @foreach($documents as $doc)
                                 <tr>
-                                    <th scope="row">1</th>
+                                    <th scope="row">{{ $loop->index + 1 }}</th>
                                     @if ( $doc->thumbnail_url == "pptx" )
                                         <td><i class="fa fa-file-powerpoint-o fa-2x" style="color: yellow;"></i></td>
                                         <td>{{ $doc->document_name }}</td>

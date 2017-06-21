@@ -94,7 +94,30 @@
                                 <!--/.Card content-->
                             </div>
                         </div>
-                        <!-- /.Second card -->
+                        <button id="uploadFilesPopUpBtn" class="btn btn-success waves-effect waves-light"><i class="fa fa-plus"></i>&nbsp; Add Attachments</button>
+                        <ul id="files" class="list-group">
+                            @foreach ($doc as $d)
+                                <li class='list-group-item justify-content-between documents' data-id="{{ $d->document_id }}" data-name="{{ $d->document_name }}"> 
+                                    {{ $d->document_name }}
+                                    <a class='deleteDoc' data-id="{{ $d->document_id }}" data-name="{{ $d->document_name }}" onClick='deleteDoc(this)'>
+                                        <span class='deleteDoc badge badge-primary badge-pill'>
+                                            <i class='fa fa-close' style='color:#f5f5f5'></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <br>
+                        <form id="uploadDocuments" method="post" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <input type="file" id="multiFiles" style="display: none;" name="documents[]" multiple> 
+                        </form>
+                        <div class="form-group">
+                            <div class="progress" style="height: 16px;">
+                                <div class="progress-bar progress-bar-success myprogress" role="progressbar" style="display: none; width:0%; height: 16px;">0%</div>
+                            </div>
+                            <div class="msg"></div>
+                        </div>
                     </div>
                     <!-- /.Second col -->
                 </div>
@@ -105,6 +128,89 @@
     </main>
     <!--/Main layout-->
     @include('includes.footerscripts')
+    <script>
+        $(document).ready(function(){
+            $("#uploadFilesPopUpBtn").click(function(){
+                $("#multiFiles").click();
+            });
+        });
+
+        $(document).ready(function() {
+            $('#multiFiles').change(function () {
+                $('#uploadDocuments').submit();
+                $('#uploadFilesPopUpBtn').attr('disabled', 'disabled');
+                $('.msg').text('Uploading in progress...');
+            });
+
+            $('#uploadDocuments').on('submit', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "{{ route('uploadDocuments') }}",
+                    dataType: 'text',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: new FormData(this),
+                    type: 'post',
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                percentComplete = parseInt(percentComplete * 100);
+                                $('.myprogress').css('display', 'block');
+                                $('.myprogress').text(percentComplete + '%');
+                                $('.myprogress').css('width', percentComplete + '%');
+                            }
+                        }, false);
+                        return xhr;
+                    },
+                    success: function (response) {
+                        // $('#multiFiles').val('');
+                        // $("#myModal").modal('hide');
+                        var data = JSON.parse(response);
+                        $.each(data, function (index) {
+                            var url = "/document/delete/" + data[index].document_id;
+                            $('#files').append("<li class='list-group-item justify-content-between documents' data-id='" + data[index].document_id + "'data-name='" + data[index].document_name + "'>" 
+                                                + data[index].document_name + 
+                                                "<a class='deleteDoc' data-id='" + data[index].document_id + "'data-name='" + data[index].document_name + "' onClick='deleteDoc(this)'><span class='deleteDoc badge badge-primary badge-pill'><i class='fa fa-close' style='color:#f5f5f5'></i></span></a></li>");
+                        });
+                        $('.myprogress').css('display', 'none');
+                        $('.myprogress').css('width', '0%');
+                        $('.msg').text('');
+                        $('#uploadFilesPopUpBtn').removeAttr('disabled');
+                    },
+                    error: function (response) {
+                        // $('#msg').html(response);
+                    }
+                   
+                });
+                return false;
+            });
+        });
+
+        function deleteDoc(obj) {
+            var document_id = obj.getAttribute('data-id'),
+                two = obj.getAttribute('data-name');
+            $.ajax({
+                url: "../../../document/delete/"+document_id,
+                dataType: 'text',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: document_id,
+                type: 'post',
+                success: function (response) {
+                    $('.deleteDoc').filter('[data-id =' + document_id + ']').parent().remove();
+                },
+                error: function (response) {
+                    $('#msg').html(response); // display error response from the PHP script
+                }
+            });
+            return false;
+        }
+        
+    </script>
     <script type="text/javascript">
 
         // window.history.pushState('obj', '', '/?tab=recent');
@@ -277,13 +383,23 @@
                         return  elm.checked
                     });
                     tinymce.get('post_content').setMode('readonly');
+
+                    /* Attachments */
+                    var doc = [];
+
+                    $('li.documents').each(function(index){
+                        doc.push($(this).attr('data-id'));
+                    });
+
+                    /* End - Attachments */
+
                     axios.post('/api/log/update', {
                                     p_id: "{!! $p->p_id!!}",
                                     p_title: self.logcontent.title ,
                                     p_short_desc: self.logcontent.desc,
                                     p_content: self.logcontent.content,
                                     categories: categoriesToPush,
-
+                                    documents: doc,
                             }).then(function (response) {
                                 // pushing = false;
                                 console.log(response.data);

@@ -7,6 +7,7 @@ use App\Helpers\Meta;
 use Auth;
 use App\Post;
 use App\User;
+use App\Document;
 
 class PostController extends Controller
 {
@@ -47,8 +48,9 @@ class PostController extends Controller
       if ($post->provider_id != $provider_id) {
           return '<h1>404 Not Found</h1>';
       }
-      $post->p_content = file_get_contents($post->p_content); 
+      $post->p_content = file_get_contents($post->p_content);
+      $doc = Document::Select('*')->Where('p_id',$id)->get();
       //dd($post->categories);
-      return view('editpost')->with('p',$post)->with('meta',Meta::get('Edit Log'));;
+      return view('editpost')->with('p',$post)->with('doc',$doc)->with('meta',Meta::get('Edit Log'));;
     }
 }
