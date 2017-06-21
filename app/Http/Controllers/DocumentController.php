@@ -44,6 +44,32 @@ class DocumentController extends Controller
         }
     }
 
+    public function documentDownload($gusermail, $document_id) {
+        if(Auth::check() &&  Auth::user()->g_username == $gusermail ) {
+            $provider_id = User::Select('provider_id')
+                                    ->Where('g_username', $gusermail)
+                                    ->first()->toArray();
+            $document = Document::Select('*')
+                                            ->Where('provider_id', $provider_id['provider_id'])
+                                            ->Where('document_id', $document_id)
+                                            ->first()->toArray();
+            $headers = array(
+                'Content-Type' => 'application/octet-stream',
+            );
+
+            $public_dir = public_path();
+            $fileName = $document['document_name'];
+            $filetopath= $public_dir.'/documents/'.$fileName;
+
+            if(file_exists($filetopath)){
+                return response()->download($filetopath,$fileName,$headers);
+            }
+        }
+        else {
+            return redirect(route('gusermail', ['gusermail' => $gusermail]));
+        }   
+    }
+
     public function documentView($gusermail, $googledrive_id) {
     	if(Auth::check() &&  Auth::user()->g_username == $gusermail ) {
         	$provider_id = User::Select('provider_id')
@@ -135,12 +161,11 @@ class DocumentController extends Controller
 
         			$googledrive_url = 'https://docs.google.com/presentation/d/'.$googledrive_id.'/embed?start=false&loop=false&delayms=3000';
 
-                    $thumbnail_url = 'https://lh3.google.com/u/0/d/'.$googledrive_id.'=w200-h150-p-k-nu-iv1';
+                    // $thumbnail_url = 'https://lh3.google.com/u/0/d/'.$googledrive_id.'=w200-h150-p-k-nu-iv1';
                 }
                 else {
                     $googledrive_id = "";
                     $googledrive_url = "";
-                    $thumbnail_url = "";   
                 }
 
                 $gusermail = Auth::user()->g_username;
@@ -155,7 +180,7 @@ class DocumentController extends Controller
                 $document_data[$key]->document_name = $filename;
                 $document_data[$key]->googledrive_id = $googledrive_id;
                 $document_data[$key]->googledrive_url = $googledrive_url;
-                $document_data[$key]->thumbnail_url = $thumbnail_url;
+                $document_data[$key]->thumbnail_url = $extension;
                 $document_data[$key]->save();
 
                 $document_data[$key] = Document::Select('document_id', 'document_name')->Where('id',$document_data[$key]->id)->get();

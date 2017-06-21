@@ -60,7 +60,8 @@ Route::get('/{gusermail}/presentations/{presentation_id}', 'PresentationControll
 
 // Route::post('/{gusermail}/documents', 'DocumentController@uploadDocuments')->name('uploadDocuments');
 Route::get('/{gusermail}/documents', 'DocumentController@documents')->name('documents');
-Route::get('/{gusermail}/documents/{googledrive_id}', 'DocumentController@documentView')->name('documentView');
+Route::get('/{gusermail}/documents/view/{googledrive_id}', 'DocumentController@documentView')->name('documentView');
+Route::get('/{gusermail}/documents/download/{document_id}', 'DocumentController@documentDownload')->name('documentDownload');
 
 Route::get('/{gusermail}/tasks', 'TasksController@index')->name('tasks');
 Route::get('/{gusermail}/teams', 'TeamsController@index')->name('teams');

@@ -190,7 +190,7 @@
             },
             mounted:function () {
                 var self = this;
-                axios.post('/api/{{ $gusermail }}/tasks/show/', {})
+                axios.post('/api/{{ $gusermail }}/tasks/show', {})
                 .then(function (response) {
                     response.data.collection.forEach(function(elm, index){
                         self.tasks[ elm.status ].unshift(elm);

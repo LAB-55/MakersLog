@@ -16,7 +16,11 @@
     <!--Main layout-->
     <main class="">
         <div class="container-fluid text-center">
-            <h3>{{ $document['document_name'] }}</h3>
+            <h3 style="color: blue">{{ $document['document_name'] }}
+                <a href="{{ route( 'documentDownload', ['gusermail' => $meta['gusermail'], 'document_id' => $document['document_id']] ) }}">
+                    <i class="fa fa-download pad-lr-10"></i>
+                </a>
+            </h3>
             <iframe src="{{ $document['googledrive_url'] }}" frameborder="0" width="960" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
         </div>
     </main>
