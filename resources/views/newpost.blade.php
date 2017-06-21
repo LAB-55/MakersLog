@@ -156,7 +156,7 @@
                         var data = JSON.parse(response);
                         $.each(data, function (index) {
                             var url = "/document/delete/" + data[index].document_id;
-                            $('#files').append("<li class='list-group-item justify-content-between'>" 
+                            $('#files').append("<li class='list-group-item justify-content-between documents' data-id='" + data[index].document_id + "'data-name='" + data[index].document_name + "'>" 
                                                 + data[index].document_name + 
                                                 "<a class='deleteDoc' data-id='" + data[index].document_id + "'data-name='" + data[index].document_name + "' onClick='deleteDoc(this)'><span class='deleteDoc badge badge-primary badge-pill'><i class='fa fa-close' style='color:#f5f5f5'></i></span></a></li>");
                         });
@@ -360,11 +360,21 @@
                     });
                     tinymce.get('post_content').setMode('readonly');
 
+                    /* Attachments */
+                    var doc = [];
+
+                    $('li.documents').each(function(index){
+                        doc.push($(this).attr('data-id'));
+                    });
+
+                    /* End - Attachments */
+
                     axios.post('/api/log/publish', {
                                     p_title: self.logcontent.title ,
                                     p_short_desc: self.logcontent.desc,
                                     p_content: self.logcontent.content,
                                     categories: categoriesToPush,
+                                    documents: doc,
 
                             }).then(function (response) {
                                 pushing = false;

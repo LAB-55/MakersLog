@@ -176,14 +176,12 @@ class DocumentController extends Controller
         return response()->json($document_id);
     }
 
-
-    public function download()
-    {
+    public function download() {
         $public_dir = public_path();
-        $zipFileName = 'documents.zip';
+        $zipFileName = '_p_content.zip';
         $filetopath= $public_dir.'/'.$zipFileName;
 
-        $files = glob($public_dir.'/documents/*');
+        $files = glob($public_dir.'/_p_content/*');
         Zipper::make($filetopath)->add($files)->close();
 
         $headers = array(
@@ -193,6 +191,8 @@ class DocumentController extends Controller
         if(file_exists($filetopath)){
             return response()->download($filetopath,$zipFileName,$headers);
         }
-        return ['status'=>'file does not exist'];        
+        return ['status'=>'file does not exist'];
+
+        // File::delete($filetopath);   
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Post;
 use App\CategoryMap;
+use App\Document;
 use Auth;
 use Uuid;
 
@@ -51,6 +52,11 @@ class PostController extends Controller
                 $catmap->c_name      = $cname;
                 $catmap->save();
             }
+
+            foreach ($r->documents as $doc) {
+                Document::Where('document_id', $doc)->update(['p_id' => $input['p_id']]);   
+            }
+
             return (['status' => '1']);
 
         } catch (Exception $e) {
