@@ -196,6 +196,10 @@
 }
 
 @media (max-width: 768px) {
+	.hidden-sn main {
+		margin-right: 0px;
+		margin-left: 0px;
+	}
 	.container-fluid {
 		padding-left: 0px;
 		padding-right: 0px;
