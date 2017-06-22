@@ -50,7 +50,6 @@
 
                         <div class="hideOnMobile">
                                <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">@{{ pushing ? 'Updating' : 'Update Changes' }}</button>
-                                <button class="btn red btn-danger waves-effect offset-md-2"> Discard</button>
                         </div>
                         <br>
                         <!-- Second card -->
@@ -120,9 +119,6 @@
                         </div>
                         <div class="hideOnDesktop">
                                <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">@{{ pushing ? 'Publishing' : 'Publish'}} </button>
-                                <button
-                                    v-on:click="discardPost"
-                                    class="btn red btn-danger waves-effect offset-md-2"> Discard</button>
                         </div>
                     </div>
                     <!-- /.Second col -->
@@ -172,7 +168,7 @@
                         return xhr;
                     },
                     success: function (response) {
-                        // $('#multiFiles').val('');
+                        $('#multiFiles').val('');
                         // $("#myModal").modal('hide');
                         var data = JSON.parse(response);
                         $.each(data, function (index) {

@@ -45,7 +45,7 @@ class DocumentController extends Controller
     }
 
     public function documentDownload($gusermail, $document_id) {
-        if(Auth::check() &&  Auth::user()->g_username == $gusermail ) {
+        
             $provider_id = User::Select('provider_id')
                                     ->Where('g_username', $gusermail)
                                     ->first()->toArray();
@@ -63,15 +63,10 @@ class DocumentController extends Controller
 
             if(file_exists($filetopath)){
                 return response()->download($filetopath,$fileName,$headers);
-            }
-        }
-        else {
-            return redirect(route('gusermail', ['gusermail' => $gusermail]));
-        }   
+            }   
     }
 
     public function documentView($gusermail, $googledrive_id) {
-    	if(Auth::check() &&  Auth::user()->g_username == $gusermail ) {
         	$provider_id = User::Select('provider_id')
         							->Where('g_username', $gusermail)
         							->first()->toArray();
@@ -81,11 +76,7 @@ class DocumentController extends Controller
 											->first()->toArray();
             return view('document_view')
             		->with('document', $document)
-            		->with('meta',Meta::get());
-        }
-        else {
-            return redirect(route('gusermail', ['gusermail' => $gusermail]));
-        }	
+            		->with('meta',Meta::get());	
     }
 
     public function getClient() {
@@ -112,11 +103,14 @@ class DocumentController extends Controller
         if ($files) {
 
             foreach($files as $key => $value) {
-
+                $time = Carbon\Carbon::now();
+                $gusermail = Auth::user()->g_username;
                 $extension = $files[$key]->extension();
                 // dd($extension);
-                $filename = $files[$key]->getClientOriginalName();
-                // $filename = pathinfo($fullfilename, PATHINFO_FILENAME);
+                $orgFilename = $files[$key]->getClientOriginalName();
+                $title = pathinfo($orgFilename, PATHINFO_FILENAME);
+                $filename = $title."_".time()."_".$gusermail.'.'.$extension;
+
                 // $extension = pathinfo($fullfilename, PATHINFO_EXTENSION);
                 
                 $files[$key]->move(public_path().'/documents', $filename);
@@ -168,9 +162,7 @@ class DocumentController extends Controller
                     $googledrive_url = "";
                 }
 
-                $gusermail = Auth::user()->g_username;
                 $provider_id = User::Select('provider_id')->Where('g_username', $gusermail)->first()->toArray();
-                $time = Carbon\Carbon::now();
                 $document_id = sha1($provider_id['provider_id'].$filename.$time);
 
                 $document_data[$key] = new Document();

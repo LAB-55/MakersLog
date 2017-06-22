@@ -84,7 +84,8 @@ class Meta
                 case 'documentView':
                     $d = Document::where('googledrive_id', Request::route('googledrive_id'))->first();
                     $meta['title'] = "Document of ".$d['document_name']." | MakersLog";
-                    $meta['pageName'] = $AuthUser->first_name." ".$AuthUser->last_name." / Document View";
+                    $meta['pageName'] = "Document View";
+                    $meta['gusermail'] = Request::route('gusermail');
                     break;
 
                 case 'tasks':

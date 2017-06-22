@@ -157,7 +157,7 @@
                         return xhr;
                     },
                     success: function (response) {
-                        // $('#multiFiles').val('');
+                        $('#multiFiles').val('');
                         // $("#myModal").modal('hide');
                         var data = JSON.parse(response);
                         $.each(data, function (index) {
