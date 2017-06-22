@@ -24,12 +24,12 @@
             <div class="tabs-wrapper"> 
                 <ul class="nav classic-tabs indigo tabs-2" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link waves-light" id="fellowMakers" data-toggle="tab" href="#panel51" role="tab">
+                        <a class="nav-link waves-light active" id="fellowMakers" data-toggle="tab" href="#panel51" role="tab">
                         <i class="fa fa-coffee pad-lr-10"></i>
                         Fellow Makers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link waves-light active" id="recentLogs" data-toggle="tab" href="#panel52" role="tab">
+                        <a class="nav-link waves-light" id="recentLogs" data-toggle="tab" href="#panel52" role="tab">
                         <i class="fa fa-list-ul pad-lr-10"></i>
                         Recent Logs</a>
                     </li>
