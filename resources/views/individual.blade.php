@@ -107,7 +107,7 @@
         </a>
     </div> 
     @endif
-    <div id="gotoTop" class="fx-action-btn hideOnMobile" style="bottom: 55px; right: 95px;">
+    <div id="gotoTop" class="fx-action-btn hideOnMobile" style="right: 95px;">
         <a data-toggle="tooltip" data-placement="left" title="Goto top" class="btn-floating btn-med green">
             <i class="fa fa-chevron-up fa-1 med-btn-fonts" ></i>
         </a>
