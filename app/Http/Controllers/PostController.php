@@ -22,11 +22,13 @@ class PostController extends Controller
 
         $aPost = Post::where('p_id', $pid)
             ->where('is_latest', '1')->where('delete', '0')->first();
+        $doc = Document::where('p_id', $pid)->get();
         if ($aPost) {
             $userDetails = User::where('provider_id', $aPost->provider_id)->first();
             $aPost->p_content = file_get_contents($aPost->p_content);
             return view('individual')
                 ->with('p', $aPost)
+                ->with('doc', $doc)
                 ->with('u', $userDetails)
                 ->with('meta', Meta::get('Log'));
         } else {

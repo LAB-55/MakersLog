@@ -43,8 +43,34 @@
                             <hr>
 
                             <p class="text-left">
-                                    {!! $p->p_content !!}
+                                {!! $p->p_content !!}
                             </p>
+                            <hr>
+                            <h4>Attachments</h4>
+                            <table class="table">
+                            <tbody>
+                                @foreach($doc as $doc)
+                                <tr>
+                                    <th scope="row">{{ $loop->index + 1 }}</th>
+                                    @if ( $doc->thumbnail_url == "pptx" )
+                                        <td>{{ $doc->document_name }}</td>
+                                        <td>
+                                            <a href="{{ route( 'documentView', ['gusermail' => $meta['gusermail'], 'googledrive_id' => $doc->googledrive_id] ) }}" target="_blank">
+                                                View
+                                            </a>
+                                        </td>
+                                    @else
+                                        <td>{{ $doc->document_name }}</td>
+                                        <td>
+                                            <a href="{{ route( 'documentDownload', ['gusermail' => $meta['gusermail'], 'document_id' => $doc->document_id] ) }}">
+                                                Download
+                                            </a>
+                                        </td>
+                                    @endif
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>                          
                         </div>
                     </div>
 
