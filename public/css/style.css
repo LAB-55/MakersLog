@@ -195,6 +195,14 @@
 	z-index: -1!important;
 }
 
+.hideOnDesktop {
+	display: none;
+}
+
+.hideOnMobile {
+	display: block;
+}
+
 @media (max-width: 768px) {
 	.hidden-sn main {
 		margin-right: 0px;
@@ -204,4 +212,19 @@
 		padding-left: 0px;
 		padding-right: 0px;
 	}
+	.hideOnDesktop {
+		display: block;
+	}
+	.hideOnMobile {
+		display: none;
+	}
+	.btn-floating.btn-large {
+		width: 37px;
+		height: 37px;
+    	line-height: 37px;
+    }
+	.btn-floating.btn-large i {
+    	line-height: 37px;
+    }
+}
 }

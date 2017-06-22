@@ -48,7 +48,7 @@
                     <!-- Second col -->
                     <div class="col-lg-4" id="category-scope">
 
-                        <div>
+                        <div class="hideOnMobile">
                                <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">@{{ pushing ? 'Updating' : 'Update Changes' }}</button>
                                 <button class="btn red btn-danger waves-effect offset-md-2"> Discard</button>
                         </div>
@@ -117,6 +117,12 @@
                                 <div class="progress-bar progress-bar-success myprogress" role="progressbar" style="display: none; width:0%; height: 16px;">0%</div>
                             </div>
                             <div class="msg"></div>
+                        </div>
+                        <div class="hideOnDesktop">
+                               <button type="submit" class="btn green offset-md-1" :disabled="pushing" v-on:click="publish">@{{ pushing ? 'Publishing' : 'Publish'}} </button>
+                                <button
+                                    v-on:click="discardPost"
+                                    class="btn red btn-danger waves-effect offset-md-2"> Discard</button>
                         </div>
                     </div>
                     <!-- /.Second col -->

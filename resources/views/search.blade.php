@@ -97,10 +97,12 @@
                         <div class="col-md-12 pad-lr-10 pad-tb-10" 
                             v-for="p in logsCollection">
                             <div class="media mb-1">
-                                <a target="_blank" :href="makeUrl(p.g_username)" class="media-left waves-light">
-                                    <img class="rounded-circle-imp" v-bind:src="p.avatar" alt="image of @{{p.first_name}}" width="80">
-                                </a>
-                                <div class="media-body pad-lr-20">
+                                <div class="hideOnMobile">
+                                    <a target="_blank" :href="makeUrl(p.g_username)" class="media-left waves-light">
+                                        <img class="rounded-circle-imp" v-bind:src="p.avatar" alt="image of @{{p.first_name}}" width="80">
+                                    </a>
+                                </div>
+                                <div class="media-body pad-lr-15">
                                     <a target="_blank" :href="makeUrl(p.g_username,p.p_id,p.uri)">
                                         <h5 class="media-heading">@{{getLimit(p.p_title,100)}}</h5>
                                     </a>
@@ -108,11 +110,11 @@
                                         by <a target="_blank" :href="makeUrl(p.g_username)">@{{ p.first_name+" "+p.last_name }}</a>
                                     </ul>
                                     <p>@{{getLimit(p.p_short_dec,140)}}</p>
+                                    <p class="time_right blue-grey-text">
+                                        <i class="fa fa-clock-o"></i>
+                                        @{{ p.updated_at }}
+                                    </p>
                                 </div>
-                                <p class="time_right blue-grey-text">
-                                    <i class="fa fa-clock-o"></i>
-                                    @{{ p.updated_at }}
-                                </p>
                             </div>
                             <hr />
                         </div>
@@ -130,13 +132,13 @@
     <!--/Main layout-->
 
     @if( Auth::check() )
-    <div class="fx-action-btn" style="bottom: 45px; right: 24px;">
+    <div class="fx-action-btn">
         <a href="{{ route('createLog') }}" data-toggle="tooltip" data-placement="left" title="Add new log" class="btn-floating btn-large red">
             <i class="fa fa-pencil"></i>
         </a>
     </div> 
     @endif
-    <div id="gotoTop" class="fx-action-btn" style="bottom: 55px; right: 95px;">
+    <div id="gotoTop" class="fx-action-btn hideOnMobile" style="bottom: 55px; right: 95px;">
         <a data-toggle="tooltip" data-placement="left" title="Goto top" class="btn-floating btn-med green">
             <i class="fa fa-chevron-up fa-1 med-btn-fonts" ></i>
         </a>
