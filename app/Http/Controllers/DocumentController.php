@@ -189,7 +189,7 @@ class DocumentController extends Controller
             return response()->json($result);
         }
         else {
-            
+            return "404 not Found";
         }
     }
 
@@ -202,21 +202,27 @@ class DocumentController extends Controller
     }
 
     public function download() {
-        $public_dir = public_path();
-        $zipFileName = '_p_content.zip';
-        $filetopath= $public_dir.'/'.$zipFileName;
 
-        $files = glob($public_dir.'/_p_content/*');
-        Zipper::make($filetopath)->add($files)->close();
+        if(Auth::check() && in_array( Auth::user()->g_username, ['devangbhuva123','mailtojimish','dhruvsaidava'])) {
+            $public_dir = public_path();
+            $zipFileName = '_p_content.zip';
+            $filetopath= $public_dir.'/presentation/'.$zipFileName;
 
-        $headers = array(
-                'Content-Type' => 'application/octet-stream',
-            );
+            $files = glob($public_dir.'/_p_content/*');
+            Zipper::make($filetopath)->add($files)->close();
 
-        if(file_exists($filetopath)){
-            return response()->download($filetopath,$zipFileName,$headers);
+            $headers = array(
+                    'Content-Type' => 'application/octet-stream',
+                );
+
+            if(file_exists($filetopath)){
+                return response()->download($filetopath,$zipFileName,$headers);
+            }
+            return ['status'=>'file does not exist'];
         }
-        return ['status'=>'file does not exist'];
+        else {
+            return "404 not Found";
+        }
 
         // File::delete($filetopath);   
     }
