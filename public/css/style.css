@@ -195,10 +195,9 @@
 	z-index: -1!important;
 }
 
-
-/*.modal-header, h4, .close {
-	background-color: #5cb85c;
-	color:white !important;
-	text-align: center;
-	font-size: 30px;
-}*/
+@media (max-width: 768px) {
+	.container-fluid {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+}
