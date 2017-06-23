@@ -25,13 +25,15 @@
                         </a>
                         <div class="dropdown-menu dropdown-ins dropdown-menu-right" aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="/{{ $meta['gusermail']}}">My Logs</a>
+                            <a class="dropdown-item" href="{{ route('contributors') }}">Contributors</a>
                             <a class="dropdown-item" href="/feedback/reportbug">Report Bug</a>
                             <a type="submit" class="dropdown-item" href="{{ route('logout') }}">Log Out</a>
                         </div>
                     </li>
 
                 @else
-                    <li class="nav-item">
+                    <li class="nav-item" style="display: inline-flex;">
+                        <a class="nav-link" href="{{ route('contributors') }}">Contributors</a>
                         <a class="nav-link" href="/login">Login / Sign up</a>
                     </li>
                 @endif

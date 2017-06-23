@@ -60,7 +60,7 @@
                     <li><a href="invoice.html" class="collapsible-header waves-effect arrow-r"><i class="fa fa-money"></i> Invoice</a>
                     <li><a href="support.html" class="collapsible-header waves-effect arrow-r"><i class="fa fa-support"></i> Support</a>
                     <li><a href="faq.html" class="collapsible-header waves-effect arrow-r"><i class="fa fa-question-circle" aria-hidden="true"></i> FAQ</a> -->
-                    <li><a href="{{ route('indexroot') }}" class="waves-effect">Home</a></li>
+                    <li><a href="{{ route('indexroot') }}" class="waves-effect">Search</a></li>
                     <li><a href="{{ route('createLog') }}" class="waves-effect">Add New Log</a></li>
                     <li><a href="{{ route('gusermail', ['gusermail' => $meta['gusermail']] ) }}" class="waves-effect">My Logs</a></li>
                     <!-- <li><a href="{{ route('teams', ['teamsroot' => $meta['gusermail']] ) }}" class="waves-effect">My Teams</a></li> -->

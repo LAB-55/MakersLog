@@ -97,6 +97,11 @@ class Meta
                     $meta['pageName'] = str_replace("-", " ", Request::route('slug') );
                     $meta['title'] = $meta['pageName']. " | MakersLog";
                     break;
+
+                case 'contributors':
+                    $meta['title'] = "Contributors | MakersLog";
+                    $meta['pageName'] = "/ Contributors";
+                    break;
                                         
                 default:
                     # code...

@@ -21,6 +21,7 @@ Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/log/view/{id}', 'RootController@showPost');
 
 Route::get('/download', 'DocumentController@download')->name('download');
+Route::get('/contributors', 'ContributorController@contributors')->name('contributors');
 
 Route::group(['middleware' => 'auth'], function () {
   Route::get('/log/new', 'PostController@index')->name('createLog');
