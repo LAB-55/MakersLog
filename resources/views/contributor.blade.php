@@ -15,9 +15,9 @@
         <div class="container-fluid">
             <div class="row">
             @for ($i = (count($contributors))-1; $i >= 0; $i--)
-                <div class="contributor-card col-sm-6 githubCard row">
+                <div class="contributor-card col-sm-6 githubProfileCard row">
                     <div class="col-sm-5 githubProfile">
-                        <div class="card testimonial-card">
+                        <div class="githubProfileCard card testimonial-card">
                             <div class="github avatar">
                                 <a href="{{ $contributors[$i]['author']['html_url'] }}" target="_blank">
                                     <img src="{{ $contributors[$i]['author']['avatar_url'] }}" class="rounded-circle img-responsive">
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class="col-sm-7 githubGraph">
-                        <div class="card testimonial-card">
+                        <div class="githubProfileCard card testimonial-card">
                             
                             @if ($i == 3)
                                 <div id="chart_div-3" class="githubGoogleChart"></div>

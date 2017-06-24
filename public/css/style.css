@@ -215,6 +215,10 @@
     max-width: 500px;
 }
 
+.githubProfileCard.card {
+	box-shadow: none;
+}
+
 .github.avatar {
 	width: 90px;
 	height: 90px;
