@@ -261,11 +261,14 @@
     	white-space: initial;
     	max-width: 120px;
     }
+    .githubCard {
+    	margin-left: 0;
+    	margin-right: 0;
+    }
     .githubProfile {
-		padding-right: 15px;
+		padding-left: 0;
 	}
-
 	.githubGraph {
-		padding-left: 15px;
+		padding-right: 0px;
 	}
 }
