@@ -15,7 +15,7 @@ class ContributorController extends Controller
     	
     	$client = new \Guzzle\Service\Client();
     	$request = $client->get('https://api.github.com/repos/LAB-55/MakersLog/stats/contributors', [
-    							'token' => '74453ececf1c241cc2949835742471c02ce05f0d'
+    							'token' => env('GITHUB_TOKEN')
 		]);
   		$response = $request->send();
   		$result = $response->json();
