@@ -23,7 +23,7 @@ class ContributorController extends Controller
   		$commit = array();
   		for ($i=0; $i < count($result) ; $i++) {
   			for ($j = 0; $j < count($result[$i]['weeks']); $j++) { 
-  				$commit[$i]['c'] = $result[$i]['weeks'][$j]['c'];
+  				$commit[$i][$j] = $result[$i]['weeks'][$j]['c'];
   				// echo  $i . "[c] : " . $commit[$i]['c'];
   				// echo "<br>";	
   			}

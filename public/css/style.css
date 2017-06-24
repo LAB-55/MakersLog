@@ -215,6 +215,25 @@
     max-width: 500px;
 }
 
+.github.avatar {
+	width: 90px;
+	height: 90px;
+	margin-top: 20px;
+}
+
+.githubProfile {
+	padding-right: 0;
+}
+
+.githubGraph {
+	padding-left: 0;
+}
+
+.githubGoogleChart {
+	padding-top: 15px;
+	padding-bottom: 10px;
+}
+
 @media (max-width: 768px) {
 	.hidden-sn main {
 		margin-right: 0px;
