@@ -15,7 +15,7 @@
         <div class="container-fluid">
             <div class="row">
             @for ($i = (count($contributors))-1; $i >= 0; $i--)
-                <div class="contributor-card col-sm-6 githubProfileCard row">
+                <div class="contributor-card col-sm-6 githubCard row">
                     <div class="col-sm-5 githubProfile">
                         <div class="githubProfileCard card testimonial-card">
                             <div class="github avatar">
