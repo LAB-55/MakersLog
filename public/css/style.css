@@ -261,4 +261,11 @@
     	white-space: initial;
     	max-width: 120px;
     }
+    .githubProfile {
+		padding-right: 15px;
+	}
+
+	.githubGraph {
+		padding-left: 15px;
+	}
 }
