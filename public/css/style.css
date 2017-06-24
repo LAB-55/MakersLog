@@ -203,6 +203,18 @@
 	display: block;
 }
 
+.contributor-card {
+	padding-bottom: 15px;
+	padding-top: 15px;
+}
+
+.filename {
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 500px;
+}
+
 @media (max-width: 768px) {
 	.hidden-sn main {
 		margin-right: 0px;
@@ -226,5 +238,8 @@
 	.btn-floating.btn-large i {
     	line-height: 37px;
     }
-}
+    .filename {
+    	white-space: initial;
+    	max-width: 120px;
+    }
 }

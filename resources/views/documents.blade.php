@@ -26,7 +26,7 @@
                                     <th scope="row">{{ $loop->index + 1 }}</th>
                                     @if ( $doc->thumbnail_url == "pptx" || $doc->thumbnail_url == "ppt" || $doc->thumbnail_url == "odp" )
                                         <td><i class="fa fa-file-powerpoint-o fa-2x orange-text" ></i></td>
-                                        <td>{{ $doc->document_name }}</td>
+                                        <td class="filename">{{ $doc->document_name }}</td>
                                         <td>
                                             <a href="{{ route( 'documentView', ['gusermail' => $meta['gusermail'], 'googledrive_id' => $doc->googledrive_id] ) }}" target="_blank">
                                                 View
@@ -42,7 +42,7 @@
                                         @else
                                             <td><i class="fa fa-file fa-2x"></i></td>
                                         @endif
-                                        <td>{{ $doc->document_name }}</td>
+                                        <td class="filename">{{ $doc->document_name }}</td>
                                         <td>
                                             <a href="{{ route( 'documentDownload', ['gusermail' => $meta['gusermail'], 'document_id' => $doc->document_id] ) }}">
                                                 Download

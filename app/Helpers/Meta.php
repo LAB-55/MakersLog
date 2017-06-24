@@ -100,7 +100,7 @@ class Meta
 
                 case 'contributors':
                     $meta['title'] = "Contributors | MakersLog";
-                    $meta['pageName'] = "/ Contributors";
+                    $meta['pageName'] = "Contributors";
                     break;
                                         
                 default:

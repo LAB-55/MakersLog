@@ -162,9 +162,9 @@
                         var data = JSON.parse(response);
                         $.each(data, function (index) {
                             var url = "/document/delete/" + data[index].document_id;
-                            $('#files').append("<li class='list-group-item justify-content-between documents' data-id='" + data[index].document_id + "'data-name='" + data[index].document_name + "'>" 
+                            $('#files').append("<li class='list-group-item justify-content-between documents' data-id='" + data[index].document_id + "'data-name='" + data[index].document_name + "'><span class='filename'>" 
                                                 + data[index].document_name + 
-                                                "<a class='deleteDoc' data-id='" + data[index].document_id + "'data-name='" + data[index].document_name + "' onClick='deleteDoc(this)'><span class='deleteDoc badge badge-primary badge-pill'><i class='fa fa-close' style='color:#f5f5f5'></i></span></a></li>");
+                                                "</span><a class='deleteDoc' data-id='" + data[index].document_id + "'data-name='" + data[index].document_name + "' onClick='deleteDoc(this)'><span class='deleteDoc badge badge-primary badge-pill'><i class='fa fa-close' style='color:#f5f5f5'></i></span></a></li>");
                         });
                         $('.myprogress').css('display', 'none');
                         $('.myprogress').css('width', '0%');

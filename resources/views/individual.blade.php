@@ -53,15 +53,14 @@
                                     @foreach($doc as $d)
                                     <tr>
                                         <th scope="row">{{ $loop->index + 1 }}</th>
+                                        <td class="filename">{{ $d->document_name }}</td>
                                         @if ( $d->thumbnail_url == "pptx" )
-                                            <td>{{ $d->document_name }}</td>
                                             <td>
                                                 <a href="{{ route( 'documentView', ['gusermail' =>  $u->g_username, 'googledrive_id' => $d->googledrive_id] ) }}" target="_blank">
                                                     View
                                                 </a>
                                             </td>
                                         @else
-                                            <td>{{ $d->document_name }}</td>
                                             <td>
                                                 <a href="{{ route( 'documentDownload', ['gusermail' => $u->g_username, 'document_id' => $d->document_id] ) }}">
                                                     Download

@@ -96,8 +96,8 @@
                         <button id="uploadFilesPopUpBtn" class="btn btn-success waves-effect waves-light"><i class="fa fa-plus"></i>&nbsp; Add Attachments</button>
                         <ul id="files" class="list-group">
                             @foreach ($doc as $d)
-                                <li class='list-group-item justify-content-between documents' data-id="{{ $d->document_id }}" data-name="{{ $d->document_name }}"> 
-                                    {{ $d->document_name }}
+                                <li class='list-group-item justify-content-between documents' data-id="{{ $d->document_id }}" data-name="{{ $d->document_name }}">
+                                    <span class='filename'>{{ $d->document_name }}</span>
                                     <a class='deleteDoc' data-id="{{ $d->document_id }}" data-name="{{ $d->document_name }}" onClick='deleteDoc(this)'>
                                         <span class='deleteDoc badge badge-primary badge-pill'>
                                             <i class='fa fa-close' style='color:#f5f5f5'></i>
@@ -173,9 +173,7 @@
                         var data = JSON.parse(response);
                         $.each(data, function (index) {
                             var url = "/document/delete/" + data[index].document_id;
-                            $('#files').append("<li class='list-group-item justify-content-between documents' data-id='" + data[index].document_id + "'data-name='" + data[index].document_name + "'>" 
-                                                + data[index].document_name + 
-                                                "<a class='deleteDoc' data-id='" + data[index].document_id + "'data-name='" + data[index].document_name + "' onClick='deleteDoc(this)'><span class='deleteDoc badge badge-primary badge-pill'><i class='fa fa-close' style='color:#f5f5f5'></i></span></a></li>");
+                            $('#files').append("<li class='list-group-item justify-content-between documents' data-id='" + data[index].document_id + "'data-name='" + data[index].document_name + "'><span class='filename'>" + data[index].document_name + "</span><a class='deleteDoc' data-id='" + data[index].document_id + "'data-name='" + data[index].document_name + "' onClick='deleteDoc(this)'><span class='deleteDoc badge badge-primary badge-pill'><i class='fa fa-close' style='color:#f5f5f5'></i></span></a></li>");
                         });
                         $('.myprogress').css('display', 'none');
                         $('.myprogress').css('width', '0%');

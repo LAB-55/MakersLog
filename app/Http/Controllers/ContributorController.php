@@ -8,12 +8,33 @@ use App\Helpers\Meta;
 class ContributorController extends Controller
 {
     public function contributors() {
+    // 	$client = new \Guzzle\Service\Client();
+    // 	$request = $client->get('https://api.github.com/repos/LAB-55/MakersLog/contributors');
+  		// $response = $request->send();
+  		// $result = $response->json();
+    	
     	$client = new \Guzzle\Service\Client();
-    	$request = $client->get('https://api.github.com/repos/LAB-55/MakersLog/contributors');
+    	$request = $client->get('https://api.github.com/repos/LAB-55/MakersLog/stats/contributors', [
+    							'token' => '74453ececf1c241cc2949835742471c02ce05f0d'
+		]);
   		$response = $request->send();
   		$result = $response->json();
-    	// print_r($data[0]['login']);
-     	// exit();
-    	return view('contributor')->with('contributors', $result)->with('meta', Meta::get());
+
+  		$commit = array();
+  		for ($i=0; $i < count($result) ; $i++) {
+  			for ($j = 0; $j < count($result[$i]['weeks']); $j++) { 
+  				$commit[$i]['c'] = $result[$i]['weeks'][$j]['c'];
+  				// echo  $i . "[c] : " . $commit[$i]['c'];
+  				// echo "<br>";	
+  			}
+  		}
+      	
+  		// print_r($result);
+    //   	exit();
+    	
+    	return view('contributor')
+    			->with('contributors', $result)
+    			->with('commit', $commit)
+    			->with('meta', Meta::get());
     }
 }
