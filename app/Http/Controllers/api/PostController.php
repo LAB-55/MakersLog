@@ -27,7 +27,7 @@ class PostController extends Controller
         try {
             $input['p_id']        = Uuid::generate(5, Auth::user()->g_username . $r->p_title, Uuid::NS_DNS);
 
-            $pc = public_path().'/_p_content/'.$this->generateRandomString(30);
+            $pc = public_path().'/_p_content/'.$this->generateRandomString(50);
             file_put_contents($pc, $r->p_content);
             date_default_timezone_set('Asia/Kolkata');
             $input['provider_id'] = Auth::user()->provider_id;

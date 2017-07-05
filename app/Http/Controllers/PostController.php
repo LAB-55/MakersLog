@@ -8,11 +8,13 @@ use Auth;
 use App\Post;
 use App\User;
 use App\Document;
-
+use Session;
 class PostController extends Controller
 {
     public function index()
     {
+        Session::put('RF',Array('subfolder' => Auth::user()->g_username) );
+        // $_SESSION['RF']['subfolder'] = ;
         return view('newpost')
             ->with('meta', Meta::get('Kalpit Akhawat / New Log'));
     }
@@ -25,7 +27,7 @@ class PostController extends Controller
         $doc = Document::where('p_id', $pid)->get();
         if ($aPost) {
             $userDetails = User::where('provider_id', $aPost->provider_id)->first();
-            $aPost->p_content = file_get_contents($aPost->p_content);
+            $aPost->p_content = str_replace('"../_tiny/','"/_tiny/', file_get_contents($aPost->p_content) );
             return view('individual')
                 ->with('p', $aPost)
                 ->with('doc', $doc)

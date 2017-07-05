@@ -212,47 +212,63 @@
             headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
         });
 
-        tinymce.init({
-            selector: "#post_content",
-
-            plugins: [
-                "advlist autolink lists link image charmap print preview anchor",
-                "searchreplace visualblocks fullscreen",
-                "insertdatetime media table contextmenu paste"
-            ],
-            height:"270",
-            file_browser_callback_types: 'image',
-            file_picker_types: 'image',
-            paste_data_images: true,
-            
-            file_picker_callback: function(callback, value, meta) {
-                                // return console.log(meta);
-                if( meta.filetype == 'image'){
-
-                var input = document.createElement('input');
-                    input.setAttribute('type', 'file');
-                    input.setAttribute('accept', 'image/*');
-                    input.onchange = function() {
-                      var file = this.files[0];
-                      var reader = new FileReader();
-                      reader.readAsDataURL(file);
-                      reader.onload = function () {
-                        var id = 'blobid' + (new Date()).getTime();
-                        var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-                        var base64 = reader.result.split(',')[1];
-                        var blobInfo = blobCache.create(id, file, base64);
-                        blobCache.add(blobInfo);
-                        callback(blobInfo.blobUri(), { title: file.name });
-                      };
-                    };
-                    
-                    input.click();
-                } 
-          },
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-            invalid_elements:"*['class'],button",
+        tinymce.init({ 
+                selector: "#post_content",
+                theme: "modern", 
+                plugins: [ 
+                    "advlist autolink link image lists charmap print preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
+                    "table contextmenu directionality emoticons paste textcolor responsivefilemanager" ],
+                toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect", toolbar2: "| responsivefilemanager | link unlink anchor | image media | forecolor backcolor | print preview code ",
+                image_advtab: true ,
+                external_filemanager_path:"/filemanager/",
+                filemanager_title:"Responsive Filemanager" ,
+                external_plugins: { "filemanager" : "/filemanager/plugin.min.js"} 
 
         });
+        // tinymce.init({
+        //     selector: "#post_content",
+
+        //     plugins: [
+        //         "advlist autolink lists link image charmap print preview anchor",
+        //         "searchreplace visualblocks fullscreen",
+        //         "insertdatetime media table contextmenu paste responsivefilemanager"
+        //     ],
+        //     height:"270",
+            // file_browser_callback_types: 'image',
+            // file_picker_types: 'image',
+            // paste_data_images: true,
+            
+          //   file_picker_callback: function(callback, value, meta) {
+          //                       // return console.log(meta);
+          //       if( meta.filetype == 'image'){
+
+          //       var input = document.createElement('input');
+          //           input.setAttribute('type', 'file');
+          //           input.setAttribute('accept', 'image/*');
+          //           input.onchange = function() {
+          //             var file = this.files[0];
+          //             var reader = new FileReader();
+          //             reader.readAsDataURL(file);
+          //             reader.onload = function () {
+          //               var id = 'blobid' + (new Date()).getTime();
+          //               var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+          //               var base64 = reader.result.split(',')[1];
+          //               var blobInfo = blobCache.create(id, file, base64);
+          //               blobCache.add(blobInfo);
+          //               callback(blobInfo.blobUri(), { title: file.name });
+          //             };
+          //           };
+                    
+          //           input.click();
+          //       } 
+          // },
+            //     toolbar: "responsivefilemanager | insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        //     invalid_elements:"*['class'],button",
+        //     external_filemanager_path:"/filemanager/",
+        //     filemanager_title:"Responsive Filemanager" ,
+        //     external_plugins: { "filemanager" : "/filemanager/plugin.min.js"}
+
+        // });
 
        new Vue({
             el: "#editor-scope",

@@ -192,7 +192,7 @@ class DocumentController extends Controller
         Document::Where('document_id', $document_id)->delete();
         return response()->json($document_id);
     }
-
+   
     public function download() {
 
         if(Auth::check() && in_array( Auth::user()->g_username, ['devangbhuva123','mailtojimish','dhruvsaidava'])) {
