@@ -205,7 +205,7 @@
                            toastr.info(self.newTask + " Added");
                             self.newTask = "";
                             self.tasks['open'].unshift(response.data.elm);
-                            self.toAnimateAfter.push( new AnimTask("opencard0", 'flipInX') )
+                            self.toAnimateAfter.push( new AnimTask("opencard0", 'flipInX') );
                         });
                     }
                 },
